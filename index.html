@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Content Campaigns</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- ↓↓↓ SET THESE TWO VALUES from your Supabase project (Settings → API) ↓↓↓ -->
+<script>
+  window.SUPABASE_URL = "https://wwlpefgtsezrbcibgicr.supabase.co";       // e.g. https://abcdxyz.supabase.co
+  window.SUPABASE_ANON_KEY = "sb_publishable_8NDd6JoXxwKk5MwMmqKDkQ_b8qWUXLe";  // the public anon key (safe in frontend with RLS on)
+</script>
+<!-- Shared campaign data is baked directly into this file (no companion file needed). -->
+<script>
+window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id":"zj8h8n0","name":"Gameworld-Alpha Digital","wallet":"1844690683","category":"rewards","priority":"normal","manager":"Md. Tanvir Rahman","start":"2025-08-01","end":"2026-01-31","kpi":{"PC":{"t":29727,"a":0},"PA":{"t":445905,"a":0},"CC":{"t":20943,"a":0}},"lifecycle":"Modality Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"bhbkz7f","name":"GameBD","wallet":"1833810516","category":"rewards","priority":"normal","manager":"Md. Tanvir Rahman","start":"2025-09-01","end":"2026-08-04","kpi":{"PC":{"t":4950,"a":0},"PA":{"t":247500,"a":0},"CC":{"t":4125,"a":0}},"lifecycle":"Modality Confirmed","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"io89f4x","name":"10 MS - Yearlong Cashback Campaign","wallet":"1835801999","category":"rewards","priority":"high","manager":"Syed Mustafa Tanveer Hasan","start":"2025-10-01","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Modality Confirmed","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"uys57st","name":"Adplay - Wordstar - Realme Narzo","wallet":"1980332866","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2025-10-10","end":"2026-02-28","kpi":{"PC":{"t":464182.5,"a":0},"PA":{"t":3598995,"a":0},"CC":{"t":118455,"a":0}},"lifecycle":"KV Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"khv2y4v","name":"Adplay - Quizmaster - Realme Note 70","wallet":"1831189161","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2025-10-10","end":"2026-02-28","kpi":{"PC":{"t":371257.5,"a":0},"PA":{"t":6042967.5,"a":0},"CC":{"t":94741.42,"a":0}},"lifecycle":"KV Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"octro4t","name":"Adplay - Gamestar - Vivo Y04","wallet":"1540209846","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2025-10-10","end":"2026-02-28","kpi":{"PC":{"t":573870,"a":0},"PA":{"t":9110625,"a":0},"CC":{"t":245355,"a":0}},"lifecycle":"KV Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"gvyrn1v","name":"National Games and Quiz Fest","wallet":"","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2025-11-01","end":"2026-01-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Modality Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"q00oan3","name":"BDGamers","wallet":"1708400182","category":"rewards","priority":"normal","manager":"Md. Tanvir Rahman","start":"2026-01-31","end":"2026-02-28","kpi":{"PC":{"t":4282,"a":0},"PA":{"t":42811,"a":0},"CC":{"t":3621,"a":0}},"lifecycle":"Modality Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"znrrj20","name":"Shikho - Back 2 School (MR)","wallet":"","category":"rewards","priority":"high","manager":"Syed Mustafa Tanveer Hasan","start":"2025-12-22","end":"2026-02-28","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"4eiaint","name":"DeeptoPlay_Prodhanmontri Lu Zhen Premiere Cashback Campaign","wallet":"1787682929","category":"rewards","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2025-12-05","end":"2026-01-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":true},"fborganic":{"planned":"","actual":"","used":true},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"hxfsg7t","name":"Goama Games - Year End Camapgin","wallet":"1730728645","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2025-12-01","end":"2026-01-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"li9xne7","name":"Nagorik New User Campaign - QuickQuiz","wallet":"1754841575","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-01-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"bqrndqj","name":"Purno New User Campaign - QuizBD","wallet":"1705009262","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-01-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"iamgtkf","name":"Adplay New User Campaign - Quizmaster","wallet":"1831189161","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-01-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"vljq6am","name":"DFG - Wordly H1 Campaign","wallet":"1988117760","category":"rewards","priority":"high","manager":"Md. Tanvir Rahman","start":"2026-01-01","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"ut0nh0v","name":"DFG - Quizard H1 Campaign","wallet":"1917707786","category":"rewards","priority":"high","manager":"Md. Tanvir Rahman","start":"2026-01-01","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"loaibma","name":"DFG - Arcade Rush H1 Campaign","wallet":"1917707776","category":"rewards","priority":"high","manager":"Md. Tanvir Rahman","start":"2026-01-01","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"c53gy3p","name":"DFG - Quizard Ramadan Quiz Challenge","wallet":"1917707786","category":"rewards","priority":"high","manager":"Md. Tanvir Rahman","start":"2026-01-01","end":"2026-04-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"94i3h9f","name":"M/S Nexario - Tokkor New Year Campaign","wallet":"","category":"rewards","priority":"high","manager":"Syed Mustafa Tanveer Hasan","start":"2026-01-10","end":"2026-02-20","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Modality Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"zud4cqz","name":"Shadhin Music - New Year Campaign","wallet":"","category":"rewards","priority":"high","manager":"Syed Mustafa Tanveer Hasan","start":"2026-01-15","end":"2026-02-14","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Modality Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"sq8ac04","name":"Khela Hobe","wallet":"1773002169","category":"rewards","priority":"high","manager":"Md. Tanvir Rahman","start":"2026-01-01","end":"2026-02-28","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"x07eiir","name":"Khela Ghor","wallet":"1805127751","category":"rewards","priority":"normal","manager":"Md. Tanvir Rahman","start":"2026-01-01","end":"2026-02-28","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"tkzshqs","name":"Adplay - Wordstar - Ramadan 2026","wallet":"1980332866","category":"rewards","priority":"urgent","manager":"","start":"2026-02-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"wmf8taz","name":"Adplay - Gamestar - Ramadan 2026","wallet":"1540209846","category":"rewards","priority":"urgent","manager":"","start":"2026-02-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"mcdur7h","name":"Adplay - Quizmaster - Ramadan 2026","wallet":"1831189161","category":"rewards","priority":"urgent","manager":"","start":"2026-02-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"oquys31","name":"Practiceclub Cashback","wallet":"1321178159","category":"mfc","priority":"normal","manager":"","start":"","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"ov4uafi","name":"Deen - Ramadan 2026","wallet":"1321234790","category":"mfc","priority":"urgent","manager":"","start":"","end":"2026-03-19","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"1r87dgr","name":"QuizMuiz","wallet":"1345752900","category":"rewards","priority":"normal","manager":"","start":"","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"e3k4exl","name":"Muslim Pro","wallet":"1960448662","category":"rewards","priority":"normal","manager":"","start":"","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"guh8573","name":"Purno - QuizBD","wallet":"1705009262","category":"rewards","priority":"urgent","manager":"","start":"2026-02-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"y2dda8x","name":"Purno - QuizMind","wallet":"1705009262","category":"rewards","priority":"urgent","manager":"","start":"2026-02-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"qp9k7gk","name":"Purno - QuizTime","wallet":"1705005263","category":"rewards","priority":"urgent","manager":"","start":"2026-02-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"r779ubc","name":"Nagorik - Quizgiri","wallet":"1754837223","category":"rewards","priority":"urgent","manager":"","start":"2026-02-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"eihtrq0","name":"Nagorik - Quick Quiz","wallet":"1754841575","category":"rewards","priority":"urgent","manager":"","start":"2026-02-01","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"ry8bmrs","name":"Deeptoplay - Ramadan Cashback","wallet":"1787682929","category":"mfc","priority":"normal","manager":"","start":"2026-02-22","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"vrc62jr","name":"iScreen Ramadan Cashback","wallet":"1708488975","category":"mfc","priority":"high","manager":"","start":"2026-02-22","end":"2026-03-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"wb6v4fq","name":"Rabbithole T20 WC Cahsback","wallet":"1311798870","category":"mfc","priority":"urgent","manager":"","start":"2026-02-19","end":"2026-03-08","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"nsmu91i","name":"DFG Ramadan Campaign","wallet":"","category":"rewards","priority":"normal","manager":"","start":"","end":"","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"wkxdb7y","name":"Skill Planet Cashback","wallet":"","category":"rewards","priority":"normal","manager":"","start":"","end":"","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"k4pw3tl","name":"Tokkor Campaign","wallet":"","category":"rewards","priority":"normal","manager":"","start":"2026-03-17","end":"2026-05-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"q0429cp","name":"Purno - MyQuiz - Q2","wallet":"1705009262","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-04-01","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"txhtoo9","name":"Nagorik - Quizgiri Q2","wallet":"1754837223","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-04-01","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"fr7gw6t","name":"Nagorik - Tukhor Q2","wallet":"1754841575","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-04-01","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"s25zovg","name":"Khela Ghor","wallet":"","category":"rewards","priority":"high","manager":"Md. Tanvir Rahman","start":"2026-04-01","end":"2026-05-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":true},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"oqeado5","name":"Adplay - Gamestar Q2'26","wallet":"1540209846","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-04-15","end":"2026-05-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"wnaqxfh","name":"Adplay - Gamestar Q2'26","wallet":"1831189161","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-04-15","end":"2026-05-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"lfnyff8","name":"Adplay - Gamestar Q2'26","wallet":"1980332866","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-04-15","end":"2026-05-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"dy8freu","name":"Nagorik + Purno Slab Based Campaign","wallet":"","category":"channel","priority":"normal","manager":"Syed Mustafa Tanveer Hasan","start":"","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"zoroxsd","name":"Shikho Slab Based Campaign","wallet":"","category":"channel","priority":"normal","manager":"Syed Mustafa Tanveer Hasan","start":"","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"u36wi14","name":"Nagorik Quizgiri Eid Ul Adha","wallet":"","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-05-01","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"KV Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"zcskclo","name":"Purno Quiz Pro Eid Ul Adha","wallet":"","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-05-01","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"KV Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"s0jh5q1","name":"Purno Quizbd Eid Ul Adha","wallet":"","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-05-01","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"KV Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"rof51ez","name":"MoMagicBD Quizmuiz","wallet":"","category":"rewards","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-05-18","end":"2026-06-28","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"88qg5xy","name":"Deeptoplay Cashback","wallet":"","category":"mfc","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-05-26","end":"2026-06-15","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"l28xji3","name":"Bongo New User Campaign","wallet":"","category":"mfc","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-05-25","end":"2026-06-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"lnuk3kf","name":"Chorki Cashback Campaign","wallet":"","category":"jfc","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-05-25","end":"2026-06-10","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"reovwdu","name":"Hoichoi Cashback Campaign","wallet":"","category":"jfc","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-06-01","end":"2026-06-15","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"jjk84wr","name":"Kabbik Football World Cup Quiz","wallet":"","category":"rewards","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-06-12","end":"2026-07-20","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":true}},"notes":"","starred":false},{"id":"213vh0a","name":"QUIZARD FIFA World Cup Quiz","wallet":"","category":"rewards","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-06-01","end":"2026-07-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"hh9r3sb","name":"Arcade Rush (Football Super Stars 2026)","wallet":"","category":"rewards","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-06-01","end":"2026-07-30","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"nseo63v","name":"Khela Hobe WC","wallet":"","category":"rewards","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-06-01","end":"2026-07-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"lud31ny","name":"Khela Ghor WC","wallet":"","category":"rewards","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-06-01","end":"2026-07-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"8eqvqqu","name":"GameWorld WC","wallet":"","category":"rewards","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-06-10","end":"2026-07-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"k7gjup1","name":"Softtech WC","wallet":"","category":"rewards","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-06-10","end":"2026-07-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":true}},"notes":"","starred":false},{"id":"36es8j4","name":"bdgamers WC","wallet":"","category":"rewards","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-06-11","end":"2026-07-19","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":true}},"notes":"","starred":false},{"id":"hy9hfrb","name":"Deepto Play Cashback","wallet":"","category":"mfc","priority":"high","manager":"Md. Tanvir Rahman","start":"2026-07-19","end":"2026-07-19","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"pjbuck6","name":"Quiztime WC","wallet":"","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-06-11","end":"2026-07-19","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"ewlut3m","name":"Gamestar","wallet":"","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-06-11","end":"2026-07-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"mxkt2sc","name":"Wordstar","wallet":"","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-06-11","end":"2026-07-19","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":true}},"notes":"","starred":false},{"id":"twxv3c1","name":"Quizmaster","wallet":"","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-06-11","end":"2026-07-19","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":true}},"notes":"","starred":false},{"id":"3embpc2","name":"Iscreen cashback","wallet":"","category":"jfc","priority":"high","manager":"Syed Mustafa Tanveer Hasan","start":"2026-06-20","end":"2026-07-20","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Assets Uploaded","placements":{"offer":{"planned":"","actual":"","used":true},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"em9zvtg","name":"Boighor Cashback","wallet":"","category":"jfc","priority":"urgent","manager":"Md. Tanvir Rahman","start":"2026-07-01","end":"2026-07-31","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Proposal Under Review","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false},{"id":"17iauvs","name":"Nagorik WC Quiz","wallet":"","category":"rewards","priority":"urgent","manager":"Syed Mustafa Tanveer Hasan","start":"2026-06-11","end":"2026-07-19","kpi":{"PC":{"t":0,"a":0},"PA":{"t":0,"a":0},"CC":{"t":0,"a":0}},"lifecycle":"Modality Confirmed","placements":{"offer":{"planned":"","actual":"","used":false},"push":{"planned":"","actual":"","used":false},"fborganic":{"planned":"","actual":"","used":false},"hero":{"planned":"","actual":"","used":false},"fbpaid":{"planned":"","actual":"","used":false}},"notes":"","starred":false}]};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+  :root{
+    --bg:#f4f4ef; --surface:#ffffff; --text:#1a1a17; --muted:#6b6b64;
+    --hint:#9a9a92; --border:rgba(0,0,0,.12); --border-strong:rgba(0,0,0,.22);
+    --radius:12px; --radius-sm:8px;
+    --c-mfc:#534ab7; --c-mfc-bg:#eeedfe;
+    --c-jfc:#1d9e75; --c-jfc-bg:#e1f5ee;
+    --c-rew:#d85a30; --c-rew-bg:#faece7;
+    --c-dis:#378add; --c-dis-bg:#e6f1fb;
+    --c-clm:#d4537e; --c-clm-bg:#fbeaf0;
+    --c-cha:#ba7517; --c-cha-bg:#faeeda;
+    --ok:#3b6d11; --ok-bg:#eaf3de;
+    --warn:#854f0b; --warn-bg:#faeeda;
+    --done:#5f5e5a; --done-bg:#f1efe8;
+    --live:#185fa5; --live-bg:#e6f1fb;
+    --danger:#a32d2d;
+    --pri-urgent:#a32d2d; --pri-urgent-bg:#fcebeb;
+    --pri-high:#854f0b; --pri-high-bg:#faeeda;
+    --pri-normal:#185fa5; --pri-normal-bg:#e6f1fb;
+    --pri-low:#5f5e5a; --pri-low-bg:#f1efe8;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#1c1c1a; --surface:#262624; --text:#f2f2ee; --muted:#a8a8a0;
+      --hint:#76766e; --border:rgba(255,255,255,.14); --border-strong:rgba(255,255,255,.26);
+      --c-mfc:#afa9ec; --c-mfc-bg:#2d2a4a;
+      --c-jfc:#5dcaa5; --c-jfc-bg:#0f3b30;
+      --c-rew:#f0997b; --c-rew-bg:#4a2516;
+      --c-dis:#85b7eb; --c-dis-bg:#103050;
+      --c-clm:#ed93b1; --c-clm-bg:#451828;
+      --c-cha:#efc575; --c-cha-bg:#3d2a0a;
+      --ok:#97c459; --ok-bg:#22300f;
+      --warn:#efc575; --warn-bg:#3d2a0a;
+      --done:#b4b2a9; --done-bg:#33332f;
+      --live:#85b7eb; --live-bg:#103050;
+      --danger:#f09595;
+      --pri-urgent:#f09595; --pri-urgent-bg:#501313;
+      --pri-high:#efc575; --pri-high-bg:#3d2a0a;
+      --pri-normal:#85b7eb; --pri-normal-bg:#103050;
+      --pri-low:#b4b2a9; --pri-low-bg:#33332f;
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.5;-webkit-font-smoothing:antialiased;padding:20px 22px 70px}
+  .wrap{max-width:1280px;margin:0 auto}
+  header.top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+  h1{font-size:20px;font-weight:600;letter-spacing:-.01em}
+  .sub{color:var(--muted);font-size:12.5px;margin-top:2px}
+  .btn{font:inherit;font-size:13px;border:.5px solid var(--border-strong);background:var(--surface);
+    color:var(--text);border-radius:var(--radius-sm);padding:7px 12px;cursor:pointer;
+    display:inline-flex;align-items:center;gap:6px;transition:.12s}
+  .btn:hover{background:var(--bg)}
+  .btn:active{transform:scale(.98)}
+  .btn.primary{background:var(--text);color:var(--bg);border-color:var(--text)}
+  .btn.primary:hover{opacity:.88}
+
+  .controls{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:13px}
+  .search{flex:1;min-width:200px;position:relative}
+  .search input{width:100%;font:inherit;font-size:13px;padding:8px 12px 8px 32px;border:.5px solid var(--border);
+    border-radius:var(--radius-sm);background:var(--surface);color:var(--text)}
+  .search svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);opacity:.5}
+  select{font:inherit;font-size:13px;padding:8px 11px;border:.5px solid var(--border);
+    border-radius:var(--radius-sm);background:var(--surface);color:var(--text);cursor:pointer}
+
+  .filters{display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+  .filters .flabel{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin-right:2px}
+  .chip{font:inherit;font-size:12px;padding:5px 12px;border-radius:20px;border:.5px solid var(--border-strong);
+    background:var(--surface);color:var(--muted);cursor:pointer;transition:.12s}
+  .chip:hover{border-color:var(--text);color:var(--text)}
+  .chip.active{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+  .cat-section{margin-bottom:22px}
+  .cat-header{display:flex;align-items:center;gap:9px;margin-bottom:11px;padding-bottom:8px;border-bottom:.5px solid var(--border)}
+  .cat-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+  .cat-header h2{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+  .cat-count{font-size:12px;color:var(--muted);background:var(--bg);padding:2px 8px;border-radius:20px}
+  .cat-expand{margin-left:auto;font:inherit;font-size:12px;font-weight:500;color:var(--muted);
+    background:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:4px;padding:3px 6px;border-radius:6px;transition:.12s}
+  .cat-expand:hover{background:var(--bg);color:var(--text)}
+  .cat-expand svg{transition:transform .18s}
+  .cat-expand.open svg{transform:rotate(180deg)}
+  .cat-collapsed .grid{grid-template-rows:0;max-height:none}
+
+  .star{background:none;border:none;cursor:pointer;padding:3px;border-radius:6px;display:flex;
+    color:var(--hint);transition:.12s;line-height:0}
+  .star:hover{background:var(--bg);color:var(--warn)}
+  .star.on{color:#e0a82e}
+  .fav-section{margin-bottom:22px;background:var(--pri-high-bg);border:.5px solid var(--border);
+    border-radius:var(--radius);padding:13px 14px 14px}
+  .fav-header{display:flex;align-items:center;gap:8px;margin-bottom:11px}
+  .fav-header svg{color:#e0a82e}
+  .fav-header h2{font-size:14.5px;font-weight:600;letter-spacing:-.01em}
+  .fav-header .cat-count{background:var(--surface)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(208px,1fr));gap:10px}
+  .card{background:var(--surface);border:.5px solid var(--border);border-radius:10px;
+    padding:11px 12px;cursor:pointer;transition:.14s;border-left:3px solid var(--cat,var(--border-strong))}
+  .card:hover{border-color:var(--border-strong);transform:translateY(-1px);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+  .card .chead{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:7px}
+  .badges{display:flex;gap:6px;flex-wrap:wrap}
+  .status{font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;white-space:nowrap}
+  .s-progress{background:var(--live-bg);color:var(--live)}
+  .s-notstarted{background:var(--warn-bg);color:var(--warn)}
+  .s-completed{background:var(--done-bg);color:var(--done)}
+  .pri{font-size:10px;font-weight:600;padding:2px 7px;border-radius:4px;white-space:nowrap}
+  .pri-urgent{background:var(--pri-urgent-bg);color:var(--pri-urgent)}
+  .pri-high{background:var(--pri-high-bg);color:var(--pri-high)}
+  .pri-normal{background:var(--pri-normal-bg);color:var(--pri-normal)}
+  .pri-low{background:var(--pri-low-bg);color:var(--pri-low)}
+  .card h3{font-size:13.5px;font-weight:600;letter-spacing:-.01em;line-height:1.25;margin-bottom:2px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+  .wallet{font-size:11px;color:var(--hint);margin-bottom:8px;font-family:ui-monospace,monospace}
+  .dates{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);margin-bottom:9px}
+  .dates svg{flex-shrink:0;opacity:.7}
+  .kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-top:2px}
+  .kpi{background:var(--bg);border-radius:5px;padding:5px 4px;text-align:center}
+  .kpi .kl{font-size:9.5px;color:var(--muted);font-weight:600;letter-spacing:.03em}
+  .kpi .kv{font-size:11.5px;font-weight:600;margin-top:1px}
+  .kpi .kv small{font-size:9px;color:var(--hint);font-weight:400}
+  .star{padding:2px}
+  .star svg{width:15px;height:15px}
+
+  .empty{text-align:center;padding:60px 20px;color:var(--muted)}
+  .empty svg{opacity:.35;margin-bottom:12px}
+
+  .overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-start;
+    justify-content:center;padding:40px 20px;overflow-y:auto;z-index:50}
+  .overlay.open{display:flex}
+  .modal{background:var(--surface);border-radius:16px;max-width:600px;width:100%;
+    padding:26px 28px 28px;border:.5px solid var(--border);position:relative;animation:pop .16s ease}
+  @keyframes pop{from{transform:translateY(8px) scale(.99);opacity:0}to{transform:none;opacity:1}}
+  .modal .x{position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer;
+    color:var(--muted);padding:6px;border-radius:6px;display:flex}
+  .modal .x:hover{background:var(--bg)}
+  .modal .mtags{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+  .cat-tag{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;
+    padding:3px 9px;border-radius:5px;background:var(--catbg);color:var(--cat);white-space:nowrap}
+  .modal h2{font-size:21px;font-weight:600;letter-spacing:-.01em;margin-bottom:3px;padding-right:30px}
+  .modal .mwallet{color:var(--muted);font-size:13px;margin-bottom:18px;font-family:ui-monospace,monospace}
+  .sec{margin-bottom:20px}
+  .sec-t{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:9px}
+  .dl{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);
+    border:.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+  .dl .cell{background:var(--surface);padding:11px 13px}
+  .dl .dt{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+  .dl .dd{font-size:14px;font-weight:500}
+  .kpi-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+  .kpi-box{background:var(--bg);border-radius:var(--radius-sm);padding:11px 12px;text-align:center}
+  .kpi-box .kl{font-size:12px;color:var(--muted);font-weight:600}
+  .kpi-box .kv{font-size:18px;font-weight:600;margin-top:3px}
+  .kpi-box .ka{font-size:11px;color:var(--hint);margin-top:2px}
+  /* lifecycle */
+  .life{display:flex;flex-wrap:wrap;gap:0}
+  .life-step{display:flex;align-items:center;font-size:12px}
+  .life-step .dot{width:9px;height:9px;border-radius:50%;background:var(--border-strong);margin-right:6px}
+  .life-step.done .dot{background:var(--c-jfc)}
+  .life-step.done{color:var(--text);font-weight:500}
+  .life-step:not(.done){color:var(--hint)}
+  .life-step .sep{width:18px;height:.5px;background:var(--border);margin:0 8px}
+  /* placements */
+  .place-row{display:grid;grid-template-columns:1.3fr .7fr 1fr 1fr;gap:1px;background:var(--border);font-size:13px}
+  .place-tbl{border:.5px solid var(--border);border-radius:var(--radius-sm);overflow:hidden}
+  .place-row>div{background:var(--surface);padding:9px 12px}
+  .place-row.head>div{background:var(--bg);font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600}
+  .place-row.na>div{opacity:.45}
+  .place-name{font-weight:500;display:flex;align-items:center;gap:7px}
+  .place-name .pdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+  .place-name .pdot.exp{background:var(--c-jfc)}
+  .place-name .pdot.no{background:var(--border-strong)}
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
+  .modal-actions .btn.danger{color:var(--danger);border-color:var(--danger)}
+
+  .field{margin-bottom:14px}
+  .field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px;font-weight:500}
+  .field input,.field textarea,.field select{width:100%;font:inherit;font-size:14px;padding:9px 11px;
+    border:.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text)}
+  .field textarea{resize:vertical;min-height:54px}
+  .field input.ai-filled,.field textarea.ai-filled,.field select.ai-filled{border-color:var(--c-jfc);background:var(--c-jfc-bg)}
+  .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+  @media (max-width:560px){.frow,.frow3{grid-template-columns:1fr}.dl,.kpi-grid,.kpi-box{grid-template-columns:1fr}.place-row{grid-template-columns:1fr}}
+  .form-sec-t{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;
+    margin:20px 0 11px;padding-top:16px;border-top:.5px solid var(--border)}
+  .place-edit{display:grid;grid-template-columns:1.2fr .6fr 1fr 1fr;gap:8px;align-items:center;margin-bottom:8px;font-size:13px}
+  .place-edit .pn{font-weight:500;display:flex;align-items:center;gap:7px}
+  .place-edit input{font:inherit;font-size:13px;padding:7px 9px;border:.5px solid var(--border);
+    border-radius:6px;background:var(--surface);color:var(--text);width:100%}
+  .place-edit.na{opacity:.4}
+  .place-edit.na input{pointer-events:none}
+  .pri-hint{font-size:12px;color:var(--c-jfc);margin:-4px 0 12px}
+
+  .ai-zone{border:1px dashed var(--border-strong);border-radius:var(--radius);padding:20px;
+    text-align:center;margin-bottom:20px;transition:.15s;background:var(--bg)}
+  .ai-zone.drag{border-color:var(--c-jfc);background:var(--c-jfc-bg)}
+  .ai-zone .ico{opacity:.5;margin-bottom:8px}
+  .ai-zone .big{font-size:14px;font-weight:500;margin-bottom:3px}
+  .ai-zone .small{font-size:12.5px;color:var(--muted);margin-bottom:12px}
+  .ai-status{font-size:13px;color:var(--muted);margin-top:10px;display:none;align-items:center;gap:8px;justify-content:center}
+  .ai-status.show{display:flex}
+  .spin{width:14px;height:14px;border:2px solid var(--border-strong);border-top-color:var(--c-jfc);border-radius:50%;animation:sp .7s linear infinite}
+  @keyframes sp{to{transform:rotate(360deg)}}
+  .divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--hint);font-size:12px}
+  .divider::before,.divider::after{content:"";flex:1;height:.5px;background:var(--border)}
+  .ai-q{background:var(--c-jfc-bg);border:.5px solid var(--c-jfc);border-radius:var(--radius-sm);padding:13px 15px;margin-bottom:14px}
+  .ai-q .qhdr{font-size:12px;font-weight:600;color:var(--c-jfc);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+  .ai-q .qitem{font-size:13.5px;margin-bottom:6px;line-height:1.5}
+  .ai-q .qitem:last-child{margin-bottom:0}
+  .filled-banner{background:var(--c-jfc-bg);border:.5px solid var(--c-jfc);color:var(--c-jfc);
+    font-size:13px;padding:9px 13px;border-radius:var(--radius-sm);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+  /* password gate */
+  #gate{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;align-items:center;justify-content:center;padding:24px}
+  #gate .box{background:var(--surface);border:.5px solid var(--border);border-radius:16px;padding:32px 30px;max-width:360px;width:100%;text-align:center}
+  #gate h2{font-size:19px;font-weight:600;margin-bottom:6px;letter-spacing:-.01em}
+  #gate p{font-size:13px;color:var(--muted);margin-bottom:20px}
+  #gate input{width:100%;font:inherit;font-size:15px;padding:11px 13px;border:.5px solid var(--border-strong);
+    border-radius:var(--radius-sm);background:var(--bg);color:var(--text);margin-bottom:12px;text-align:center}
+  #gate button{width:100%;font:inherit;font-size:14px;font-weight:500;padding:11px;border:none;border-radius:var(--radius-sm);
+    background:var(--text);color:var(--bg);cursor:pointer}
+  #gate button:hover{opacity:.9}
+  #gate .err{color:var(--danger);font-size:12.5px;margin-top:10px;min-height:16px}
+  body.locked{overflow:hidden}
+</style>
+</head>
+<body class="locked">
+<div id="gate">
+  <div class="box">
+    <h2>Content Campaigns</h2>
+    <p>Enter the team password to continue.</p>
+    <input type="password" id="gatePass" placeholder="Password" autocomplete="off">
+    <button id="gateBtn">Unlock</button>
+    <div class="err" id="gateErr"></div>
+  </div>
+</div>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Content Campaigns</h1>
+      <div class="sub">All campaigns, past and present · <span id="syncBadge" style="font-weight:600;color:var(--hint)">Local only</span></div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button class="btn" id="migrateBtn" title="One-time: upload the built-in campaigns into the database">Migrate to DB</button>
+      <button class="btn" id="reloadBtn" title="Reload data from the database">Reload</button>
+      <button class="btn" id="importBtn">Import sheet</button>
+      <button class="btn" id="exportBtn">Export</button>
+      <button class="btn primary" id="addBtn">+ New campaign</button>
+    </div>
+    <input type="file" id="importFile" accept=".csv,.xlsx" style="display:none">
+  </header>
+  <div class="controls">
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" placeholder="Search campaigns, wallet, or manager…">
+    </div>
+    <select id="sortBy">
+      <option value="endSoon">Ending soonest</option>
+      <option value="priority">Priority</option>
+      <option value="recent">Recently started</option>
+      <option value="name">Name A–Z</option>
+    </select>
+  </div>
+  <div class="filters" id="statusFilters">
+    <span class="flabel">Status</span>
+    <button class="chip active" data-status="all">All</button>
+    <button class="chip" data-status="progress">In Progress</button>
+    <button class="chip" data-status="notstarted">Not Started</button>
+    <button class="chip" data-status="completed">Completed</button>
+  </div>
+  <div id="sections"></div>
+  <div class="empty" id="empty" style="display:none">
+    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v5"/></svg>
+    <div>No campaigns match.</div>
+  </div>
+</div>
+<div class="overlay" id="detailOverlay"><div class="modal" id="detailModal"></div></div>
+<div class="overlay" id="formOverlay"><div class="modal" id="formModal"></div></div>
+
+<script>
+/* ---------- Team password gate ----------
+   Simple client-side gate so the URL isn't wide open. Change the password by
+   replacing GATE_HASH below with the SHA-256 of your chosen password.
+   (This deters casual access; it is not strong security. For that, use Vercel's
+   built-in Password Protection on top, or the M365-hosted-data route.) */
+const GATE_HASH="f9c01687b613352f510e7964e672b3612738bb46eab514dd77f6ef0160a33954"; // "bkash-campaigns-2026"
+const GATE_SESSION_KEY="cc_gate_ok";
+async function sha256hex(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
+function unlockApp(){document.body.classList.remove('locked');const g=document.getElementById('gate');if(g)g.style.display='none';}
+async function tryUnlock(pw){
+  const h=await sha256hex(pw);
+  if(h===GATE_HASH){sessionStorage.setItem(GATE_SESSION_KEY,'1');unlockApp();return true;}
+  return false;
+}
+(function initGate(){
+  if(sessionStorage.getItem(GATE_SESSION_KEY)==='1'){unlockApp();return;}
+  const btn=document.getElementById('gateBtn'),inp=document.getElementById('gatePass'),err=document.getElementById('gateErr');
+  async function attempt(){
+    err.textContent='';
+    if(!(await tryUnlock(inp.value))){err.textContent='Incorrect password.';inp.value='';inp.focus();}
+  }
+  if(btn)btn.onclick=attempt;
+  if(inp)inp.addEventListener('keydown',e=>{if(e.key==='Enter')attempt();});
+  if(inp)inp.focus();
+})();
+
+const CATS = {
+  mfc:{label:"Merchant Funded Cashback", short:"MF Cashback", cat:"--c-mfc", bg:"--c-mfc-bg"},
+  jfc:{label:"Joint Funded Cashback", short:"JF Cashback", cat:"--c-jfc", bg:"--c-jfc-bg"},
+  rewards:{label:"Rewards", short:"Rewards", cat:"--c-rew", bg:"--c-rew-bg"},
+  discounts:{label:"Discounts", short:"Discounts", cat:"--c-dis", bg:"--c-dis-bg"},
+  clm:{label:"CLM", short:"CLM", cat:"--c-clm", bg:"--c-clm-bg"},
+  channel:{label:"Channel", short:"Channel", cat:"--c-cha", bg:"--c-cha-bg"},
+};
+const CAT_ORDER = ["mfc","jfc","rewards","discounts","clm","channel"];
+const MANAGERS = ["Md. Tanvir Rahman","Syed Mustafa Tanveer Hasan"];
+const PRIORITIES = ["urgent","high","normal","low"];
+const PRI_LABEL = {urgent:"Urgent",high:"High",normal:"Normal",low:"Low"};
+const PRI_RANK = {urgent:0,high:1,normal:2,low:3};
+const LIFECYCLE = ["Proposal Under Review","Modality Confirmed","Assets Confirmed","KV Confirmed","Assets Uploaded"];
+const PLACEMENTS = [
+  {key:"offer",label:"Offer Section"},
+  {key:"push",label:"Push Notification"},
+  {key:"fborganic",label:"FB Organic"},
+  {key:"hero",label:"Hero Banner"},
+  {key:"fbpaid",label:"FB Paid Promotion"},
+];
+// priority matrix -> expected placements (cumulative)
+const PRI_PLACEMENTS = {
+  urgent:["offer","push","fborganic","hero","fbpaid"],
+  high:["offer","push","fborganic","hero"],
+  normal:["offer","push","fborganic"],
+  low:["offer","push"],
+};
+function expectedPlacements(pri){return PRI_PLACEMENTS[pri]||[]}
+
+const KEY = "content_campaigns_v3";
+
+/* ---------- Shared data via auto-loaded companion file (OneDrive) ----------
+   Reads campaigns from campaigns_data.js which sets window.CAMPAIGNS_DATA.
+   Browsers block fetch() of a local sibling file, but DO allow loading it as a
+   <script>, so everyone who opens the HTML from the shared OneDrive folder sees
+   the same data automatically — no button, no picker.
+
+   Writing back to that file from the browser isn't allowed, so editors use
+   "Save shared data" to download an updated campaigns_data.js and drop it into
+   the OneDrive folder; it then syncs and auto-loads for everyone on next open. */
+
+// campaign list is declared below, hydrated from Supabase (cache-first)
+
+function setSyncBadge(stateStr,detail){
+  const b=document.getElementById('syncBadge');if(!b)return;
+  const map={loaded:['Synced ✓','var(--c-jfc)'],local:['Offline (cached)','var(--warn)'],
+    syncing:['Syncing…','var(--muted)'],error:['Sync error','var(--danger)'],config:['Not configured','var(--danger)']};
+  const [label,color]=map[stateStr]||map.local;
+  b.textContent=detail||label;b.style.color=color;
+}
+function fmtWhen(iso){try{const d=new Date(iso);return d.toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});}catch(e){return iso;}}
+
+/* ---------- Supabase-backed storage ----------
+   Config is set in the SUPABASE block near the top of this file (URL + anon key).
+   The database is the source of truth. localStorage is only an offline cache so
+   the UI can show something instantly and survive a dropped connection. */
+let sb=null;
+function initSupabase(){
+  try{
+    if(window.SUPABASE_URL && window.SUPABASE_ANON_KEY && window.supabase){
+      sb=window.supabase.createClient(window.SUPABASE_URL, window.SUPABASE_ANON_KEY);
+      return true;
+    }
+  }catch(e){console.error(e);}
+  return false;
+}
+
+function id(){return Math.random().toString(36).slice(2,9)}
+
+// Local cache only (instant paint / offline fallback).
+function loadCache(){try{const r=localStorage.getItem(KEY);if(r)return JSON.parse(r);}catch(e){}
+  try{if(window.CAMPAIGNS_DATA&&Array.isArray(window.CAMPAIGNS_DATA.campaigns))return JSON.parse(JSON.stringify(window.CAMPAIGNS_DATA.campaigns));}catch(e){}
+  try{return JSON.parse(JSON.stringify(SEED));}catch(e){return [];}
+}
+function writeCache(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+let state = loadCache();
+
+// Pull all campaigns from Supabase and refresh the view.
+async function loadFromDB(){
+  if(!sb){setSyncBadge('config','Set Supabase keys');return;}
+  setSyncBadge('syncing','Loading…');
+  try{
+    const {data,error}=await sb.from('campaigns').select('id,data,updated_at').order('updated_at',{ascending:false});
+    if(error)throw error;
+    state=(data||[]).map(r=>({...r.data,id:r.id}));
+    writeCache();
+    renderGrid();
+    setSyncBadge('loaded');
+  }catch(e){console.error(e);setSyncBadge('error','Load failed — showing cached');renderGrid();}
+}
+
+// Write one campaign (insert or update) to the DB, then update local state.
+async function upsertCampaign(c){
+  const prev=JSON.parse(JSON.stringify(state));
+  // optimistic local update
+  const i=state.findIndex(x=>x.id===c.id);
+  if(i>=0)state[i]=c;else state.unshift(c);
+  writeCache();renderGrid();
+  if(!sb){setSyncBadge('local');return;}
+  setSyncBadge('syncing');
+  try{
+    const {id,...rest}=c;
+    const {error}=await sb.from('campaigns').upsert({id:c.id,data:rest});
+    if(error)throw error;
+    setSyncBadge('loaded');
+  }catch(e){console.error(e);state=prev;writeCache();renderGrid();setSyncBadge('error','Save failed');alert('Could not save to the database. Check your connection and try again.');}
+}
+
+// Delete one campaign from the DB, then update local state.
+async function deleteCampaignDB(cid){
+  const prev=JSON.parse(JSON.stringify(state));
+  state=state.filter(x=>x.id!==cid);
+  writeCache();renderGrid();
+  if(!sb){setSyncBadge('local');return;}
+  setSyncBadge('syncing');
+  try{
+    const {error}=await sb.from('campaigns').delete().eq('id',cid);
+    if(error)throw error;
+    setSyncBadge('loaded');
+  }catch(e){console.error(e);state=prev;writeCache();renderGrid();setSyncBadge('error','Delete failed');}
+}
+
+// Bulk upsert (used by import and one-time migration).
+async function bulkUpsert(list){
+  if(!sb){alert('Supabase is not configured.');return false;}
+  setSyncBadge('syncing','Saving…');
+  try{
+    const rows=list.map(c=>{const {id,...rest}=c;return {id:c.id,data:rest};});
+    const {error}=await sb.from('campaigns').upsert(rows);
+    if(error)throw error;
+    await loadFromDB();
+    return true;
+  }catch(e){console.error(e);setSyncBadge('error');alert('Bulk save failed: '+(e.message||e));return false;}
+}
+
+function reloadShared(){loadFromDB();}
+
+// One-time migration of the built-in 73 campaigns into an empty database.
+async function migrateBuiltIn(){
+  const built=(window.CAMPAIGNS_DATA&&window.CAMPAIGNS_DATA.campaigns)||SEED||[];
+  if(!built.length){alert('No built-in campaigns to migrate.');return;}
+  if(!confirm('Upload the '+built.length+' built-in campaigns into your Supabase database?\n\nSafe to run once. Existing rows with the same id are updated, not duplicated.'))return;
+  const ok=await bulkUpsert(built);
+  if(ok)alert('Migrated '+built.length+' campaigns into the database.');
+}
+
+function blankPlacements(){const o={};PLACEMENTS.forEach(p=>o[p.key]={planned:"",actual:"",used:false});return o}
+
+const SEED = [{"id": "zj8h8n0", "name": "Gameworld-Alpha Digital", "wallet": "1844690683", "category": "rewards", "priority": "normal", "manager": "Md. Tanvir Rahman", "start": "2025-08-01", "end": "2026-01-31", "kpi": {"PC": {"t": 29727.0, "a": 0}, "PA": {"t": 445905.0, "a": 0}, "CC": {"t": 20943.0, "a": 0}}, "lifecycle": "Modality Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "bhbkz7f", "name": "GameBD", "wallet": "1833810516", "category": "rewards", "priority": "normal", "manager": "Md. Tanvir Rahman", "start": "2025-09-01", "end": "2026-08-04", "kpi": {"PC": {"t": 4950.0, "a": 0}, "PA": {"t": 247500.0, "a": 0}, "CC": {"t": 4125.0, "a": 0}}, "lifecycle": "Modality Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "io89f4x", "name": "10 MS - Yearlong Cashback Campaign", "wallet": "1835801999", "category": "rewards", "priority": "high", "manager": "Syed Mustafa Tanveer Hasan", "start": "2025-10-01", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Modality Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "uys57st", "name": "Adplay - Wordstar - Realme Narzo", "wallet": "1980332866", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2025-10-10", "end": "2026-02-28", "kpi": {"PC": {"t": 464182.5, "a": 0}, "PA": {"t": 3598995.0, "a": 0}, "CC": {"t": 118455.0, "a": 0}}, "lifecycle": "KV Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "khv2y4v", "name": "Adplay - Quizmaster - Realme Note 70", "wallet": "1831189161", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2025-10-10", "end": "2026-02-28", "kpi": {"PC": {"t": 371257.5, "a": 0}, "PA": {"t": 6042967.5, "a": 0}, "CC": {"t": 94741.42, "a": 0}}, "lifecycle": "KV Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "octro4t", "name": "Adplay - Gamestar - Vivo Y04", "wallet": "1540209846", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2025-10-10", "end": "2026-02-28", "kpi": {"PC": {"t": 573870.0, "a": 0}, "PA": {"t": 9110625.0, "a": 0}, "CC": {"t": 245355.0, "a": 0}}, "lifecycle": "KV Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "gvyrn1v", "name": "National Games and Quiz Fest", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2025-11-01", "end": "2026-01-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Modality Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "q00oan3", "name": "BDGamers", "wallet": "1708400182", "category": "rewards", "priority": "normal", "manager": "Md. Tanvir Rahman", "start": "2026-01-31", "end": "2026-02-28", "kpi": {"PC": {"t": 4282.0, "a": 0}, "PA": {"t": 42811.0, "a": 0}, "CC": {"t": 3621.0, "a": 0}}, "lifecycle": "Modality Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "znrrj20", "name": "Shikho - Back 2 School (MR)", "wallet": "", "category": "rewards", "priority": "high", "manager": "Syed Mustafa Tanveer Hasan", "start": "2025-12-22", "end": "2026-02-28", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "4eiaint", "name": "DeeptoPlay_Prodhanmontri Lu Zhen Premiere Cashback Campaign", "wallet": "1787682929", "category": "rewards", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2025-12-05", "end": "2026-01-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": true}, "fborganic": {"planned": "", "actual": "", "used": true}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "hxfsg7t", "name": "Goama Games - Year End Camapgin", "wallet": "1730728645", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2025-12-01", "end": "2026-01-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "li9xne7", "name": "Nagorik New User Campaign - QuickQuiz", "wallet": "1754841575", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-01-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "bqrndqj", "name": "Purno New User Campaign - QuizBD", "wallet": "1705009262", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-01-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "iamgtkf", "name": "Adplay New User Campaign - Quizmaster", "wallet": "1831189161", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-01-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "vljq6am", "name": "DFG - Wordly H1 Campaign", "wallet": "1988117760", "category": "rewards", "priority": "high", "manager": "Md. Tanvir Rahman", "start": "2026-01-01", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "ut0nh0v", "name": "DFG - Quizard H1 Campaign", "wallet": "1917707786", "category": "rewards", "priority": "high", "manager": "Md. Tanvir Rahman", "start": "2026-01-01", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "loaibma", "name": "DFG - Arcade Rush H1 Campaign", "wallet": "1917707776", "category": "rewards", "priority": "high", "manager": "Md. Tanvir Rahman", "start": "2026-01-01", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "c53gy3p", "name": "DFG - Quizard Ramadan Quiz Challenge", "wallet": "1917707786", "category": "rewards", "priority": "high", "manager": "Md. Tanvir Rahman", "start": "2026-01-01", "end": "2026-04-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "94i3h9f", "name": "M/S Nexario - Tokkor New Year Campaign", "wallet": "", "category": "rewards", "priority": "high", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-01-10", "end": "2026-02-20", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Modality Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "zud4cqz", "name": "Shadhin Music - New Year Campaign", "wallet": "", "category": "rewards", "priority": "high", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-01-15", "end": "2026-02-14", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Modality Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "sq8ac04", "name": "Khela Hobe", "wallet": "1773002169", "category": "rewards", "priority": "high", "manager": "Md. Tanvir Rahman", "start": "2026-01-01", "end": "2026-02-28", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "x07eiir", "name": "Khela Ghor", "wallet": "1805127751", "category": "rewards", "priority": "normal", "manager": "Md. Tanvir Rahman", "start": "2026-01-01", "end": "2026-02-28", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "tkzshqs", "name": "Adplay - Wordstar - Ramadan 2026", "wallet": "1980332866", "category": "rewards", "priority": "urgent", "manager": "", "start": "2026-02-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "wmf8taz", "name": "Adplay - Gamestar - Ramadan 2026", "wallet": "1540209846", "category": "rewards", "priority": "urgent", "manager": "", "start": "2026-02-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "mcdur7h", "name": "Adplay - Quizmaster - Ramadan 2026", "wallet": "1831189161", "category": "rewards", "priority": "urgent", "manager": "", "start": "2026-02-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "oquys31", "name": "Practiceclub Cashback", "wallet": "1321178159", "category": "mfc", "priority": "normal", "manager": "", "start": "", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "ov4uafi", "name": "Deen - Ramadan 2026", "wallet": "1321234790", "category": "mfc", "priority": "urgent", "manager": "", "start": "", "end": "2026-03-19", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "1r87dgr", "name": "QuizMuiz", "wallet": "1345752900", "category": "rewards", "priority": "normal", "manager": "", "start": "", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "e3k4exl", "name": "Muslim Pro", "wallet": "1960448662", "category": "rewards", "priority": "normal", "manager": "", "start": "", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "guh8573", "name": "Purno - QuizBD", "wallet": "1705009262", "category": "rewards", "priority": "urgent", "manager": "", "start": "2026-02-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "y2dda8x", "name": "Purno - QuizMind", "wallet": "1705009262", "category": "rewards", "priority": "urgent", "manager": "", "start": "2026-02-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "qp9k7gk", "name": "Purno - QuizTime", "wallet": "1705005263", "category": "rewards", "priority": "urgent", "manager": "", "start": "2026-02-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "r779ubc", "name": "Nagorik - Quizgiri", "wallet": "1754837223", "category": "rewards", "priority": "urgent", "manager": "", "start": "2026-02-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "eihtrq0", "name": "Nagorik - Quick Quiz", "wallet": "1754841575", "category": "rewards", "priority": "urgent", "manager": "", "start": "2026-02-01", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "ry8bmrs", "name": "Deeptoplay - Ramadan Cashback", "wallet": "1787682929", "category": "mfc", "priority": "normal", "manager": "", "start": "2026-02-22", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "vrc62jr", "name": "iScreen Ramadan Cashback", "wallet": "1708488975", "category": "mfc", "priority": "high", "manager": "", "start": "2026-02-22", "end": "2026-03-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "wb6v4fq", "name": "Rabbithole T20 WC Cahsback", "wallet": "1311798870", "category": "mfc", "priority": "urgent", "manager": "", "start": "2026-02-19", "end": "2026-03-08", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "nsmu91i", "name": "DFG Ramadan Campaign", "wallet": "", "category": "rewards", "priority": "normal", "manager": "", "start": "", "end": "", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "wkxdb7y", "name": "Skill Planet Cashback", "wallet": "", "category": "rewards", "priority": "normal", "manager": "", "start": "", "end": "", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "k4pw3tl", "name": "Tokkor Campaign", "wallet": "", "category": "rewards", "priority": "normal", "manager": "", "start": "2026-03-17", "end": "2026-05-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "q0429cp", "name": "Purno - MyQuiz - Q2", "wallet": "1705009262", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-04-01", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "txhtoo9", "name": "Nagorik - Quizgiri Q2", "wallet": "1754837223", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-04-01", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "fr7gw6t", "name": "Nagorik - Tukhor Q2", "wallet": "1754841575", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-04-01", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "s25zovg", "name": "Khela Ghor", "wallet": "", "category": "rewards", "priority": "high", "manager": "Md. Tanvir Rahman", "start": "2026-04-01", "end": "2026-05-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": true}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "oqeado5", "name": "Adplay - Gamestar Q2'26", "wallet": "1540209846", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-04-15", "end": "2026-05-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "wnaqxfh", "name": "Adplay - Gamestar Q2'26", "wallet": "1831189161", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-04-15", "end": "2026-05-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "lfnyff8", "name": "Adplay - Gamestar Q2'26", "wallet": "1980332866", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-04-15", "end": "2026-05-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "dy8freu", "name": "Nagorik + Purno Slab Based Campaign", "wallet": "", "category": "channel", "priority": "normal", "manager": "Syed Mustafa Tanveer Hasan", "start": "", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "zoroxsd", "name": "Shikho Slab Based Campaign", "wallet": "", "category": "channel", "priority": "normal", "manager": "Syed Mustafa Tanveer Hasan", "start": "", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "u36wi14", "name": "Nagorik Quizgiri Eid Ul Adha", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-05-01", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "KV Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "zcskclo", "name": "Purno Quiz Pro Eid Ul Adha", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-05-01", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "KV Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "s0jh5q1", "name": "Purno Quizbd Eid Ul Adha", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-05-01", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "KV Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "rof51ez", "name": "MoMagicBD Quizmuiz", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-05-18", "end": "2026-06-28", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "88qg5xy", "name": "Deeptoplay Cashback", "wallet": "", "category": "mfc", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-05-26", "end": "2026-06-15", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "l28xji3", "name": "Bongo New User Campaign", "wallet": "", "category": "mfc", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-05-25", "end": "2026-06-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "lnuk3kf", "name": "Chorki Cashback Campaign", "wallet": "", "category": "jfc", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-05-25", "end": "2026-06-10", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "reovwdu", "name": "Hoichoi Cashback Campaign", "wallet": "", "category": "jfc", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-06-01", "end": "2026-06-15", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "jjk84wr", "name": "Kabbik Football World Cup Quiz", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-06-12", "end": "2026-07-20", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": true}}, "notes": "", "starred": false}, {"id": "213vh0a", "name": "QUIZARD FIFA World Cup Quiz", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-06-01", "end": "2026-07-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "hh9r3sb", "name": "Arcade Rush (Football Super Stars 2026)", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-06-01", "end": "2026-07-30", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "nseo63v", "name": "Khela Hobe WC", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-06-01", "end": "2026-07-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "lud31ny", "name": "Khela Ghor WC", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-06-01", "end": "2026-07-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "8eqvqqu", "name": "GameWorld WC", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-06-10", "end": "2026-07-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "k7gjup1", "name": "Softtech WC", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-06-10", "end": "2026-07-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": true}}, "notes": "", "starred": false}, {"id": "36es8j4", "name": "bdgamers WC", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-06-11", "end": "2026-07-19", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": true}}, "notes": "", "starred": false}, {"id": "hy9hfrb", "name": "Deepto Play Cashback", "wallet": "", "category": "mfc", "priority": "high", "manager": "Md. Tanvir Rahman", "start": "2026-07-19", "end": "2026-07-19", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "pjbuck6", "name": "Quiztime WC", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-06-11", "end": "2026-07-19", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "ewlut3m", "name": "Gamestar", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-06-11", "end": "2026-07-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "mxkt2sc", "name": "Wordstar", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-06-11", "end": "2026-07-19", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": true}}, "notes": "", "starred": false}, {"id": "twxv3c1", "name": "Quizmaster", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-06-11", "end": "2026-07-19", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": true}}, "notes": "", "starred": false}, {"id": "3embpc2", "name": "Iscreen cashback", "wallet": "", "category": "jfc", "priority": "high", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-06-20", "end": "2026-07-20", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Assets Uploaded", "placements": {"offer": {"planned": "", "actual": "", "used": true}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "em9zvtg", "name": "Boighor Cashback", "wallet": "", "category": "jfc", "priority": "urgent", "manager": "Md. Tanvir Rahman", "start": "2026-07-01", "end": "2026-07-31", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Proposal Under Review", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}, {"id": "17iauvs", "name": "Nagorik WC Quiz", "wallet": "", "category": "rewards", "priority": "urgent", "manager": "Syed Mustafa Tanveer Hasan", "start": "2026-06-11", "end": "2026-07-19", "kpi": {"PC": {"t": 0, "a": 0}, "PA": {"t": 0, "a": 0}, "CC": {"t": 0, "a": 0}}, "lifecycle": "Modality Confirmed", "placements": {"offer": {"planned": "", "actual": "", "used": false}, "push": {"planned": "", "actual": "", "used": false}, "fborganic": {"planned": "", "actual": "", "used": false}, "hero": {"planned": "", "actual": "", "used": false}, "fbpaid": {"planned": "", "actual": "", "used": false}}, "notes": "", "starred": false}];
+function blankCell(){return {planned:"",actual:"",used:false}}
+
+function daysBetween(a,b){return Math.round((new Date(b)-new Date(a))/864e5)}
+function fmtDate(d){if(!d)return"—";return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}
+function fmtNum(n){return Number(n||0).toLocaleString('en-GB')}
+function pct(a,t){if(!t)return 0;return Math.round(a/t*100)}
+
+function computeStatus(c){
+  const today=new Date();today.setHours(0,0,0,0);
+  if(!c.start||!c.end)return"notstarted";
+  const s=new Date(c.start),e=new Date(c.end);
+  if(today<s)return"notstarted";
+  if(today>e)return"completed";
+  return"progress";
+}
+const STATUS_LABEL={notstarted:"Not Started",progress:"In Progress",completed:"Completed"};
+function daysLeft(c){const today=new Date();today.setHours(0,0,0,0);return daysBetween(today,c.end);}
+
+function cardHTML(c){
+  const cat=CATS[c.category],st=computeStatus(c);
+  const k=c.kpi||{PC:{},PA:{},CC:{}};
+  const fav=!!c.starred;
+  return `<div class="card" data-id="${c.id}" style="--cat:var(${cat.cat})">
+    <div class="chead">
+      <span class="pri pri-${c.priority}">${PRI_LABEL[c.priority]}</span>
+      <div style="display:flex;align-items:center;gap:7px">
+        <span class="status s-${st}">${STATUS_LABEL[st]}</span>
+        <button class="star ${fav?'on':''}" data-star="${c.id}" aria-label="${fav?'Remove from favorites':'Add to favorites'}" title="${fav?'Remove from favorites':'Add to favorites'}">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="${fav?'currentColor':'none'}" stroke="currentColor" stroke-width="1.8"><path d="M12 2.5l2.9 5.9 6.5.95-4.7 4.58 1.1 6.47L12 17.9l-5.8 3.05 1.1-6.47L2.6 9.85l6.5-.95L12 2.5z"/></svg>
+        </button>
+      </div>
+    </div>
+    <h3>${esc(c.name)}</h3>
+    <div class="wallet">${esc(c.wallet||'—')}</div>
+    <div class="dates">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
+      ${fmtDate(c.start)} – ${fmtDate(c.end)}
+    </div>
+    <div class="kpis">
+      ${['PC','PA','CC'].map(m=>`<div class="kpi"><div class="kl">${m}</div><div class="kv">${fmtNum((k[m]||{}).a)}<small>/${fmtNum((k[m]||{}).t)}</small></div></div>`).join('')}
+    </div>
+  </div>`;
+}
+
+let statusFilter="all";
+const expandedCats=new Set();
+
+function renderGrid(){
+  const q=document.getElementById('search').value.toLowerCase().trim();
+  const sort=document.getElementById('sortBy').value;
+  let list=state.filter(c=>{
+    if(statusFilter!=="all"&&computeStatus(c)!==statusFilter)return false;
+    if(q&&!(c.name.toLowerCase().includes(q)||(c.wallet||'').toLowerCase().includes(q)||(c.manager||'').toLowerCase().includes(q)))return false;
+    return true;
+  });
+  list.sort((a,b)=>{
+    if(sort==="endSoon")return new Date(a.end)-new Date(b.end);
+    if(sort==="priority")return PRI_RANK[a.priority]-PRI_RANK[b.priority];
+    if(sort==="recent")return new Date(b.start)-new Date(a.start);
+    if(sort==="name")return a.name.localeCompare(b.name);
+    return 0;
+  });
+  const wrap=document.getElementById('sections'),empty=document.getElementById('empty');
+  if(!list.length){wrap.innerHTML='';empty.style.display='block';return}
+  empty.style.display='none';
+  let html="";
+  const favs=list.filter(c=>c.starred);
+  if(favs.length){
+    html+=`<div class="fav-section"><div class="fav-header">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5"><path d="M12 2.5l2.9 5.9 6.5.95-4.7 4.58 1.1 6.47L12 17.9l-5.8 3.05 1.1-6.47L2.6 9.85l6.5-.95L12 2.5z"/></svg>
+      <h2>Favorites</h2><span class="cat-count">${favs.length}</span></div>
+      <div class="grid">${favs.map(cardHTML).join('')}</div></div>`;
+  }
+  CAT_ORDER.forEach(k=>{
+    const items=list.filter(c=>c.category===k);if(!items.length)return;
+    const cat=CATS[k];
+    const open=expandedCats.has(k);
+    html+=`<div class="cat-section" data-cat="${k}"><div class="cat-header">
+      <span class="cat-dot" style="background:var(${cat.cat})"></span>
+      <h2>${cat.label}</h2><span class="cat-count">${items.length}</span>
+      <button class="cat-expand ${open?'open':''}" data-expand="${k}">
+        <span class="ex-label">${open?'Show less':'Show all'}</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button></div>
+      <div class="grid" data-grid="${k}">${items.map(cardHTML).join('')}</div></div>`;
+  });
+  wrap.innerHTML=html;
+  document.querySelectorAll('.star').forEach(btn=>btn.onclick=e=>{e.stopPropagation();toggleStar(btn.dataset.star)});
+  document.querySelectorAll('.card').forEach(card=>card.onclick=()=>openDetail(card.dataset.id));
+  document.querySelectorAll('.cat-expand').forEach(btn=>btn.onclick=()=>{
+    const k=btn.dataset.expand;
+    if(expandedCats.has(k))expandedCats.delete(k);else expandedCats.add(k);
+    renderGrid();
+  });
+  applyRowClamp();
+}
+
+// Show only the first row of cards per category unless expanded.
+function applyRowClamp(){
+  document.querySelectorAll('.cat-section[data-cat] .grid[data-grid]').forEach(grid=>{
+    const k=grid.dataset.grid;
+    const cards=[...grid.children];
+    cards.forEach(c=>c.style.display='');
+    const btn=document.querySelector('.cat-expand[data-expand="'+k+'"]');
+    if(expandedCats.has(k)){if(btn)btn.style.visibility='';return}
+    // measure cards in the first row by their top offset
+    if(!cards.length)return;
+    const firstTop=cards[0].offsetTop;
+    let perRow=cards.filter(c=>c.offsetTop===firstTop).length;
+    if(perRow<1)perRow=1;
+    if(cards.length<=perRow){if(btn)btn.style.visibility='hidden';return}
+    if(btn)btn.style.visibility='';
+    cards.forEach((c,i)=>{if(i>=perRow)c.style.display='none'});
+  });
+}
+window.addEventListener('resize',()=>{clearTimeout(window._rc);window._rc=setTimeout(applyRowClamp,150)});
+
+function toggleStar(cid){
+  const c=state.find(x=>x.id===cid);if(!c)return;
+  const updated={...c,starred:!c.starred};
+  upsertCampaign(updated);
+}
+
+function openDetail(cid){
+  const c=state.find(x=>x.id===cid);if(!c)return;
+  const cat=CATS[c.category],st=computeStatus(c);
+  const dur=(c.start&&c.end)?daysBetween(c.start,c.end):0;
+  const dl=daysLeft(c);
+  let dlCell = st==="progress" ? (dl>=0?dl:0)+" days left" : st==="notstarted" ? (c.start?"Starts "+fmtDate(c.start):"Not set") : "Ended";
+  const k=c.kpi||{PC:{},PA:{},CC:{}};
+  const exp=expectedPlacements(c.priority);
+  const lifeIdx=LIFECYCLE.indexOf(c.lifecycle);
+  const lifeHTML=LIFECYCLE.map((s,i)=>`<div class="life-step ${i<=lifeIdx?'done':''}"><span class="dot"></span>${s}${i<LIFECYCLE.length-1?'<span class="sep"></span>':''}</div>`).join('');
+  const placeHTML=PLACEMENTS.map(p=>{
+    const isExp=exp.includes(p.key);const d=(c.placements||{})[p.key]||{};
+    const used=d.used?'<span style="color:var(--c-jfc);font-weight:600">Yes</span>':'<span style="color:var(--hint)">No</span>';
+    return `<div class="place-row ${isExp?'':'na'}">
+      <div class="place-name"><span class="pdot ${isExp?'exp':'no'}"></span>${p.label}</div>
+      <div>${isExp?used:'n/a'}</div>
+      <div>${isExp?fmtDate(d.planned):'n/a'}</div>
+      <div>${isExp?fmtDate(d.actual):'n/a'}</div></div>`;
+  }).join('');
+  document.getElementById('detailModal').innerHTML=`
+    <button class="x" onclick="closeDetail()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <div class="mtags">
+      <span class="cat-tag" style="--cat:var(${cat.cat});--catbg:var(${cat.bg})">${cat.label}</span>
+      <span class="pri pri-${c.priority}">${PRI_LABEL[c.priority]}</span>
+      <span class="status s-${st}">${STATUS_LABEL[st]}</span>
+    </div>
+    <h2>${esc(c.name)}</h2>
+    <div class="mwallet">${esc(c.wallet||'—')}</div>
+
+    <div class="sec"><div class="sec-t">Schedule & owner</div>
+      <div class="dl">
+        <div class="cell"><div class="dt">Start</div><div class="dd">${fmtDate(c.start)}</div></div>
+        <div class="cell"><div class="dt">End</div><div class="dd">${fmtDate(c.end)}</div></div>
+        <div class="cell"><div class="dt">Duration</div><div class="dd">${dur} days · ${dlCell}</div></div>
+        <div class="cell"><div class="dt">Key Account Manager</div><div class="dd">${esc(c.manager||'—')}</div></div>
+      </div>
+    </div>
+
+    <div class="sec"><div class="sec-t">KPIs — achievement / target</div>
+      <div class="kpi-grid">
+        ${['PC','PA','CC'].map(m=>{const x=k[m]||{};return `<div class="kpi-box"><div class="kl">${m}</div><div class="kv">${fmtNum(x.a)}</div><div class="ka">of ${fmtNum(x.t)} · ${pct(x.a,x.t)}%</div></div>`}).join('')}
+      </div>
+    </div>
+
+    <div class="sec"><div class="sec-t">Lifecycle</div><div class="life">${lifeHTML}</div></div>
+
+    <div class="sec"><div class="sec-t">Placement tracking — planned vs actual (by ${PRI_LABEL[c.priority]} priority)</div>
+      <div class="place-tbl">
+        <div class="place-row head"><div>Channel</div><div>Used</div><div>Planned</div><div>Actual</div></div>
+        ${placeHTML}
+      </div>
+    </div>
+
+    ${c.notes?`<div class="sec"><div class="sec-t">Notes</div><div style="font-size:14px;line-height:1.6;background:var(--bg);padding:12px 14px;border-radius:var(--radius-sm)">${esc(c.notes)}</div></div>`:''}
+
+    <div class="modal-actions">
+      <button class="btn danger" onclick="delCampaign('${c.id}')">Delete</button>
+      <button class="btn" onclick="toggleStar('${c.id}');closeDetail()">${c.starred?'★ Unfavorite':'☆ Favorite'}</button>
+      <button class="btn" onclick="openForm('${c.id}')">Edit</button>
+    </div>`;
+  document.getElementById('detailOverlay').classList.add('open');
+}
+function closeDetail(){document.getElementById('detailOverlay').classList.remove('open')}
+
+function openForm(cid, prefill, questions){
+  closeDetail();
+  const c = cid ? state.find(x=>x.id===cid) : (prefill||null);
+  const f = c || {};
+  const k = f.kpi || {PC:{},PA:{},CC:{}};
+  const pl = f.placements || blankPlacements();
+  const aiFields = prefill ? (prefill._aiFields||[]) : [];
+  const ac = n => aiFields.includes(n) ? 'ai-filled' : '';
+  const catOpts=Object.keys(CATS).map(x=>`<option value="${x}" ${f.category===x?'selected':''}>${CATS[x].label}</option>`).join('');
+  const priOpts=PRIORITIES.map(x=>`<option value="${x}" ${f.priority===x?'selected':''}>${PRI_LABEL[x]}</option>`).join('');
+  const mgrOpts=`<option value="">—</option>`+MANAGERS.map(x=>`<option value="${esc(x)}" ${f.manager===x?'selected':''}>${esc(x)}</option>`).join('');
+  const lifeOpts=LIFECYCLE.map(x=>`<option value="${x}" ${f.lifecycle===x?'selected':''}>${x}</option>`).join('');
+
+  const placeEditHTML=PLACEMENTS.map(p=>{
+    const d=pl[p.key]||{};
+    return `<div class="place-edit" data-pkey="${p.key}">
+      <div class="pn"><span class="pdot exp" style="width:7px;height:7px;border-radius:50%;background:var(--c-jfc)"></span>${p.label}</div>
+      <label style="display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted)"><input type="checkbox" id="pl_${p.key}_used" ${d.used?'checked':''} style="width:auto;margin:0">Used</label>
+      <input type="date" id="pl_${p.key}_planned" value="${d.planned||''}" title="Planned">
+      <input type="date" id="pl_${p.key}_actual" value="${d.actual||''}" title="Actual">
+    </div>`;
+  }).join('');
+
+  document.getElementById('formModal').innerHTML=`
+    <button class="x" onclick="closeForm()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <h2>${cid?'Edit campaign':'New campaign'}</h2><div style="height:18px"></div>
+
+    <div class="field"><label>Campaign name</label><input id="f_name" class="${ac('name')}" value="${esc(f.name||'')}" placeholder="e.g. Summer Spend & Save"></div>
+    <div class="frow">
+      <div class="field"><label>Wallet No</label><input id="f_wallet" class="${ac('wallet')}" value="${esc(f.wallet||'')}" placeholder="WAL-10293"></div>
+      <div class="field"><label>Campaign type</label><select id="f_category" class="${ac('category')}">${catOpts}</select></div>
+    </div>
+    <div class="frow">
+      <div class="field"><label>Start date</label><input type="date" id="f_start" class="${ac('start')}" value="${f.start||''}"></div>
+      <div class="field"><label>End date</label><input type="date" id="f_end" class="${ac('end')}" value="${f.end||''}"></div>
+    </div>
+    <div class="frow">
+      <div class="field"><label>Priority</label><select id="f_priority" class="${ac('priority')}" onchange="updatePriHint()">${priOpts}</select></div>
+      <div class="field"><label>Key Account Manager</label><select id="f_manager" class="${ac('manager')}">${mgrOpts}</select></div>
+    </div>
+    <div class="pri-hint" id="priHint"></div>
+
+    <div class="form-sec-t">KPIs (target now, achievement later)</div>
+    ${['PC','PA','CC'].map(m=>{const x=k[m]||{};return `<div class="frow"><div class="field"><label>${m} target</label><input type="number" id="kpi_${m}_t" class="${ac('kpi_'+m)}" value="${x.t!=null?x.t:''}" placeholder="0"></div><div class="field"><label>${m} achieved</label><input type="number" id="kpi_${m}_a" value="${x.a!=null?x.a:0}" placeholder="0"></div></div>`}).join('')}
+
+    <div class="form-sec-t">Campaign tracking</div>
+    <div class="field"><label>Lifecycle stage</label><select id="f_lifecycle" class="${ac('lifecycle')}">${lifeOpts}</select></div>
+    <label style="display:block;font-size:12.5px;color:var(--muted);margin-bottom:9px;font-weight:500">Placement tracking — planned vs actual</label>
+    <div class="place-edit" style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600"><div>Channel</div><div>Used</div><div>Planned</div><div>Actual</div></div>
+    ${placeEditHTML}
+    <div id="placeNote" class="pri-hint" style="margin-top:8px"></div>
+
+    <div class="field" style="margin-top:18px"><label>Notes</label><textarea id="f_notes" class="${ac('notes')}" placeholder="Optional context…">${esc(f.notes||'')}</textarea></div>
+
+    <div class="modal-actions">
+      <button class="btn" onclick="closeForm()">Cancel</button>
+      <button class="btn primary" onclick="saveForm('${cid||''}')">${cid?'Save changes':'Create campaign'}</button>
+    </div>`;
+  document.getElementById('formOverlay').classList.add('open');
+  updatePriHint();
+}
+function closeForm(){document.getElementById('formOverlay').classList.remove('open')}
+
+function updatePriHint(){
+  const pri=document.getElementById('f_priority').value;
+  const exp=expectedPlacements(pri);
+  const names=exp.map(k=>PLACEMENTS.find(p=>p.key===k).label);
+  const hint=document.getElementById('priHint');
+  if(hint)hint.textContent=PRI_LABEL[pri]+" priority → expected placements: "+names.join(", ");
+  PLACEMENTS.forEach(p=>{
+    const row=document.querySelector('.place-edit[data-pkey="'+p.key+'"]');
+    if(!row)return;
+    const on=exp.includes(p.key);
+    row.classList.toggle('na',!on);
+    const dot=row.querySelector('.pdot');
+    if(dot)dot.style.background=on?'var(--c-jfc)':'var(--border-strong)';
+    row.querySelectorAll('input').forEach(inp=>{inp.disabled=!on});
+  });
+  const note=document.getElementById('placeNote');
+  if(note)note.textContent="Channels not expected for this priority are disabled per the priority matrix.";
+}
+
+
+
+
+
+function saveForm(cid){
+  const g=i=>{const el=document.getElementById(i);return el?el.value:''};
+  const name=g('f_name').trim();
+  if(!name){alert('Campaign name is required.');return}
+  const kpi={};['PC','PA','CC'].forEach(m=>{kpi[m]={t:Number(g('kpi_'+m+'_t'))||0,a:Number(g('kpi_'+m+'_a'))||0}});
+  const placements={};PLACEMENTS.forEach(p=>{const u=document.getElementById('pl_'+p.key+'_used');placements[p.key]={planned:g('pl_'+p.key+'_planned'),actual:g('pl_'+p.key+'_actual'),used:u?u.checked:false}});
+  const obj={
+    name, wallet:g('f_wallet').trim(), category:g('f_category'), priority:g('f_priority'),
+    manager:g('f_manager'), start:g('f_start'), end:g('f_end'),
+    kpi, lifecycle:g('f_lifecycle'), placements, notes:g('f_notes').trim()
+  };
+  let campaign;
+  if(cid){const cur=state.find(x=>x.id===cid)||{};campaign={...cur,...obj,id:cid};}
+  else{campaign={...obj,id:id(),starred:false};}
+  closeForm();
+  upsertCampaign(campaign);
+}
+function delCampaign(cid){if(!confirm('Delete this campaign? This cannot be undone.'))return;closeDetail();deleteCampaignDB(cid);}
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+/* ---------- Import / Export ---------- */
+const IMPORT_TYPE={'rewards':'rewards','reward':'rewards','cashback - merchant funded':'mfc','merchant funded cashback':'mfc','mfc':'mfc','cashback - joint':'jfc','joint funded cashback':'jfc','jfc':'jfc','channel':'channel','discounts':'discounts','discount':'discounts','clm':'clm'};
+const IMPORT_KAM={'tanveer':'Syed Mustafa Tanveer Hasan','tanvir':'Md. Tanvir Rahman','syed mustafa tanveer hasan':'Syed Mustafa Tanveer Hasan','md. tanvir rahman':'Md. Tanvir Rahman'};
+const IMPORT_PRI={'urgent':'urgent','high':'high','normal':'normal','low':'low'};
+function normHdr(s){return String(s||'').trim().toLowerCase()}
+function excelDate(v){
+  if(v==null||v==='')return"";
+  if(typeof v==='number'){const d=new Date(Math.round((v-25569)*864e5));return isNaN(d)?"":d.toISOString().slice(0,10)}
+  const d=new Date(v);return isNaN(d)?"":d.toISOString().slice(0,10);
+}
+function findCol(headers,names){for(let i=0;i<headers.length;i++){if(names.includes(normHdr(headers[i])))return i}return -1}
+
+function parseSheetRows(rows){
+  // rows: array of arrays. Find header row containing "campaign name".
+  let hi=-1;
+  for(let i=0;i<Math.min(rows.length,6);i++){if(rows[i].some(c=>normHdr(c)==='campaign name')){hi=i;break}}
+  if(hi<0)hi=0;
+  const H=rows[hi].map(normHdr);
+  const col={
+    name:findCol(H,['campaign name','name']),
+    wallet:findCol(H,['wallet no','wallet no.','wallet']),
+    start:findCol(H,['start date','start']),
+    end:findCol(H,['due date','end date','end']),
+    priority:findCol(H,['priority']),
+    lifecycle:findCol(H,['lifecycle']),
+    ctype:findCol(H,['campaign type','type']),
+    kam:findCol(H,['kam','key account manager','manager']),
+    cc:findCol(H,['cc']),pa:findCol(H,['pa']),pc:findCol(H,['pc']),
+  };
+  // placement columns: first occurrence after type/kam
+  const pcol={};
+  [['offer','offer section'],['push','push notification'],['fborganic','fb organic'],['hero','hero banner'],['fbpaid','fb paid promotion']].forEach(([k,label])=>{pcol[k]=findCol(H,[label])});
+  const out=[];
+  for(let r=hi+1;r<rows.length;r++){
+    const row=rows[r];if(!row)continue;
+    const nm=col.name>=0?String(row[col.name]||'').trim():'';
+    if(!nm||normHdr(nm)==='campaign name')continue;
+    const ct=col.ctype>=0?IMPORT_TYPE[normHdr(row[col.ctype])]:null;
+    const placements={};
+    PLACEMENTS.forEach(p=>{const ci=pcol[p.key];const used=ci>=0?String(row[ci]||'').trim().toUpperCase()==='TRUE':false;placements[p.key]={planned:"",actual:"",used}});
+    const kpi={};
+    [['PC','pc'],['PA','pa'],['CC','cc']].forEach(([m,c])=>{const ci=col[c];let t=0;if(ci>=0){const v=parseFloat(row[ci]);if(!isNaN(v))t=Math.round(v*100)/100}kpi[m]={t,a:0}});
+    out.push({
+      name:nm,
+      wallet:col.wallet>=0?String(row[col.wallet]||'').split('.')[0].trim():'',
+      category:ct||'rewards',
+      priority:col.priority>=0?(IMPORT_PRI[normHdr(row[col.priority])]||'normal'):'normal',
+      manager:col.kam>=0?(IMPORT_KAM[normHdr(row[col.kam])]||''):'',
+      start:col.start>=0?excelDate(row[col.start]):"",
+      end:col.end>=0?excelDate(row[col.end]):"",
+      kpi,
+      lifecycle:col.lifecycle>=0&&LIFECYCLE.includes(String(row[col.lifecycle]).trim())?String(row[col.lifecycle]).trim():LIFECYCLE[0],
+      placements,notes:'',starred:false
+    });
+  }
+  return out;
+}
+
+function handleImportFile(file){
+  const reader=new FileReader();
+  reader.onload=async e=>{
+    try{
+      const wb=XLSX.read(e.target.result,{type:'binary'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''});
+      const parsed=parseSheetRows(rows);
+      if(!parsed.length){alert('No campaigns found in that file. Check it has a "Campaign Name" column.');return}
+      const mode=confirm(parsed.length+' campaigns found.\n\nOK = ADD these as new campaigns.\nCancel = MERGE into existing (match by wallet/name, update duplicates).');
+      let toSave=[];
+      if(mode){
+        parsed.forEach(p=>{p.id=id();toSave.push(p);});
+      }else{
+        parsed.forEach(p=>{
+          const match=state.find(c=>(p.wallet&&c.wallet===p.wallet&&c.name===p.name)||(!p.wallet&&c.name===p.name));
+          if(match){toSave.push({...match,...p,id:match.id,starred:match.starred});}
+          else{p.id=id();toSave.push(p);}
+        });
+      }
+      const ok=await bulkUpsert(toSave);
+      if(ok)alert('Import complete. '+toSave.length+' campaigns saved to the database.');
+    }catch(err){console.error(err);alert('Could not read that file. Use a .xlsx or .csv export.');}
+  };
+  reader.readAsBinaryString(file);
+}
+
+function exportData(){
+  const headers=['Campaign Name','Wallet No','Start Date','Due Date','Status','Priority','Lifecycle','Campaign Type','KAM','Offer Section','Push Notification','FB Organic','Hero Banner','FB Paid Promotion','PC','PA','CC'];
+  const rows=[headers];
+  state.forEach(c=>{
+    const k=c.kpi||{};
+    rows.push([c.name,c.wallet,c.start,c.end,STATUS_LABEL[computeStatus(c)],PRI_LABEL[c.priority]||'',c.lifecycle||'',(CATS[c.category]||{}).label||'',c.manager||'',
+      ...PLACEMENTS.map(p=>((c.placements||{})[p.key]||{}).used?'TRUE':'FALSE'),
+      (k.PC||{}).t||'',(k.PA||{}).t||'',(k.CC||{}).t||'']);
+  });
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Campaigns');
+  XLSX.writeFile(wb,'content-campaigns-export.xlsx');
+}
+
+document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
+document.getElementById('importFile').onchange=e=>{if(e.target.files[0]){handleImportFile(e.target.files[0]);e.target.value=''}};
+document.getElementById('exportBtn').onclick=exportData;
+
+document.getElementById('migrateBtn').onclick=()=>{migrateBuiltIn()};
+document.getElementById('reloadBtn').onclick=()=>{reloadShared()};
+document.getElementById('addBtn').onclick=()=>openForm(null);
+document.querySelectorAll('#statusFilters .chip').forEach(chip=>chip.onclick=()=>{
+  statusFilter=chip.dataset.status;
+  document.querySelectorAll('#statusFilters .chip').forEach(c=>c.classList.toggle('active',c===chip));
+  renderGrid();
+});
+document.getElementById('search').oninput=renderGrid;
+document.getElementById('sortBy').onchange=renderGrid;
+['detailOverlay','formOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm()}});
+
+// Paint from cache immediately, then connect to Supabase and load the live data.
+renderGrid();
+if(initSupabase()){
+  loadFromDB();
+}else{
+  setSyncBadge('config','Set Supabase keys in the file');
+}
+</script>
+</body>
+</html>
