@@ -193,6 +193,21 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
     border:.5px solid var(--border);border-radius:var(--radius-sm);background:var(--surface);color:var(--text)}
   .field textarea{resize:vertical;min-height:54px}
   .field input.ai-filled,.field textarea.ai-filled,.field select.ai-filled{border-color:var(--c-jfc);background:var(--c-jfc-bg)}
+  .ai-zone{border:1.5px dashed var(--border-strong);border-radius:var(--radius);padding:4px;margin-bottom:20px;background:var(--bg)}
+  .ai-zone.busy{opacity:.85;pointer-events:none}
+  .ai-zone-inner{display:flex;align-items:center;gap:13px;padding:14px 15px;border-radius:var(--radius-sm);transition:background .15s}
+  .ai-zone-inner.drag{background:var(--c-jfc-bg)}
+  .ai-zone-inner > svg{color:var(--c-jfc);flex-shrink:0}
+  .ai-zone-txt{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0}
+  .ai-zone-txt strong{font-size:13.5px;font-weight:600}
+  .ai-zone-txt span{font-size:12px;color:var(--muted);line-height:1.45}
+  .ai-zone .btn{flex-shrink:0}
+  .ai-status{font-size:12.5px;padding:0 15px;min-height:0;color:var(--muted);line-height:1.5}
+  .ai-status:not(:empty){padding:2px 15px 12px}
+  .ai-status.ok{color:var(--ok)}
+  .ai-status.err{color:var(--danger)}
+  .ai-spin{display:inline-block;width:11px;height:11px;border:2px solid var(--border-strong);border-top-color:var(--c-jfc);border-radius:50%;animation:aispin .7s linear infinite;vertical-align:-1px;margin-right:3px}
+  @keyframes aispin{to{transform:rotate(360deg)}}
   .frow{display:grid;grid-template-columns:1fr 1fr;gap:12px}
   .frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
   @media (max-width:560px){.frow,.frow3{grid-template-columns:1fr}.dl,.kpi-grid,.kpi-box{grid-template-columns:1fr}.place-row{grid-template-columns:1fr}}
@@ -206,16 +221,6 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .place-edit.na input{pointer-events:none}
   .pri-hint{font-size:12px;color:var(--c-jfc);margin:-4px 0 12px}
 
-  .ai-zone{border:1px dashed var(--border-strong);border-radius:var(--radius);padding:20px;
-    text-align:center;margin-bottom:20px;transition:.15s;background:var(--bg)}
-  .ai-zone.drag{border-color:var(--c-jfc);background:var(--c-jfc-bg)}
-  .ai-zone .ico{opacity:.5;margin-bottom:8px}
-  .ai-zone .big{font-size:14px;font-weight:500;margin-bottom:3px}
-  .ai-zone .small{font-size:12.5px;color:var(--muted);margin-bottom:12px}
-  .ai-status{font-size:13px;color:var(--muted);margin-top:10px;display:none;align-items:center;gap:8px;justify-content:center}
-  .ai-status.show{display:flex}
-  .spin{width:14px;height:14px;border:2px solid var(--border-strong);border-top-color:var(--c-jfc);border-radius:50%;animation:sp .7s linear infinite}
-  @keyframes sp{to{transform:rotate(360deg)}}
   .divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--hint);font-size:12px}
   .divider::before,.divider::after{content:"";flex:1;height:.5px;background:var(--border)}
   .ai-q{background:var(--c-jfc-bg);border:.5px solid var(--c-jfc);border-radius:var(--radius-sm);padding:13px 15px;margin-bottom:14px}
@@ -686,6 +691,19 @@ function openForm(cid, prefill, questions){
   document.getElementById('formModal').innerHTML=`
     <button class="x" onclick="closeForm()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
     <h2>${cid?'Edit campaign':'New campaign'}</h2><div style="height:18px"></div>
+    ${cid?'':`
+    <div id="aiZone" class="ai-zone">
+      <input type="file" id="aiFile" accept=".pdf,.eml,.msg,.txt,.doc,.docx,.png,.jpg,.jpeg,.webp,.gif,.csv,.rtf,.html,.htm,.md" style="display:none">
+      <div class="ai-zone-inner" id="aiDrop">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 16V4m0 0 4 4m-4-4L8 8"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <div class="ai-zone-txt">
+          <strong>✦ Fill from an email or file</strong>
+          <span>Upload a PDF, email, or any doc — Claude reads it and fills the fields below. You review before saving.</span>
+        </div>
+        <button type="button" class="btn primary" id="aiPick">Choose file</button>
+      </div>
+      <div id="aiStatus" class="ai-status"></div>
+    </div>`}
 
     <div class="field"><label>Campaign name</label><input id="f_name" class="${ac('name')}" value="${esc(f.name||'')}" placeholder="e.g. Summer Spend & Save"></div>
     <div class="frow">
@@ -720,6 +738,7 @@ function openForm(cid, prefill, questions){
     </div>`;
   document.getElementById('formOverlay').classList.add('open');
   updatePriHint();
+  if(!cid) wireAIZone();
 }
 function closeForm(){document.getElementById('formOverlay').classList.remove('open')}
 
@@ -865,6 +884,86 @@ function exportData(){
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'Campaigns');
   XLSX.writeFile(wb,'content-campaigns-export.xlsx');
+}
+
+/* ---------- AI: Fill from file (inside New campaign form) ---------- */
+function wireAIZone(){
+  const zone=document.getElementById('aiZone'); if(!zone) return;
+  const file=document.getElementById('aiFile');
+  const pick=document.getElementById('aiPick');
+  const drop=document.getElementById('aiDrop');
+  pick.onclick=()=>file.click();
+  file.onchange=e=>{ if(e.target.files[0]){ runAIFromFile(e.target.files[0]); e.target.value=''; } };
+  // Drag & drop
+  ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));
+  ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));
+  drop.addEventListener('drop',e=>{ const f=e.dataTransfer.files&&e.dataTransfer.files[0]; if(f) runAIFromFile(f); });
+}
+
+function readFileAsDataURL(f){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result);           // "data:<mime>;base64,...."
+    r.onerror=()=>rej(new Error('Could not read file'));
+    r.readAsDataURL(f);
+  });
+}
+
+async function runAIFromFile(f){
+  const status=document.getElementById('aiStatus');
+  const zone=document.getElementById('aiZone');
+  if(f.size>25*1024*1024){ status.className='ai-status err'; status.textContent='File is over 25 MB — please use a smaller file.'; return; }
+  zone.classList.add('busy');
+  status.className='ai-status'; status.innerHTML='<span class="ai-spin"></span> Reading “'+esc(f.name)+'” with Claude…';
+  try{
+    const dataUrl=await readFileAsDataURL(f);
+    const comma=dataUrl.indexOf(',');
+    const b64=dataUrl.slice(comma+1);
+    const mime=(dataUrl.slice(5,comma).split(';')[0])||f.type||'application/octet-stream';
+    const resp=await fetch('/api/extract',{
+      method:'POST',
+      headers:{'content-type':'application/json'},
+      body:JSON.stringify({ filename:f.name, mime, data:b64 })
+    });
+    const out=await resp.json();
+    if(!resp.ok||out.ok===false){
+      zone.classList.remove('busy');
+      status.className='ai-status err';
+      status.textContent='Error: '+((out&&out.error)||('HTTP '+resp.status))+(out&&out.detail?(' — '+String(out.detail).slice(0,200)):'');
+      return;
+    }
+    applyExtractToForm(out.campaign||{});
+    zone.classList.remove('busy');
+    status.className='ai-status ok';
+    status.textContent='✓ Filled from “'+f.name+'”. Highlighted fields were read from the file — please review, then save.';
+  }catch(err){
+    zone.classList.remove('busy');
+    status.className='ai-status err';
+    status.textContent='Could not process the file: '+String(err&&err.message||err);
+  }
+}
+
+// Write extracted values straight into the already-open form, and highlight what was filled.
+function applyExtractToForm(c){
+  const setVal=(id,val)=>{
+    const el=document.getElementById(id);
+    if(!el||val==null||val==='') return false;
+    el.value=val; el.classList.add('ai-filled'); return true;
+  };
+  setVal('f_name',c.name);
+  setVal('f_wallet',c.wallet);
+  if(c.category) setVal('f_category',c.category);
+  if(c.priority) setVal('f_priority',c.priority);
+  if(c.manager) setVal('f_manager',c.manager);
+  setVal('f_start',c.start);
+  setVal('f_end',c.end);
+  if(c.lifecycle) setVal('f_lifecycle',c.lifecycle);
+  setVal('f_notes',c.notes);
+  ['PC','PA','CC'].forEach(m=>{
+    const v=c.kpi&&c.kpi[m]!=null&&c.kpi[m]!==''?c.kpi[m]:'';
+    if(v!=='') setVal('kpi_'+m+'_t',v);
+  });
+  updatePriHint(); // re-evaluate placement enabling for the new priority
 }
 
 document.getElementById('importBtn').onclick=()=>document.getElementById('importFile').click();
