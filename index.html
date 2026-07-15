@@ -269,6 +269,83 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
     background:linear-gradient(120deg,#6a5cf0,#8b6cf0 55%,#c07af0)}
   .soon-modal h2{font-size:20px;font-weight:650;letter-spacing:-.02em;margin-bottom:8px;padding-right:30px}
   .soon-desc{font-size:14px;color:var(--muted);line-height:1.6}
+  .export-modal{max-width:560px}
+  .exp-sub{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:18px}
+  .exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px}
+  @media (max-width:520px){.exp-grid{grid-template-columns:1fr}}
+  .exp-h{font-size:11px;font-weight:650;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:9px}
+  .exp-chk{display:flex;align-items:center;gap:9px;font-size:13.5px;padding:5px 0;cursor:pointer;color:var(--text)}
+  .exp-chk input{width:16px;height:16px;cursor:pointer;accent-color:var(--c-mfc);flex-shrink:0}
+  .exp-star{margin-top:18px;padding:11px 13px;background:var(--bg);border-radius:11px;border:1px solid var(--border);font-weight:500}
+  .exp-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px;
+    padding-top:18px;border-top:1px solid var(--border)}
+  .exp-actions-left{display:flex;gap:8px}
+  .exp-mini{padding:6px 12px;font-size:12px}
+  .exp-count-txt{font-size:13px;color:var(--muted);margin-right:4px}
+  .exp-count-txt b{color:var(--c-mfc);font-size:15px}
+  /* hero banner schedule */
+  .hero-modal{max-width:min(1100px,94vw)}
+  .h-controls{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .h-range{display:flex;gap:12px;flex-wrap:wrap}
+  .h-range label{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--muted);font-weight:550}
+  .h-range input{font:inherit;font-size:13px;padding:8px 11px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text)}
+  .h-range input:focus{outline:none;border-color:var(--c-mfc);box-shadow:0 0 0 3px rgba(106,92,240,.10)}
+  .h-filters{display:flex;flex-direction:column;gap:9px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+  .h-fgroup{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+  .h-flabel{font-size:10.5px;font-weight:650;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);width:64px;flex-shrink:0}
+  .h-chip{font:inherit;font-size:11.5px;padding:4px 11px;border-radius:999px;border:1px solid var(--border-strong);
+    background:var(--surface);color:var(--muted);cursor:pointer;transition:.14s}
+  .h-chip:hover{border-color:var(--text);color:var(--text)}
+  .h-chip.on{background:linear-gradient(120deg,#16161d,#37374a);color:#fff;border-color:transparent}
+  .h-tablewrap{overflow:auto;max-height:52vh;border:1px solid var(--border);border-radius:12px}
+  .h-table{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
+  .h-table th,.h-table td{padding:8px 6px;text-align:center;border-bottom:1px solid var(--border);white-space:nowrap}
+  .h-table thead th{position:sticky;top:0;z-index:2;background:var(--bg);font-size:10.5px;font-weight:650;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.02em}
+  .h-name-h,.h-name{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;min-width:180px;max-width:220px}
+  .h-table thead .h-name-h{z-index:3;background:var(--bg)}
+  .h-name{display:flex;align-items:center;gap:8px}
+  .h-dot{width:9px;height:9px;border-radius:3px;flex-shrink:0;background:linear-gradient(135deg,var(--cd,#888),color-mix(in srgb,var(--cd,#888) 50%,#fff))}
+  .h-nm{overflow:hidden;text-overflow:ellipsis;flex:1;font-weight:500}
+  .h-pri{font-size:9px;font-weight:650;padding:2px 6px;border-radius:999px;flex-shrink:0}
+  .h-wk{min-width:52px}
+  .h-cell input{width:16px;height:16px;cursor:pointer;accent-color:var(--c-mfc)}
+  .h-cell.out{background:repeating-linear-gradient(45deg,transparent,transparent 4px,rgba(0,0,0,.02) 4px,rgba(0,0,0,.02) 8px)}
+  .h-total,.h-total-h{position:sticky;right:0;background:var(--c-mfc-bg);font-weight:700;color:var(--c-mfc);min-width:48px}
+  .h-table thead .h-total-h{z-index:3;background:var(--c-mfc-bg)}
+  .h-table tfoot td{position:sticky;bottom:0;background:var(--bg);font-weight:650;border-top:1.5px solid var(--border-strong);border-bottom:none}
+  .h-coltot{color:var(--muted)}
+  .h-table tfoot .h-total-h{background:var(--c-mfc);color:#fff}
+  .h-empty,.h-empty-row{padding:28px;text-align:center;color:var(--muted);font-size:13px}
+  /* PN schedule */
+  .pn-gen{display:flex;gap:8px;margin-left:auto}
+  .pn-legend{display:flex;gap:14px;margin-bottom:10px;font-size:11px;color:var(--muted)}
+  .pn-lg{display:flex;align-items:center;gap:5px}
+  .pn-lg::before{content:"";width:10px;height:10px;border-radius:3px;display:inline-block}
+  .pn-lg.good::before{background:var(--ok)}
+  .pn-lg.under::before{background:var(--warn)}
+  .pn-lg.over::before{background:var(--danger)}
+  .pn-wrap{max-height:56vh}
+  .pn-table th,.pn-table td{padding:6px 3px}
+  .pn-dh{min-width:26px;padding:5px 2px}
+  .pn-dh.wknd{background:color-mix(in srgb,var(--c-mfc-bg) 60%,var(--bg))}
+  .pn-dow{display:block;font-size:8.5px;color:var(--hint);font-weight:600}
+  .pn-dnum{display:block;font-size:11px;font-weight:650;color:var(--muted)}
+  .pn-band-h,.pn-band{min-width:46px;font-size:11px;color:var(--muted);text-align:center;font-weight:550}
+  .pn-band{position:sticky;left:180px;background:var(--surface);z-index:1}
+  .h-table thead .pn-band-h{position:sticky;left:180px;z-index:3;background:var(--bg)}
+  .pn-daycol{padding:4px 2px}
+  .pn-daycol.wknd{background:color-mix(in srgb,var(--c-mfc-bg) 35%,transparent)}
+  .pn-daycol.inactive{background:repeating-linear-gradient(45deg,transparent,transparent 3px,rgba(0,0,0,.03) 3px,rgba(0,0,0,.03) 6px)}
+  .pn-daycol.overday{background:color-mix(in srgb,var(--danger) 12%,transparent)}
+  .pn-daycol input{width:14px;height:14px;cursor:pointer;accent-color:var(--c-mfc)}
+  .pn-total{position:sticky;right:0;background:var(--c-mfc-bg);font-weight:700;min-width:44px}
+  .pn-total.good{color:var(--ok)} .pn-total.under{color:var(--warn)} .pn-total.over{color:var(--danger)}
+  .pn-coltot{font-weight:650;color:var(--muted);font-size:11px}
+  .pn-coltot.over{color:#fff;background:var(--danger)}
+  .pn-table tfoot .h-total-h{background:var(--c-mfc);color:#fff}
+  /* keep the campaign-name column offset consistent in PN table */
+  .pn-table .h-name,.pn-table .h-name-h{min-width:180px;max-width:180px}
 
   .field{margin-bottom:14px}
   .field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px;font-weight:500}
@@ -376,6 +453,9 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
 </button>
 <div class="overlay" id="soonOverlay"><div class="modal soon-modal" id="soonModal"></div></div>
+<div class="overlay" id="exportOverlay"><div class="modal export-modal" id="exportModal"></div></div>
+<div class="overlay" id="heroOverlay"><div class="modal hero-modal" id="heroModal"></div></div>
+<div class="overlay" id="pnOverlay"><div class="modal hero-modal" id="pnModal"></div></div>
 <div id="gate">
   <div class="box">
     <h2>Content Campaigns</h2>
@@ -1104,10 +1184,11 @@ function handleImportFile(file){
   reader.readAsBinaryString(file);
 }
 
-function exportData(){
+function exportData(list){
+  const data=Array.isArray(list)?list:state;
   const headers=['Campaign Name','Wallet No','Start Date','Due Date','Status','Priority','Lifecycle','Campaign Type','KAM','Editions','Offer Section Dates','Push Notification Dates','FB Organic Dates','Hero Banner Dates','FB Paid Promotion Dates','PC','PA','CC'];
   const rows=[headers];
-  state.forEach(c=>{
+  data.forEach(c=>{
     const k=c.kpi||{};
     const pl=normalizePlacements(c);
     rows.push([c.name,c.wallet,c.start,c.end,STATUS_LABEL[computeStatus(c)],PRI_LABEL[c.priority]||'',c.lifecycle||'',(CATS[c.category]||{}).label||'',c.manager||'',
@@ -1230,13 +1311,13 @@ function setSidebarCollapsed(v){
 })();
 
 const TOOL_INFO={
-  hero:{title:"Hero Banner Schedule",desc:"A calendar view of every hero banner slot across your campaigns, so you can spot clashes and open dates at a glance."},
   marketing:{title:"Marketing Export",desc:"A ready-to-send export tailored for the marketing team — asset dates and channels per campaign, formatted for their workflow."},
-  pn:{title:"PN Scheduling",desc:"Plan and queue push notifications against each edition, with reminders for what still needs a send date."},
   analysis:{title:"Full Analysis Export",desc:"A complete workbook — KPIs, placements, editions, and status — for deeper reporting and review."}
 };
 function handleTool(tool){
-  if(tool==='export'){ exportData(); return; }
+  if(tool==='export'){ openExportModal(); return; }
+  if(tool==='hero'){ openHeroSchedule(); return; }
+  if(tool==='pn'){ openPNSchedule(); return; }
   const info=TOOL_INFO[tool]; if(!info) return;
   showComingSoon(info.title,info.desc);
 }
@@ -1250,6 +1331,459 @@ function showComingSoon(title,desc){
   document.getElementById('soonOverlay').classList.add('open');
 }
 function closeSoon(){document.getElementById('soonOverlay').classList.remove('open');}
+
+/* ---------- Export with filters ---------- */
+const EXPORT_STATUSES=[['progress','In Progress'],['notstarted','Not Started'],['completed','Completed']];
+function computeExportList(){
+  const get=n=>[...document.querySelectorAll('#exportModal input[data-grp="'+n+'"]:checked')].map(i=>i.value);
+  const cats=get('cat'), stats=get('status'), pris=get('priority'), mgrs=get('manager');
+  const starOnly=document.getElementById('exp_starred')&&document.getElementById('exp_starred').checked;
+  return state.filter(c=>{
+    if(cats.length&&!cats.includes(c.category))return false;
+    if(stats.length&&!stats.includes(computeStatus(c)))return false;
+    if(pris.length&&!pris.includes(c.priority))return false;
+    if(mgrs.length){ const m=c.manager||'__none__'; if(!mgrs.includes(m))return false; }
+    if(starOnly&&!c.starred)return false;
+    return true;
+  });
+}
+function updateExportCount(){
+  const n=computeExportList().length;
+  const el=document.getElementById('exp_count'); if(el)el.textContent=n;
+  const btn=document.getElementById('exp_go');
+  if(btn){btn.disabled=n===0;btn.textContent=n===0?'No campaigns match':'Export '+n+' campaign'+(n===1?'':'s');}
+}
+function chkRow(grp,items){
+  return items.map(([val,label])=>`<label class="exp-chk"><input type="checkbox" data-grp="${grp}" value="${esc(String(val))}" checked onchange="updateExportCount()"><span>${esc(label)}</span></label>`).join('');
+}
+function openExportModal(){
+  const catItems=CAT_ORDER.map(k=>[k,(CATS[k]||{}).label||k]);
+  const priItems=PRIORITIES.map(p=>[p,PRI_LABEL[p]]);
+  const mgrItems=MANAGERS.map(m=>[m,m]);
+  // include an "unassigned" manager option if any campaign lacks one
+  if(state.some(c=>!c.manager))mgrItems.push(['__none__','Unassigned']);
+  document.getElementById('exportModal').innerHTML=`
+    <button class="x" onclick="closeExport()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <h2>Export campaigns</h2>
+    <p class="exp-sub">Choose which campaigns to include. Everything is selected by default — untick to narrow it down.</p>
+    <div class="exp-grid">
+      <div class="exp-col"><div class="exp-h">Status</div>${chkRow('status',EXPORT_STATUSES)}</div>
+      <div class="exp-col"><div class="exp-h">Category</div>${chkRow('cat',catItems)}</div>
+      <div class="exp-col"><div class="exp-h">Priority</div>${chkRow('priority',priItems)}</div>
+      <div class="exp-col"><div class="exp-h">Key Account Manager</div>${chkRow('manager',mgrItems)}</div>
+    </div>
+    <label class="exp-chk exp-star"><input type="checkbox" id="exp_starred" onchange="updateExportCount()"><span>Only starred campaigns</span></label>
+    <div class="exp-foot">
+      <div class="exp-actions-left">
+        <button class="btn exp-mini" onclick="exportToggleAll(true)">Select all</button>
+        <button class="btn exp-mini" onclick="exportToggleAll(false)">Clear all</button>
+      </div>
+      <div class="modal-actions" style="margin:0">
+        <span class="exp-count-txt"><b id="exp_count">0</b> match</span>
+        <button class="btn" onclick="closeExport()">Cancel</button>
+        <button class="btn primary" id="exp_go" onclick="runExport()">Export</button>
+      </div>
+    </div>`;
+  document.getElementById('exportOverlay').classList.add('open');
+  updateExportCount();
+}
+function exportToggleAll(v){
+  document.querySelectorAll('#exportModal input[type="checkbox"]').forEach(c=>{if(c.id!=='exp_starred')c.checked=v;});
+  updateExportCount();
+}
+function closeExport(){document.getElementById('exportOverlay').classList.remove('open');}
+function runExport(){
+  const list=computeExportList();
+  if(!list.length)return;
+  exportData(list);
+  closeExport();
+}
+
+/* ---------- Hero Banner Schedule ---------- */
+// Scratchpad state: which {campaignId, weekStartISO} boxes are ticked. Resets each open.
+let heroState={ from:"", to:"", cats:new Set(), stats:new Set(["progress"]), pris:new Set(["urgent"]), ticks:new Set() };
+
+function mondayOf(d){
+  const x=new Date(d); x.setHours(0,0,0,0);
+  const day=(x.getDay()+6)%7;            // 0=Mon … 6=Sun
+  x.setDate(x.getDate()-day);
+  return x;
+}
+function isoOf(d){return new Date(d).toISOString().slice(0,10);}
+function calendarWeeks(fromISO,toISO){
+  if(!fromISO||!toISO)return [];
+  let cur=mondayOf(fromISO); const end=new Date(toISO); end.setHours(0,0,0,0);
+  const weeks=[];
+  while(cur<=end && weeks.length<60){          // cap to keep the table sane
+    const ws=new Date(cur); const we=new Date(cur); we.setDate(we.getDate()+6);
+    weeks.push({start:isoOf(ws),end:isoOf(we)});
+    cur.setDate(cur.getDate()+7);
+  }
+  return weeks;
+}
+function heroFilteredList(){
+  return state.filter(c=>{
+    if(heroState.cats.size&&!heroState.cats.has(c.category))return false;
+    if(heroState.stats.size&&!heroState.stats.has(computeStatus(c)))return false;
+    if(heroState.pris.size&&!heroState.pris.has(c.priority))return false;
+    return true;
+  });
+}
+// Sensible default range: span of the currently filtered campaigns, else next ~8 weeks.
+function heroDefaultRange(){
+  const list=heroFilteredList().filter(c=>c.start&&c.end);
+  if(list.length){
+    const starts=list.map(c=>+new Date(c.start)), ends=list.map(c=>+new Date(c.end));
+    return { from:isoOf(new Date(Math.min(...starts))), to:isoOf(new Date(Math.max(...ends))) };
+  }
+  const t=new Date(); const to=new Date(); to.setDate(to.getDate()+56);
+  return { from:isoOf(t), to:isoOf(to) };
+}
+
+function openHeroSchedule(){
+  const def=heroDefaultRange();
+  if(!heroState.from)heroState.from=def.from;
+  if(!heroState.to)heroState.to=def.to;
+  renderHeroModal();
+  document.getElementById('heroOverlay').classList.add('open');
+}
+function closeHero(){document.getElementById('heroOverlay').classList.remove('open');}
+
+function heroChip(grp,val,label,active){
+  return `<button class="h-chip ${active?'on':''}" onclick="heroToggleFilter('${grp}','${esc(String(val))}')">${esc(label)}</button>`;
+}
+function heroToggleFilter(grp,val){
+  const set=grp==='cat'?heroState.cats:grp==='status'?heroState.stats:heroState.pris;
+  set.has(val)?set.delete(val):set.add(val);
+  renderHeroModal();
+}
+function heroSetRange(which,v){ heroState[which]=v; renderHeroModal(); }
+
+function heroKey(cid,ws){return cid+'|'+ws;}
+function heroToggleTick(cid,ws){
+  const k=heroKey(cid,ws);
+  heroState.ticks.has(k)?heroState.ticks.delete(k):heroState.ticks.add(k);
+  // update just the total cell + count without full re-render for snappiness
+  const list=heroFilteredList(); const weeks=calendarWeeks(heroState.from,heroState.to);
+  const tot=weeks.reduce((n,w)=>n+(heroState.ticks.has(heroKey(cid,w.start))?1:0),0);
+  const tcell=document.querySelector(`.h-total[data-cid="${cid}"]`); if(tcell)tcell.textContent=tot;
+  const gt=document.getElementById('h_grandtotal'); if(gt){
+    let g=0; list.forEach(c=>weeks.forEach(w=>{if(heroState.ticks.has(heroKey(c.id,w.start)))g++;})); gt.textContent=g;
+  }
+}
+
+function fmtWeek(ws){
+  const d=new Date(ws);
+  return d.toLocaleDateString('en-GB',{day:'numeric',month:'short'});
+}
+function renderHeroModal(){
+  const weeks=calendarWeeks(heroState.from,heroState.to);
+  const list=heroFilteredList();
+  const catChips=CAT_ORDER.map(k=>heroChip('cat',k,(CATS[k]||{}).label||k,heroState.cats.has(k))).join('');
+  const statChips=EXPORT_STATUSES.map(([v,l])=>heroChip('status',v,l,heroState.stats.has(v))).join('');
+  const priChips=PRIORITIES.map(p=>heroChip('priority',p,PRI_LABEL[p],heroState.pris.has(p))).join('');
+
+  let table='';
+  if(!weeks.length){
+    table=`<div class="h-empty">Pick a valid date range to build the schedule.</div>`;
+  }else{
+    const head=weeks.map(w=>`<th class="h-wk" title="${w.start} → ${w.end}">${fmtWeek(w.start)}</th>`).join('');
+    let body='';
+    if(!list.length){
+      body=`<tr><td colspan="${weeks.length+2}" class="h-empty-row">No campaigns match these filters.</td></tr>`;
+    }else{
+      body=list.map(c=>{
+        const cells=weeks.map(w=>{
+          const on=heroState.ticks.has(heroKey(c.id,w.start));
+          // dim weeks outside the campaign's own run for guidance (still clickable)
+          const outside=c.start&&c.end&&(w.end<c.start||w.start>c.end);
+          return `<td class="h-cell ${outside?'out':''}"><input type="checkbox" ${on?'checked':''} onchange="heroToggleTick('${c.id}','${w.start}')"></td>`;
+        }).join('');
+        const tot=weeks.reduce((n,w)=>n+(heroState.ticks.has(heroKey(c.id,w.start))?1:0),0);
+        return `<tr>
+          <td class="h-name"><span class="h-dot" style="--cd:var(${(CATS[c.category]||{}).cat})"></span><span class="h-nm" title="${esc(c.name)}">${esc(c.name)}</span><span class="h-pri pri-${c.priority}">${PRI_LABEL[c.priority]}</span></td>
+          ${cells}
+          <td class="h-total" data-cid="${c.id}">${tot}</td>
+        </tr>`;
+      }).join('');
+    }
+    let grand=0; list.forEach(c=>weeks.forEach(w=>{if(heroState.ticks.has(heroKey(c.id,w.start)))grand++;}));
+    table=`<div class="h-tablewrap"><table class="h-table">
+      <thead><tr><th class="h-name-h">Campaign (${list.length})</th>${head}<th class="h-total-h">Total</th></tr></thead>
+      <tbody>${body}</tbody>
+      <tfoot><tr><td class="h-name-h">Grand total</td>${weeks.map(w=>{
+        const col=list.reduce((n,c)=>n+(heroState.ticks.has(heroKey(c.id,w.start))?1:0),0);
+        return `<td class="h-coltot">${col||''}</td>`;}).join('')}<td class="h-total-h" id="h_grandtotal">${grand}</td></tr></tfoot>
+    </table></div>`;
+  }
+
+  document.getElementById('heroModal').innerHTML=`
+    <button class="x" onclick="closeHero()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <h2>Hero Banner Schedule</h2>
+    <p class="exp-sub">Tick the weeks each campaign needs a hero banner. Weeks are calendar weeks (Mon–Sun). This is a working scratchpad — export it when you're done.</p>
+    <div class="h-controls">
+      <div class="h-range">
+        <label>From <input type="date" value="${heroState.from}" onchange="heroSetRange('from',this.value)"></label>
+        <label>To <input type="date" value="${heroState.to}" onchange="heroSetRange('to',this.value)"></label>
+      </div>
+    </div>
+    <div class="h-filters">
+      <div class="h-fgroup"><span class="h-flabel">Priority</span>${priChips}</div>
+      <div class="h-fgroup"><span class="h-flabel">Status</span>${statChips}</div>
+      <div class="h-fgroup"><span class="h-flabel">Category</span>${catChips}</div>
+    </div>
+    ${table}
+    <div class="modal-actions">
+      <button class="btn" onclick="closeHero()">Close</button>
+      <button class="btn primary" onclick="exportHeroSchedule()" ${(!weeks.length||!list.length)?'disabled':''}>Export schedule</button>
+    </div>`;
+}
+
+function exportHeroSchedule(){
+  const weeks=calendarWeeks(heroState.from,heroState.to);
+  const list=heroFilteredList();
+  if(!weeks.length||!list.length)return;
+  const header=['Campaign','Priority','Status',...weeks.map(w=>fmtWeek(w.start)+' – '+fmtWeek(w.end)),'Total Hero Requirements'];
+  const rows=[header];
+  list.forEach(c=>{
+    let tot=0;
+    const marks=weeks.map(w=>{const on=heroState.ticks.has(heroKey(c.id,w.start));if(on)tot++;return on?'Yes':'';});
+    rows.push([c.name,PRI_LABEL[c.priority]||'',STATUS_LABEL[computeStatus(c)],...marks,tot]);
+  });
+  // grand-total footer row
+  const colTotals=weeks.map(w=>list.reduce((n,c)=>n+(heroState.ticks.has(heroKey(c.id,w.start))?1:0),0));
+  const grand=colTotals.reduce((a,b)=>a+b,0);
+  rows.push(['Grand total','','',...colTotals,grand]);
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'Hero Schedule');
+  XLSX.writeFile(wb,'hero-banner-schedule.xlsx');
+}
+
+/* ---------- PN Scheduling ---------- */
+// Frequency targets (total PNs across the whole range), by priority.
+const PN_FREQ={ urgent:[3,4], high:[2,3], normal:[1,2], low:[0,1] };
+const PN_DAILY_CAP=2;
+// Scratchpad state. ticks: Set of "campaignId|YYYY-MM-DD". Resets each open.
+let pnState={ from:"", to:"", cats:new Set(), stats:new Set(["progress"]), pris:new Set(), ticks:new Set() };
+
+function nextMonthRange(){
+  const now=new Date();
+  const first=new Date(now.getFullYear(), now.getMonth()+1, 1);
+  const last=new Date(now.getFullYear(), now.getMonth()+2, 0); // day 0 of month after = last day of next month
+  return { from:isoOf(first), to:isoOf(last) };
+}
+function dayList(fromISO,toISO){
+  if(!fromISO||!toISO)return [];
+  const days=[]; let cur=new Date(fromISO); cur.setHours(0,0,0,0);
+  const end=new Date(toISO); end.setHours(0,0,0,0);
+  while(cur<=end && days.length<400){ days.push(isoOf(cur)); cur.setDate(cur.getDate()+1); }
+  return days;
+}
+function pnFilteredList(){
+  return state.filter(c=>{
+    if(pnState.cats.size&&!pnState.cats.has(c.category))return false;
+    if(pnState.stats.size&&!pnState.stats.has(computeStatus(c)))return false;
+    if(pnState.pris.size&&!pnState.pris.has(c.priority))return false;
+    return true;
+  });
+}
+function pnKey(cid,day){return cid+'|'+day;}
+
+// Days within [from,to] on which a campaign is actually running (falls back to whole
+// range if the campaign has no dates set).
+function campaignActiveDays(c,days){
+  if(!c.start&&!c.end)return days.slice();
+  return days.filter(d=>{
+    if(c.start&&d<c.start)return false;
+    if(c.end&&d>c.end)return false;
+    return true;
+  });
+}
+
+// Auto-generate a schedule: for each campaign (urgent→high→normal), aim for the top of
+// its frequency band, placing PNs on its active days, spread as evenly as possible, only
+// where the day still has capacity (< 2 PNs). Returns a fresh Set of ticks.
+function pnAutoGenerate(){
+  const days=dayList(pnState.from,pnState.to);
+  const list=pnFilteredList();
+  const dayCount={}; days.forEach(d=>dayCount[d]=0);
+  const ticks=new Set();
+  const order={urgent:0,high:1,normal:2,low:3};
+  const sorted=[...list].sort((a,b)=>(order[a.priority]??9)-(order[b.priority]??9));
+  sorted.forEach(c=>{
+    const band=PN_FREQ[c.priority]||[0,0];
+    let target=band[1];                    // aim for the top of the band
+    const active=campaignActiveDays(c,days);
+    if(!active.length||target<=0)return;
+    // Evenly spaced candidate positions across the active window.
+    const placed=[];
+    const tryPlace=(pref)=>{
+      // pref is an index into active; search outward for a day under cap and not already used by this campaign
+      for(let off=0; off<active.length; off++){
+        for(const s of (off===0?[0]:[off,-off])){
+          const idx=pref+s;
+          if(idx<0||idx>=active.length)continue;
+          const d=active[idx];
+          if(dayCount[d]<PN_DAILY_CAP && !ticks.has(pnKey(c.id,d))){
+            ticks.add(pnKey(c.id,d)); dayCount[d]++; placed.push(idx); return true;
+          }
+        }
+      }
+      return false;
+    };
+    for(let i=0;i<target;i++){
+      const pref=Math.round(((i+0.5)/target)*(active.length-1));
+      if(!tryPlace(pref))break;            // capacity exhausted for this campaign
+    }
+  });
+  return ticks;
+}
+
+function openPNSchedule(){
+  const def=nextMonthRange();
+  if(!pnState.from)pnState.from=def.from;
+  if(!pnState.to)pnState.to=def.to;
+  if(!pnState.ticks.size)pnState.ticks=pnAutoGenerate();  // first open: auto-fill
+  renderPNModal();
+  document.getElementById('pnOverlay').classList.add('open');
+}
+function closePN(){document.getElementById('pnOverlay').classList.remove('open');}
+
+function pnChip(grp,val,label,active){
+  return `<button class="h-chip ${active?'on':''}" onclick="pnToggleFilter('${grp}','${esc(String(val))}')">${esc(label)}</button>`;
+}
+function pnToggleFilter(grp,val){
+  const set=grp==='cat'?pnState.cats:grp==='status'?pnState.stats:pnState.pris;
+  set.has(val)?set.delete(val):set.add(val);
+  renderPNModal();
+}
+function pnSetRange(which,v){ pnState[which]=v; renderPNModal(); }
+function pnRegenerate(){ pnState.ticks=pnAutoGenerate(); renderPNModal(); }
+function pnClearAll(){ pnState.ticks=new Set(); renderPNModal(); }
+
+function pnDayTotal(day,list){
+  return list.reduce((n,c)=>n+(pnState.ticks.has(pnKey(c.id,day))?1:0),0);
+}
+function pnToggleTick(cid,day){
+  const k=pnKey(cid,day);
+  pnState.ticks.has(k)?pnState.ticks.delete(k):pnState.ticks.add(k);
+  refreshPNCounts();
+}
+// Update per-day column totals, per-campaign totals, over-cap flags, band flags — no full re-render.
+function refreshPNCounts(){
+  const days=dayList(pnState.from,pnState.to);
+  const list=pnFilteredList();
+  days.forEach(d=>{
+    const t=pnDayTotal(d,list);
+    const cell=document.querySelector(`.pn-coltot[data-day="${d}"]`);
+    if(cell){cell.textContent=t||'';cell.classList.toggle('over',t>PN_DAILY_CAP);}
+    document.querySelectorAll(`.pn-daycol[data-day="${d}"]`).forEach(td=>td.classList.toggle('overday',t>PN_DAILY_CAP));
+  });
+  list.forEach(c=>{
+    const tot=days.reduce((n,d)=>n+(pnState.ticks.has(pnKey(c.id,d))?1:0),0);
+    const tc=document.querySelector(`.pn-total[data-cid="${c.id}"]`);
+    if(tc){ tc.textContent=tot; const band=PN_FREQ[c.priority]||[0,0];
+      tc.classList.toggle('under',tot<band[0]); tc.classList.toggle('good',tot>=band[0]&&tot<=band[1]); tc.classList.toggle('over',tot>band[1]); }
+  });
+  const gt=document.getElementById('pn_grand');
+  if(gt) gt.textContent=[...pnState.ticks].filter(k=>{const cid=k.split('|')[0];return list.some(c=>c.id===cid);}).length;
+}
+
+function fmtDay(d){ return new Date(d).toLocaleDateString('en-GB',{day:'2-digit'}); }
+function fmtDow(d){ return new Date(d).toLocaleDateString('en-US',{weekday:'narrow'}); }
+function fmtMonHdr(d){ return new Date(d).toLocaleDateString('en-GB',{month:'short',year:'numeric'}); }
+
+function renderPNModal(){
+  const days=dayList(pnState.from,pnState.to);
+  const list=pnFilteredList();
+  const catChips=CAT_ORDER.map(k=>pnChip('cat',k,(CATS[k]||{}).label||k,pnState.cats.has(k))).join('');
+  const statChips=EXPORT_STATUSES.map(([v,l])=>pnChip('status',v,l,pnState.stats.has(v))).join('');
+  const priChips=PRIORITIES.map(p=>pnChip('priority',p,PRI_LABEL[p],pnState.pris.has(p))).join('');
+
+  let table='';
+  if(!days.length){
+    table=`<div class="h-empty">Pick a valid date range to build the schedule.</div>`;
+  }else if(!list.length){
+    table=`<div class="h-empty">No campaigns match these filters.</div>`;
+  }else{
+    const dhead=days.map(d=>{const we=[0,6].includes(new Date(d).getDay());
+      return `<th class="pn-dh ${we?'wknd':''}" title="${d}"><span class="pn-dow">${fmtDow(d)}</span><span class="pn-dnum">${fmtDay(d)}</span></th>`;}).join('');
+    const body=list.map(c=>{
+      const active=new Set(campaignActiveDays(c,days));
+      const cells=days.map(d=>{
+        const on=pnState.ticks.has(pnKey(c.id,d));
+        const inactive=!active.has(d);
+        const we=[0,6].includes(new Date(d).getDay());
+        return `<td class="pn-daycol ${we?'wknd':''} ${inactive?'inactive':''}" data-day="${d}"><input type="checkbox" ${on?'checked':''} onchange="pnToggleTick('${c.id}','${d}')"></td>`;
+      }).join('');
+      const days_c=days.reduce((n,d)=>n+(pnState.ticks.has(pnKey(c.id,d))?1:0),0);
+      const band=PN_FREQ[c.priority]||[0,0];
+      const cls=days_c<band[0]?'under':(days_c<=band[1]?'good':'over');
+      return `<tr>
+        <td class="h-name"><span class="h-dot" style="--cd:var(${(CATS[c.category]||{}).cat})"></span><span class="h-nm" title="${esc(c.name)}">${esc(c.name)}</span><span class="h-pri pri-${c.priority}">${PRI_LABEL[c.priority]}</span></td>
+        <td class="pn-band" title="Target for ${PRI_LABEL[c.priority]}">${band[0]}–${band[1]}</td>
+        ${cells}
+        <td class="pn-total ${cls}" data-cid="${c.id}">${days_c}</td>
+      </tr>`;
+    }).join('');
+    const grand=[...pnState.ticks].filter(k=>{const cid=k.split('|')[0];return list.some(c=>c.id===cid);}).length;
+    table=`<div class="h-tablewrap pn-wrap"><table class="h-table pn-table">
+      <thead><tr><th class="h-name-h">Campaign (${list.length})</th><th class="pn-band-h">Target</th>${dhead}<th class="h-total-h">Total</th></tr></thead>
+      <tbody>${body}</tbody>
+      <tfoot><tr><td class="h-name-h">PNs / day</td><td class="pn-band-h"></td>${days.map(d=>{
+        const t=pnDayTotal(d,list);
+        return `<td class="pn-coltot ${t>PN_DAILY_CAP?'over':''}" data-day="${d}">${t||''}</td>`;}).join('')}<td class="h-total-h" id="pn_grand">${grand}</td></tr></tfoot>
+    </table></div>`;
+  }
+
+  document.getElementById('pnModal').innerHTML=`
+    <button class="x" onclick="closePN()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <h2>PN Scheduling</h2>
+    <p class="exp-sub">Auto-scheduled by priority (urgent 3–4, high 2–3, normal 1–2 across the range), capped at ${PN_DAILY_CAP} PNs per day. Adjust any cell — the day counter turns red if it goes over ${PN_DAILY_CAP}. Working scratchpad; export when done.</p>
+    <div class="h-controls">
+      <div class="h-range">
+        <label>From <input type="date" value="${pnState.from}" onchange="pnSetRange('from',this.value)"></label>
+        <label>To <input type="date" value="${pnState.to}" onchange="pnSetRange('to',this.value)"></label>
+      </div>
+      <div class="pn-gen">
+        <button class="btn exp-mini" onclick="pnRegenerate()">↻ Auto-generate</button>
+        <button class="btn exp-mini" onclick="pnClearAll()">Clear all</button>
+      </div>
+    </div>
+    <div class="h-filters">
+      <div class="h-fgroup"><span class="h-flabel">Priority</span>${priChips}</div>
+      <div class="h-fgroup"><span class="h-flabel">Status</span>${statChips}</div>
+      <div class="h-fgroup"><span class="h-flabel">Category</span>${catChips}</div>
+    </div>
+    <div class="pn-legend"><span class="pn-lg good">On target</span><span class="pn-lg under">Below target</span><span class="pn-lg over">Over target / cap</span></div>
+    ${table}
+    <div class="modal-actions">
+      <button class="btn" onclick="closePN()">Close</button>
+      <button class="btn primary" onclick="exportPNSchedule()" ${(!days.length||!list.length)?'disabled':''}>Export schedule</button>
+    </div>`;
+}
+
+function exportPNSchedule(){
+  const days=dayList(pnState.from,pnState.to);
+  const list=pnFilteredList();
+  if(!days.length||!list.length)return;
+  const header=['Campaign','Priority','Status','Target',...days.map(d=>fmtDay(d)+' '+new Date(d).toLocaleDateString('en-GB',{month:'short'})),'Total PNs'];
+  const rows=[header];
+  list.forEach(c=>{
+    let tot=0;
+    const band=PN_FREQ[c.priority]||[0,0];
+    const marks=days.map(d=>{const on=pnState.ticks.has(pnKey(c.id,d));if(on)tot++;return on?'PN':'';});
+    rows.push([c.name,PRI_LABEL[c.priority]||'',STATUS_LABEL[computeStatus(c)],band[0]+'-'+band[1],...marks,tot]);
+  });
+  const colTotals=days.map(d=>pnDayTotal(d,list));
+  const grand=colTotals.reduce((a,b)=>a+b,0);
+  rows.push(['PNs per day','','','',...colTotals,grand]);
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  const wb=XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb,ws,'PN Schedule');
+  XLSX.writeFile(wb,'pn-schedule.xlsx');
+}
 
 document.getElementById('addBtn').onclick=()=>openForm(null);
 function syncStatusChips(){
@@ -1270,8 +1804,8 @@ document.querySelectorAll('#statusFilters .chip').forEach(chip=>chip.onclick=()=
 });
 document.getElementById('search').oninput=renderGrid;
 document.getElementById('sortBy').onchange=renderGrid;
-['detailOverlay','formOverlay','soonOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();document.body.classList.remove('sb-open')}});
+['detailOverlay','formOverlay','soonOverlay','exportOverlay','heroOverlay','pnOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();closeExport();closeHero();closePN();document.body.classList.remove('sb-open')}});
 
 // Paint from cache immediately, then connect to Supabase and load the live data.
 renderGrid();
