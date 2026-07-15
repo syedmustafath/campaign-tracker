@@ -79,14 +79,15 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   body.sb-collapsed .sb-brand-txt,body.sb-collapsed .sb-label{opacity:0;pointer-events:none}
   .sb-scrim{display:none}
 
-  /* content offset for the fixed sidebar */
-  .wrap{margin-left:var(--sb-w);transition:margin-left .22s ease}
-  body.sb-collapsed .wrap{margin-left:var(--sb-w-collapsed)}
+  /* content offset for the fixed sidebar — applied as body padding so it composes
+     cleanly with .wrap's centered max-width (margin:0 auto) instead of fighting it */
+  body{padding-left:calc(24px + var(--sb-w));transition:padding-left .22s ease}
+  body.sb-collapsed{padding-left:calc(24px + var(--sb-w-collapsed))}
 
   @media (max-width:760px){
     /* sidebar becomes an overlay drawer on small screens */
-    .wrap{margin-left:0}
-    body.sb-collapsed .wrap{margin-left:0}
+    /* sidebar becomes an overlay drawer on small screens */
+    body,body.sb-collapsed{padding-left:24px}
     .sidebar{transform:translateX(-100%);transition:transform .22s ease;width:var(--sb-w)}
     body.sb-open .sidebar{transform:none}
     body.sb-collapsed .sidebar{width:var(--sb-w)} /* ignore collapse on mobile */
@@ -99,7 +100,7 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .sb-fab{display:none;position:fixed;top:20px;left:16px;z-index:50;width:40px;height:40px;border-radius:12px;
     border:1px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;
     align-items:center;justify-content:center;box-shadow:var(--shadow-md)}
-  .wrap{max-width:1300px;margin:0 auto}
+  .wrap{max-width:1300px;margin:0 auto;zoom:1.25}
   header.top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
   h1{font-size:23px;font-weight:650;letter-spacing:-.02em}
   .sub{color:var(--muted);font-size:12.5px;margin-top:3px}
@@ -197,7 +198,8 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .pri-low{background:var(--pri-low-bg);color:var(--pri-low)}
   .card h3{font-size:14px;font-weight:640;letter-spacing:-.015em;line-height:1.28;margin-bottom:3px;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-  .wallet{font-size:11px;color:var(--hint);margin-bottom:9px;font-family:ui-monospace,monospace}
+  .wallet{font-size:11px;color:var(--hint);margin-bottom:9px;font-family:ui-monospace,monospace;display:flex;flex-wrap:wrap;gap:4px}
+  .wchip{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:1px 7px;color:var(--muted);white-space:nowrap}
   .dates{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);margin-bottom:11px}
   .dates svg{flex-shrink:0;opacity:.6}
   .kpis{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:2px}
@@ -224,7 +226,8 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .cat-tag{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;
     padding:3px 9px;border-radius:5px;background:var(--catbg);color:var(--cat);white-space:nowrap}
   .modal h2{font-size:21px;font-weight:600;letter-spacing:-.01em;margin-bottom:3px;padding-right:30px}
-  .modal .mwallet{color:var(--muted);font-size:13px;margin-bottom:18px;font-family:ui-monospace,monospace}
+  .modal .mwallet{color:var(--muted);font-size:13px;margin-bottom:18px;font-family:ui-monospace,monospace;display:flex;flex-wrap:wrap;gap:6px}
+  .modal .mwallet .wchip{font-size:12px;padding:2px 9px}
   .sec{margin-bottom:20px}
   .sec-t{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:9px}
   .dl{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);
@@ -349,6 +352,7 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
 
   .field{margin-bottom:14px}
   .field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px;font-weight:500}
+  .field-hint{display:block;font-size:11px;color:var(--hint);margin-top:5px}
   .field input,.field textarea,.field select{width:100%;font:inherit;font-size:14px;padding:11px 13px;
     border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--text);transition:.14s}
   .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--c-mfc);
@@ -481,8 +485,8 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
       <input id="search" placeholder="Search campaigns, wallet, or manager…">
     </div>
     <select id="sortBy">
-      <option value="endSoon">Ending soonest</option>
       <option value="priority">Priority</option>
+      <option value="endSoon">Ending soonest</option>
       <option value="recent">Recently started</option>
       <option value="name">Name A–Z</option>
     </select>
@@ -733,6 +737,8 @@ function blankCell(){return {planned:"",actual:"",used:false}}
 
 function daysBetween(a,b){return Math.round((new Date(b)-new Date(a))/864e5)}
 function fmtDate(d){if(!d)return"—";return new Date(d).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}
+// A campaign's wallet field may hold several wallets separated by commas.
+function walletList(w){return String(w||'').split(',').map(s=>s.trim()).filter(Boolean);}
 function fmtNum(n){return Number(n||0).toLocaleString('en-GB')}
 function pct(a,t){if(!t)return 0;return Math.round(a/t*100)}
 
@@ -762,7 +768,7 @@ function cardHTML(c){
       </div>
     </div>
     <h3>${esc(c.name)}</h3>
-    <div class="wallet">${esc(c.wallet||'—')}</div>
+    <div class="wallet">${walletList(c.wallet).length?walletList(c.wallet).map(w=>`<span class="wchip">${esc(w)}</span>`).join(''):'—'}</div>
     <div class="dates">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg>
       ${fmtDate(c.start)} – ${fmtDate(c.end)}
@@ -919,7 +925,7 @@ function openDetail(cid){
       <span class="status s-${st}">${STATUS_LABEL[st]}</span>
     </div>
     <h2>${esc(c.name)}</h2>
-    <div class="mwallet">${esc(c.wallet||'—')}</div>
+    <div class="mwallet">${walletList(c.wallet).length?walletList(c.wallet).map(w=>`<span class="wchip">${esc(w)}</span>`).join(''):'—'}</div>
 
     <div class="sec"><div class="sec-t">Schedule & owner</div>
       <div class="dl">
@@ -989,7 +995,7 @@ function openForm(cid, prefill, questions){
 
     <div class="field"><label>Campaign name</label><input id="f_name" class="${ac('name')}" value="${esc(f.name||'')}" placeholder="e.g. Summer Spend & Save"></div>
     <div class="frow">
-      <div class="field"><label>Wallet No</label><input id="f_wallet" class="${ac('wallet')}" value="${esc(f.wallet||'')}" placeholder="WAL-10293"></div>
+      <div class="field"><label>Wallet No(s)</label><input id="f_wallet" class="${ac('wallet')}" value="${esc(f.wallet||'')}" placeholder="e.g. 1844690683, 1833810516"><span class="field-hint">Separate multiple wallets with commas</span></div>
       <div class="field"><label>Campaign type</label><select id="f_category" class="${ac('category')}">${catOpts}</select></div>
     </div>
     <div class="frow">
@@ -1085,7 +1091,7 @@ function saveForm(cid){
     if(placements[ch]&&ed>=0&&ed<editions)placements[ch].dates[ed]=inp.value||"";
   });
   const obj={
-    name, wallet:g('f_wallet').trim(), category:g('f_category'), priority:g('f_priority'),
+    name, wallet:walletList(g('f_wallet')).join(', '), category:g('f_category'), priority:g('f_priority'),
     manager:g('f_manager'), start:g('f_start'), end:g('f_end'),
     kpi, lifecycle:g('f_lifecycle'), editions, placements, notes:g('f_notes').trim()
   };
@@ -1291,8 +1297,8 @@ function setSidebarCollapsed(v){
   const t=document.getElementById('sbToggle');if(t)t.title=v?'Expand sidebar':'Collapse sidebar';
 }
 (function initSidebar(){
-  // restore desktop collapse preference (mobile always starts closed)
-  let collapsed=false; try{collapsed=localStorage.getItem(SB_KEY)==='1';}catch(e){}
+  // Default to collapsed. Only expand if the user previously chose to (saved '0').
+  let collapsed=true; try{const saved=localStorage.getItem(SB_KEY); if(saved==='0')collapsed=false;}catch(e){}
   if(!isMobile()) document.body.classList.toggle('sb-collapsed',collapsed);
   const toggle=document.getElementById('sbToggle');
   const fab=document.getElementById('sbFab');
