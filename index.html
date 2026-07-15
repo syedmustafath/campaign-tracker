@@ -509,8 +509,8 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
 <div class="wrap">
   <header class="top">
     <div>
-      <h1>Content Campaigns</h1>
-      <div class="sub">All campaigns, past and present · <span id="syncBadge" style="font-weight:600;color:var(--hint)">Local only</span></div>
+      <h1 id="greeting">Good evening, navigator!</h1>
+      <div class="sub"><span id="witticism">Chart your course.</span> · <span id="syncBadge" style="font-weight:600;color:var(--hint)">Local only</span></div>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap">
       <button class="btn primary" id="addBtn">+ New campaign</button>
@@ -554,7 +554,41 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
 const GATE_HASH="f9c01687b613352f510e7964e672b3612738bb46eab514dd77f6ef0160a33954"; // "bkash-campaigns-2026"
 const GATE_SESSION_KEY="cc_gate_ok";
 async function sha256hex(s){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
-function unlockApp(){document.body.classList.remove('locked');const g=document.getElementById('gate');if(g)g.style.display='none';}
+function unlockApp(){document.body.classList.remove('locked');const g=document.getElementById('gate');if(g)g.style.display='none';setGreeting();}
+
+// Time-of-day greeting + a rotating nautical/astronomy witticism, fitting Polaris —
+// the navigator's star. A fresh pair is chosen on every login.
+const GREETING_ROLES=["navigator","sailor","captain","stargazer","voyager","helmsman","skipper","wayfarer","astronomer","pilot"];
+const WITTICISMS=[
+  "Polaris is holding steady — chart your course.",
+  "The stars are aligned. Well, one of them, at least.",
+  "Fair winds and following seas today.",
+  "True north hasn't moved. Neither should your standards.",
+  "Every great voyage starts with a single heading.",
+  "Steady as she goes, and mind the deadlines.",
+  "The night sky is vast, but you've got the map.",
+  "Set your sextant — there are campaigns to steer.",
+  "A smooth sea never made a skilled marketer.",
+  "Trust the compass, but double-check the wallet numbers.",
+  "Somewhere out there, a campaign needs plotting.",
+  "By starlight and spreadsheet, we navigate onward.",
+  "The tide waits for no one — let's launch.",
+  "Keep your eyes on the North Star and your hands on the helm.",
+  "Calm waters ahead, and a full deck of campaigns.",
+  "Not all who wander are lost — but a schedule helps.",
+  "Hoist the sails; the quarter won't plan itself.",
+  "The constellations are just campaigns that shipped on time.",
+  "Dead reckoning got us this far. Data takes us the rest.",
+  "Look up — Polaris has your back."
+];
+function setGreeting(){
+  const h=new Date().getHours();
+  const part = h<5 ? "Still up" : h<12 ? "Good morning" : h<17 ? "Good afternoon" : h<21 ? "Good evening" : "Good night";
+  const role = GREETING_ROLES[Math.floor(Math.random()*GREETING_ROLES.length)];
+  const wit = WITTICISMS[Math.floor(Math.random()*WITTICISMS.length)];
+  const gEl=document.getElementById('greeting'); if(gEl)gEl.textContent=`${part}, ${role}!`;
+  const wEl=document.getElementById('witticism'); if(wEl)wEl.textContent=wit;
+}
 async function tryUnlock(pw){
   const h=await sha256hex(pw);
   if(h===GATE_HASH){sessionStorage.setItem(GATE_SESSION_KEY,'1');unlockApp();return true;}
