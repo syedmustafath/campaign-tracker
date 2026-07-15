@@ -320,6 +320,40 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .h-coltot{color:var(--muted)}
   .h-table tfoot .h-total-h{background:var(--c-mfc);color:#fff}
   .h-empty,.h-empty-row{padding:28px;text-align:center;color:var(--muted);font-size:13px}
+  /* batch import */
+  .batch-modal{max-width:min(920px,94vw)}
+  .linklike{background:none;border:none;color:var(--c-mfc);font:inherit;font-size:12px;font-weight:600;cursor:pointer;padding:0;text-decoration:underline}
+  .ai-batch-link{font-size:12px;color:var(--muted);padding:8px 15px 2px}
+  .batch-drop{display:flex;flex-direction:column;align-items:center;gap:10px;padding:40px 24px;
+    border:1.5px dashed var(--border-strong);border-radius:16px;text-align:center;transition:.15s;background:var(--bg)}
+  .batch-drop.drag{border-color:var(--c-mfc);background:var(--c-mfc-bg)}
+  .batch-drop svg{color:var(--c-mfc)}
+  .batch-drop strong{font-size:14px;font-weight:600}
+  .batch-hint{font-size:12px;color:var(--muted)}
+  .batch-progress{display:flex;flex-direction:column;gap:2px;margin-top:6px;max-height:56vh;overflow:auto}
+  .bp-row{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:10px;font-size:13px}
+  .bp-row:nth-child(odd){background:var(--bg)}
+  .bp-ic{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+  .bp-ic.ok{background:var(--ok-bg);color:var(--ok)}
+  .bp-ic.err{background:var(--pri-urgent-bg);color:var(--danger)}
+  .bp-ic.q{background:var(--border);color:var(--muted)}
+  .bp-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+  .bp-note{font-size:11.5px;color:var(--muted)}
+  .bp-note.ok{color:var(--ok)} .bp-note.err{color:var(--danger)}
+  .batch-tablewrap{overflow:auto;max-height:52vh;border:1px solid var(--border);border-radius:12px;margin-bottom:16px}
+  .batch-table{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
+  .batch-table th,.batch-table td{padding:7px 8px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap}
+  .batch-table thead th{position:sticky;top:0;background:var(--bg);font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);font-weight:650;z-index:1}
+  .bt-file{color:var(--hint);font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis}
+  .bt-in{font:inherit;font-size:12.5px;padding:6px 8px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);width:100%;min-width:120px}
+  .bt-in:focus{outline:none;border-color:var(--c-mfc);box-shadow:0 0 0 3px rgba(106,92,240,.1)}
+  .bt-narrow{min-width:130px}
+  .bt-date{min-width:130px}
+  .bt-del{background:none;border:none;color:var(--hint);cursor:pointer;font-size:14px;padding:4px 6px;border-radius:6px}
+  .bt-del:hover{background:var(--pri-urgent-bg);color:var(--danger)}
+  .batch-failed{background:var(--pri-urgent-bg);border:1px solid color-mix(in srgb,var(--danger) 25%,transparent);border-radius:12px;padding:13px 15px;font-size:12.5px;color:var(--text);margin-bottom:8px}
+  .batch-failed ul{margin:8px 0 0;padding-left:18px}
+  .batch-failed li{margin-bottom:3px}
   /* PN schedule */
   .pn-gen{display:flex;gap:8px;margin-left:auto}
   .pn-legend{display:flex;gap:14px;margin-bottom:10px;font-size:11px;color:var(--muted)}
@@ -460,6 +494,7 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
 <div class="overlay" id="exportOverlay"><div class="modal export-modal" id="exportModal"></div></div>
 <div class="overlay" id="heroOverlay"><div class="modal hero-modal" id="heroModal"></div></div>
 <div class="overlay" id="pnOverlay"><div class="modal hero-modal" id="pnModal"></div></div>
+<div class="overlay" id="batchOverlay"><div class="modal batch-modal" id="batchModal"></div></div>
 <div id="gate">
   <div class="box">
     <h2>Content Campaigns</h2>
@@ -991,6 +1026,7 @@ function openForm(cid, prefill, questions){
         <button type="button" class="btn primary" id="aiPick">Choose file</button>
       </div>
       <div id="aiStatus" class="ai-status"></div>
+      <div class="ai-batch-link">Have several? <button type="button" class="linklike" id="aiBatchOpen">Batch import multiple files →</button></div>
     </div>`}
 
     <div class="field"><label>Campaign name</label><input id="f_name" class="${ac('name')}" value="${esc(f.name||'')}" placeholder="e.g. Summer Spend & Save"></div>
@@ -1220,6 +1256,8 @@ function wireAIZone(){
   ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));
   ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));
   drop.addEventListener('drop',e=>{ const f=e.dataTransfer.files&&e.dataTransfer.files[0]; if(f) runAIFromFile(f); });
+  const batchBtn=document.getElementById('aiBatchOpen');
+  if(batchBtn)batchBtn.onclick=()=>{ closeForm(); openBatchImport(); };
 }
 
 function readFileAsDataURL(f){
@@ -1231,30 +1269,34 @@ function readFileAsDataURL(f){
   });
 }
 
+// Shared core: send one file to /api/extract, return the parsed campaign object.
+// Throws on failure so callers can handle errors per-file.
+async function extractFromFile(f){
+  if(f.size>25*1024*1024) throw new Error('File is over 25 MB');
+  const dataUrl=await readFileAsDataURL(f);
+  const comma=dataUrl.indexOf(',');
+  const b64=dataUrl.slice(comma+1);
+  const mime=(dataUrl.slice(5,comma).split(';')[0])||f.type||'application/octet-stream';
+  const resp=await fetch('/api/extract',{
+    method:'POST',
+    headers:{'content-type':'application/json'},
+    body:JSON.stringify({ filename:f.name, mime, data:b64 })
+  });
+  const out=await resp.json();
+  if(!resp.ok||out.ok===false){
+    throw new Error((out&&out.error)||('HTTP '+resp.status));
+  }
+  return out.campaign||{};
+}
+
 async function runAIFromFile(f){
   const status=document.getElementById('aiStatus');
   const zone=document.getElementById('aiZone');
-  if(f.size>25*1024*1024){ status.className='ai-status err'; status.textContent='File is over 25 MB — please use a smaller file.'; return; }
   zone.classList.add('busy');
   status.className='ai-status'; status.innerHTML='<span class="ai-spin"></span> Reading “'+esc(f.name)+'” with Claude…';
   try{
-    const dataUrl=await readFileAsDataURL(f);
-    const comma=dataUrl.indexOf(',');
-    const b64=dataUrl.slice(comma+1);
-    const mime=(dataUrl.slice(5,comma).split(';')[0])||f.type||'application/octet-stream';
-    const resp=await fetch('/api/extract',{
-      method:'POST',
-      headers:{'content-type':'application/json'},
-      body:JSON.stringify({ filename:f.name, mime, data:b64 })
-    });
-    const out=await resp.json();
-    if(!resp.ok||out.ok===false){
-      zone.classList.remove('busy');
-      status.className='ai-status err';
-      status.textContent='Error: '+((out&&out.error)||('HTTP '+resp.status))+(out&&out.detail?(' — '+String(out.detail).slice(0,200)):'');
-      return;
-    }
-    applyExtractToForm(out.campaign||{});
+    const campaign=await extractFromFile(f);
+    applyExtractToForm(campaign);
     zone.classList.remove('busy');
     status.className='ai-status ok';
     status.textContent='✓ Filled from “'+f.name+'”. Highlighted fields were read from the file — please review, then save.';
@@ -1286,6 +1328,184 @@ function applyExtractToForm(c){
     if(v!=='') setVal('kpi_'+m+'_t',v);
   });
   updatePriHint(); // re-evaluate placement enabling for the new priority
+}
+
+/* ---------- Batch import: multiple files → review table → save all ---------- */
+// Each item: {file, name, status:'queued'|'reading'|'done'|'error', error, campaign}
+let batchItems=[];
+let batchPhase='drop'; // 'drop' | 'processing' | 'review'
+
+function openBatchImport(){
+  batchItems=[]; batchPhase='drop';
+  renderBatchModal();
+  document.getElementById('batchOverlay').classList.add('open');
+}
+function closeBatch(){document.getElementById('batchOverlay').classList.remove('open');}
+
+function batchAddFiles(fileList){
+  const files=[...fileList];
+  if(!files.length)return;
+  files.forEach(f=>batchItems.push({file:f,name:f.name,status:'queued',error:'',campaign:null}));
+  batchProcess();
+}
+
+// Process queued files sequentially so we can show progress and stay within rate limits.
+async function batchProcess(){
+  batchPhase='processing';
+  renderBatchModal();
+  for(const item of batchItems){
+    if(item.status!=='queued')continue;
+    item.status='reading'; renderBatchProgress();
+    try{
+      const c=await extractFromFile(item.file);
+      // Coerce into an editable draft row with sane fallbacks.
+      item.campaign={
+        name:(c.name||'').trim()||item.name.replace(/\.[^.]+$/,''),
+        wallet:walletList(c.wallet).join(', '),
+        category:CAT_ORDER.includes(c.category)?c.category:'rewards',
+        priority:PRIORITIES.includes(c.priority)?c.priority:'normal',
+        manager:c.manager||'',
+        start:c.start||'', end:c.end||'',
+        lifecycle:LIFECYCLE.includes(c.lifecycle)?c.lifecycle:LIFECYCLE[0],
+        kpi:{PC:{t:Number((c.kpi||{}).PC)||0,a:0},PA:{t:Number((c.kpi||{}).PA)||0,a:0},CC:{t:Number((c.kpi||{}).CC)||0,a:0}},
+        notes:c.notes||''
+      };
+      item.status='done';
+    }catch(err){
+      item.status='error'; item.error=String(err&&err.message||err);
+    }
+    renderBatchProgress();
+  }
+  batchPhase='review';
+  renderBatchModal();
+}
+
+function batchProgressRow(item,i){
+  const icon = item.status==='done' ? '<span class="bp-ic ok">✓</span>'
+    : item.status==='error' ? '<span class="bp-ic err">!</span>'
+    : item.status==='reading' ? '<span class="ai-spin"></span>'
+    : '<span class="bp-ic q">•</span>';
+  const note = item.status==='error' ? `<span class="bp-note err">${esc(item.error)}</span>`
+    : item.status==='reading' ? '<span class="bp-note">Reading with Claude…</span>'
+    : item.status==='done' ? '<span class="bp-note ok">Extracted</span>'
+    : '<span class="bp-note">Queued</span>';
+  return `<div class="bp-row">${icon}<span class="bp-name" title="${esc(item.name)}">${esc(item.name)}</span>${note}</div>`;
+}
+function renderBatchProgress(){
+  const el=document.getElementById('batchProgress');
+  if(el)el.innerHTML=batchItems.map(batchProgressRow).join('');
+}
+
+function renderBatchModal(){
+  const modal=document.getElementById('batchModal');
+  if(batchPhase==='drop'){
+    modal.innerHTML=`
+      <button class="x" onclick="closeBatch()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <h2>Batch import from files</h2>
+      <p class="exp-sub">Drop several files at once — one campaign per file. Claude reads each, then you review everything in a table before saving. PDFs and images work best; emails and docs are supported too.</p>
+      <input type="file" id="batchFile" multiple accept=".pdf,.eml,.msg,.txt,.doc,.docx,.png,.jpg,.jpeg,.webp,.gif,.csv,.rtf,.html,.htm,.md" style="display:none">
+      <div class="batch-drop" id="batchDrop">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4m0 0 4 4m-4-4L8 8"/><path d="M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+        <strong>Drop files here, or</strong>
+        <button type="button" class="btn primary" id="batchPick">Choose files</button>
+        <span class="batch-hint">You can select multiple. Max 25 MB each.</span>
+      </div>`;
+    document.getElementById('batchOverlay').classList.add('open');
+    const file=document.getElementById('batchFile');
+    const drop=document.getElementById('batchDrop');
+    document.getElementById('batchPick').onclick=()=>file.click();
+    file.onchange=e=>{ if(e.target.files.length){ batchAddFiles(e.target.files); e.target.value=''; } };
+    ['dragenter','dragover'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag')}));
+    ['dragleave','drop'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.remove('drag')}));
+    drop.addEventListener('drop',e=>{ if(e.dataTransfer.files.length) batchAddFiles(e.dataTransfer.files); });
+    return;
+  }
+  if(batchPhase==='processing'){
+    modal.innerHTML=`
+      <h2>Reading ${batchItems.length} file${batchItems.length>1?'s':''}…</h2>
+      <p class="exp-sub">Claude is extracting each file. This takes a moment per file.</p>
+      <div class="batch-progress" id="batchProgress"></div>`;
+    renderBatchProgress();
+    return;
+  }
+  // review phase
+  const ok=batchItems.filter(i=>i.status==='done');
+  const failed=batchItems.filter(i=>i.status==='error');
+  const catOptsFor=v=>CAT_ORDER.map(k=>`<option value="${k}" ${v===k?'selected':''}>${(CATS[k]||{}).label||k}</option>`).join('');
+  const priOptsFor=v=>PRIORITIES.map(p=>`<option value="${p}" ${v===p?'selected':''}>${PRI_LABEL[p]}</option>`).join('');
+  const rows=ok.map((item,idx)=>{
+    const c=item.campaign;
+    const i=batchItems.indexOf(item);
+    return `<tr data-i="${i}">
+      <td class="bt-file" title="${esc(item.name)}">${esc(item.name)}</td>
+      <td><input class="bt-in" data-f="name" value="${esc(c.name)}"></td>
+      <td><input class="bt-in bt-narrow" data-f="wallet" value="${esc(c.wallet)}" placeholder="—"></td>
+      <td><select class="bt-in" data-f="category">${catOptsFor(c.category)}</select></td>
+      <td><select class="bt-in" data-f="priority">${priOptsFor(c.priority)}</select></td>
+      <td><input class="bt-in bt-date" type="date" data-f="start" value="${esc(c.start)}"></td>
+      <td><input class="bt-in bt-date" type="date" data-f="end" value="${esc(c.end)}"></td>
+      <td><button class="bt-del" title="Remove this row" onclick="batchDropRow(${i})">✕</button></td>
+    </tr>`;
+  }).join('');
+  const failedBlock=failed.length?`
+    <div class="batch-failed">
+      <strong>${failed.length} file${failed.length>1?'s':''} couldn't be read</strong> — handle ${failed.length>1?'these':'this one'} manually:
+      <ul>${failed.map(f=>`<li>${esc(f.name)} <span class="bp-note err">${esc(f.error)}</span></li>`).join('')}</ul>
+    </div>`:'';
+  modal.innerHTML=`
+    <button class="x" onclick="closeBatch()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <h2>Review ${ok.length} campaign${ok.length===1?'':'s'}</h2>
+    <p class="exp-sub">Everything below was read from your files. Edit any cell, remove rows you don't want, then save. Editions default to 1 and other details can be set later on each card.</p>
+    ${ok.length?`<div class="batch-tablewrap"><table class="batch-table">
+      <thead><tr><th>File</th><th>Name</th><th>Wallet(s)</th><th>Type</th><th>Priority</th><th>Start</th><th>End</th><th></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>`:'<div class="h-empty">No files were read successfully.</div>'}
+    ${failedBlock}
+    <div class="modal-actions">
+      <button class="btn" onclick="closeBatch()">Cancel</button>
+      <button class="btn" onclick="batchBackToDrop()">Add more files</button>
+      <button class="btn primary" onclick="batchSaveAll()" ${ok.length?'':'disabled'}>Save ${ok.length} campaign${ok.length===1?'':'s'}</button>
+    </div>`;
+  // wire inline edits back into the drafts
+  modal.querySelectorAll('.batch-table tbody tr').forEach(tr=>{
+    const i=Number(tr.dataset.i);
+    tr.querySelectorAll('.bt-in').forEach(inp=>{
+      inp.onchange=()=>{ if(batchItems[i]&&batchItems[i].campaign) batchItems[i].campaign[inp.dataset.f]=inp.value; };
+    });
+  });
+}
+
+function batchDropRow(i){
+  if(batchItems[i]) batchItems[i].status='removed';
+  renderBatchModal();
+}
+function batchBackToDrop(){ batchPhase='drop'; renderBatchModal(); }
+
+async function batchSaveAll(){
+  const ok=batchItems.filter(i=>i.status==='done'&&i.campaign);
+  if(!ok.length)return;
+  const campaigns=ok.map(item=>{
+    const c=item.campaign;
+    return {
+      id:id(), name:c.name.trim()||'Untitled campaign',
+      wallet:walletList(c.wallet).join(', '),
+      category:c.category, priority:c.priority, manager:c.manager||'',
+      start:c.start||'', end:c.end||'',
+      kpi:c.kpi||{PC:{t:0,a:0},PA:{t:0,a:0},CC:{t:0,a:0}},
+      lifecycle:c.lifecycle||LIFECYCLE[0],
+      editions:1, placements:blankPlacements(1),
+      notes:c.notes||'', starred:false
+    };
+  });
+  // Prefer a single bulk write when Supabase is on; else save locally in a loop.
+  if(typeof sb!=='undefined'&&sb){
+    const done=await bulkUpsert(campaigns);
+    if(done){closeBatch();}
+  }else{
+    campaigns.forEach(c=>{ state.unshift(c); });
+    writeCache();renderGrid();setSyncBadge('local');
+    closeBatch();
+  }
 }
 
 /* ---------- Sidebar ---------- */
@@ -1810,8 +2030,8 @@ document.querySelectorAll('#statusFilters .chip').forEach(chip=>chip.onclick=()=
 });
 document.getElementById('search').oninput=renderGrid;
 document.getElementById('sortBy').onchange=renderGrid;
-['detailOverlay','formOverlay','soonOverlay','exportOverlay','heroOverlay','pnOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();closeExport();closeHero();closePN();document.body.classList.remove('sb-open')}});
+['detailOverlay','formOverlay','soonOverlay','exportOverlay','heroOverlay','pnOverlay','batchOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();closeExport();closeHero();closePN();closeBatch();document.body.classList.remove('sb-open')}});
 
 // Paint from cache immediately, then connect to Supabase and load the live data.
 renderGrid();
