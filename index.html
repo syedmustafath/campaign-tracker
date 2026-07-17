@@ -199,6 +199,8 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .card h3{font-size:14px;font-weight:640;letter-spacing:-.015em;line-height:1.28;margin-bottom:3px;
     display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
   .wallet{font-size:11px;color:var(--hint);margin-bottom:9px;font-family:ui-monospace,monospace;display:flex;flex-wrap:wrap;gap:4px}
+  .caution{display:inline-flex;align-items:center;justify-content:center;color:#e0a000;cursor:help;flex-shrink:0}
+  .caution svg{display:block}
   .wchip{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:1px 7px;color:var(--muted);white-space:nowrap}
   .dates{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);margin-bottom:11px}
   .dates svg{flex-shrink:0;opacity:.6}
@@ -828,10 +830,20 @@ function cardHTML(c){
   const cat=CATS[c.category],st=computeStatus(c);
   const k=c.kpi||{PC:{},PA:{},CC:{}};
   const fav=!!c.starred;
-  return `<div class="card" data-id="${c.id}" style="--cat:var(${cat.cat});--catbg:var(${cat.bg})">
+  // Flag cards with missing details so they can be filled in later.
+  const missing=[];
+  if(!walletList(c.wallet).length) missing.push('wallet number');
+  const hasTarget=['PC','PA','CC'].some(m=>Number((k[m]||{}).t)>0);
+  if(!hasTarget) missing.push('targets');
+  const caution = missing.length
+    ? `<span class="caution" title="Missing: ${missing.join(', ')} — add later">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"><path d="M12 3.5 22 20H2L12 3.5z"/><path d="M12 10v4" stroke-linecap="round"/><path d="M12 17.2v.1" stroke-linecap="round"/></svg>
+      </span>` : '';
+  return `<div class="card ${missing.length?'incomplete':''}" data-id="${c.id}" style="--cat:var(${cat.cat});--catbg:var(${cat.bg})">
     <div class="chead">
       <span class="pri pri-${c.priority}">${PRI_LABEL[c.priority]}</span>
       <div style="display:flex;align-items:center;gap:7px">
+        ${caution}
         <span class="status s-${st}">${STATUS_LABEL[st]}</span>
         <button class="star ${fav?'on':''}" data-star="${c.id}" aria-label="${fav?'Remove from favorites':'Add to favorites'}" title="${fav?'Remove from favorites':'Add to favorites'}">
           <svg width="17" height="17" viewBox="0 0 24 24" fill="${fav?'currentColor':'none'}" stroke="currentColor" stroke-width="1.8"><path d="M12 2.5l2.9 5.9 6.5.95-4.7 4.58 1.1 6.47L12 17.9l-5.8 3.05 1.1-6.47L2.6 9.85l6.5-.95L12 2.5z"/></svg>
