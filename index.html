@@ -352,6 +352,39 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
     background:radial-gradient(120% 130% at 0% 0%, var(--c-mfc-bg) 0%, transparent 62%),var(--surface);box-shadow:var(--shadow-sm)}
   .mb-stat-num{font-size:30px;font-weight:680;letter-spacing:-.02em;line-height:1;color:var(--c-mfc)}
   .mb-stat-lbl{font-size:12px;color:var(--muted);margin-top:6px;font-weight:500}
+  /* to-do list */
+  .tasks-modal{max-width:min(880px,94vw)}
+  .tk-add{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .tk-in{font:inherit;font-size:13px;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text)}
+  .tk-in:focus{outline:none;border-color:var(--c-mfc);box-shadow:0 0 0 3px rgba(106,92,240,.1)}
+  #tk_text{flex:1;min-width:180px}
+  #tk_camp,#tk_kam{min-width:140px;max-width:190px}
+  .tk-tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin-bottom:8px}
+  .tk-table{border-collapse:separate;border-spacing:0;width:100%;font-size:13px}
+  .tk-table th,.tk-table td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+  .tk-table thead th{background:var(--bg);font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--muted);font-weight:650}
+  .tk-table tbody tr:last-child td{border-bottom:none}
+  .tk-text{white-space:normal;min-width:180px;font-weight:500}
+  .tk-check{width:38px}
+  .tk-box{width:20px;height:20px;border:1.6px solid var(--border-strong);border-radius:6px;background:var(--surface);
+    cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff;transition:.14s}
+  .tk-box:hover{border-color:var(--c-mfc)}
+  .tk-box.on{background:var(--c-jfc);border-color:var(--c-jfc)}
+  .tk-tag{display:inline-block;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;max-width:170px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle}
+  .tk-camp{background:var(--c-mfc-bg);color:var(--c-mfc)}
+  .tk-kam{background:var(--c-jfc-bg);color:var(--c-jfc)}
+  .tk-none{color:var(--hint)}
+  .tk-date{color:var(--muted);font-size:12px}
+  .tk-days{font-size:12px;font-weight:600;color:var(--muted)}
+  .tk-days.old{color:var(--warn)}
+  .tk-row.done .tk-text{text-decoration:line-through;color:var(--hint);font-weight:400}
+  .tk-row.done .tk-tag{opacity:.55}
+  .tk-row.done{opacity:.75}
+  .tk-del{background:none;border:none;color:var(--hint);cursor:pointer;font-size:13px;padding:3px 6px;border-radius:6px}
+  .tk-del:hover{background:var(--pri-urgent-bg);color:var(--danger)}
+  .tk-del-cell{width:34px}
+  .tk-done-h{font-size:11.5px;font-weight:650;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin:16px 0 9px}
+  .tk-empty{padding:24px;text-align:center;color:var(--muted);font-size:13px;border:1px dashed var(--border-strong);border-radius:12px}
   .mb-chart{display:flex;align-items:flex-end;gap:6px;height:280px;padding:12px 14px 6px}
   .mb-col{display:flex;flex-direction:column;align-items:center;flex:1;min-width:34px;height:100%}
   .mb-count{font-size:11px;font-weight:650;color:var(--muted);margin-bottom:4px}
@@ -507,6 +540,10 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
     <span class="sb-brand-txt">Polaris</span>
   </div>
   <nav class="sb-nav">
+    <button class="sb-item" data-tool="tasks" title="To-Do List">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg>
+      <span class="sb-label">To-Do List</span>
+    </button>
     <button class="sb-item" data-tool="export" title="Export">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m0 0 4-4m-4 4-4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
       <span class="sb-label">Export</span>
@@ -539,6 +576,7 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
 <div class="overlay" id="pnOverlay"><div class="modal hero-modal" id="pnModal"></div></div>
 <div class="overlay" id="batchOverlay"><div class="modal batch-modal" id="batchModal"></div></div>
 <div class="overlay" id="monthsOverlay"><div class="modal months-modal" id="monthsModal"></div></div>
+<div class="overlay" id="tasksOverlay"><div class="modal tasks-modal" id="tasksModal"></div></div>
 <div id="gate">
   <div class="box">
     <img class="gate-logo" src="data:image/png;base64,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" alt="Polaris">
@@ -1692,6 +1730,7 @@ const TOOL_INFO={
   analysis:{title:"Full Analysis Export",desc:"A complete workbook — KPIs, placements, editions, and status — for deeper reporting and review."}
 };
 function handleTool(tool){
+  if(tool==='tasks'){ openTasks(); return; }
   if(tool==='export'){ openExportModal(); return; }
   if(tool==='hero'){ openHeroSchedule(); return; }
   if(tool==='pn'){ openPNSchedule(); return; }
@@ -2162,6 +2201,115 @@ function exportPNSchedule(){
   XLSX.writeFile(wb,'pn-schedule.xlsx');
 }
 
+/* ---------- To-Do List (tasks) ---------- */
+// Tasks live in their own Supabase table ('tasks'), mirroring how campaigns work,
+// with a localStorage cache as fallback. Each task: {id, text, campaignId, kam, added(ISO), done}.
+const TASKS_KEY='cc_tasks_cache';
+function loadTaskCache(){try{return JSON.parse(localStorage.getItem(TASKS_KEY))||[];}catch(e){return [];}}
+function writeTaskCache(){try{localStorage.setItem(TASKS_KEY,JSON.stringify(tasks));}catch(e){}}
+let tasks=loadTaskCache();
+let tasksLoaded=false;
+
+async function loadTasksFromDB(){
+  if(!sb){tasksLoaded=true;return;}
+  try{
+    const {data,error}=await sb.from('tasks').select('id,data,updated_at').order('updated_at',{ascending:false});
+    if(error)throw error;
+    tasks=(data||[]).map(r=>({...r.data,id:r.id}));
+    writeTaskCache();
+  }catch(e){console.error('tasks load',e);}   // fall back to cache silently
+  tasksLoaded=true;
+}
+async function upsertTask(t){
+  const i=tasks.findIndex(x=>x.id===t.id);
+  if(i>=0)tasks[i]=t;else tasks.unshift(t);
+  writeTaskCache(); renderTasks();
+  if(!sb)return;
+  try{ const {id,...rest}=t; const {error}=await sb.from('tasks').upsert({id:t.id,data:rest}); if(error)throw error; }
+  catch(e){console.error('task save',e); alert('Could not save the task to the database.');}
+}
+async function deleteTask(tid){
+  tasks=tasks.filter(x=>x.id!==tid);
+  writeTaskCache(); renderTasks();
+  if(!sb)return;
+  try{ const {error}=await sb.from('tasks').delete().eq('id',tid); if(error)throw error; }
+  catch(e){console.error('task delete',e);}
+}
+
+function daysElapsed(iso){
+  if(!iso)return 0;
+  const then=new Date(iso); then.setHours(0,0,0,0);
+  const now=new Date(); now.setHours(0,0,0,0);
+  return Math.max(0, Math.round((now-then)/864e5));
+}
+function elapsedLabel(iso){
+  const d=daysElapsed(iso);
+  return d===0?'Today':d===1?'1 day':d+' days';
+}
+
+async function openTasks(){
+  if(!tasksLoaded){ await loadTasksFromDB(); }
+  renderTasks();
+  document.getElementById('tasksOverlay').classList.add('open');
+}
+function closeTasks(){document.getElementById('tasksOverlay').classList.remove('open');}
+
+function campaignName(cid){ const c=state.find(x=>x.id===cid); return c?c.name:''; }
+
+function renderTasks(){
+  const modal=document.getElementById('tasksModal');
+  const campOpts=`<option value="">— campaign —</option>`+
+    [...state].sort((a,b)=>a.name.localeCompare(b.name)).map(c=>`<option value="${c.id}">${esc(c.name)}</option>`).join('');
+  const kamOpts=`<option value="">— KAM —</option>`+MANAGERS.map(m=>`<option value="${esc(m)}">${esc(m)}</option>`).join('');
+  const open=tasks.filter(t=>!t.done);
+  const done=tasks.filter(t=>t.done);
+  const rowHTML=t=>{
+    const cName=campaignName(t.campaignId);
+    return `<tr class="tk-row ${t.done?'done':''}" data-id="${t.id}">
+      <td class="tk-check"><button class="tk-box ${t.done?'on':''}" onclick="toggleTask('${t.id}')" title="${t.done?'Mark as not done':'Mark done'}">${t.done?'<svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\"><path d=\"M20 6 9 17l-5-5\"/></svg>':''}</button></td>
+      <td class="tk-text">${esc(t.text)}</td>
+      <td>${cName?`<span class="tk-tag tk-camp">${esc(cName)}</span>`:'<span class="tk-none">—</span>'}</td>
+      <td>${t.kam?`<span class="tk-tag tk-kam">${esc(t.kam)}</span>`:'<span class="tk-none">—</span>'}</td>
+      <td class="tk-date">${t.added?fmtDate(t.added):'—'}</td>
+      <td class="tk-elapsed"><span class="tk-days ${daysElapsed(t.added)>=14&&!t.done?'old':''}">${elapsedLabel(t.added)}</span></td>
+      <td class="tk-del-cell"><button class="tk-del" onclick="removeTask('${t.id}')" title="Delete task">✕</button></td>
+    </tr>`;
+  };
+  const tableFor=(list,emptyMsg)=> list.length
+    ? `<div class="tk-tablewrap"><table class="tk-table">
+        <thead><tr><th></th><th>Task</th><th>Campaign</th><th>KAM</th><th>Date added</th><th>Elapsed</th><th></th></tr></thead>
+        <tbody>${list.map(rowHTML).join('')}</tbody></table></div>`
+    : `<div class="tk-empty">${emptyMsg}</div>`;
+
+  modal.innerHTML=`
+    <button class="x" onclick="closeTasks()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <h2>To-Do List</h2>
+    <p class="exp-sub">Add tasks, tag them to a campaign and a KAM, and track how long they've been open.</p>
+    <div class="tk-add">
+      <input id="tk_text" class="tk-in" placeholder="What needs doing?" onkeydown="if(event.key==='Enter')addTask()">
+      <select id="tk_camp" class="tk-in">${campOpts}</select>
+      <select id="tk_kam" class="tk-in">${kamOpts}</select>
+      <button class="btn primary" onclick="addTask()">Add task</button>
+    </div>
+    ${tableFor(open,'No open tasks. Add one above.')}
+    ${done.length?`<div class="tk-done-h">Completed (${done.length})</div>${tableFor(done,'')}`:''}
+    <div class="modal-actions"><button class="btn" onclick="closeTasks()">Close</button></div>`;
+}
+
+function addTask(){
+  const text=(document.getElementById('tk_text').value||'').trim();
+  if(!text){document.getElementById('tk_text').focus();return;}
+  const t={
+    id:id(), text,
+    campaignId:document.getElementById('tk_camp').value||'',
+    kam:document.getElementById('tk_kam').value||'',
+    added:isoOf(new Date()), done:false
+  };
+  upsertTask(t);
+}
+function toggleTask(tid){ const t=tasks.find(x=>x.id===tid); if(t){ t.done=!t.done; upsertTask(t); } }
+function removeTask(tid){ if(confirm('Delete this task?')) deleteTask(tid); }
+
 document.getElementById('addBtn').onclick=()=>openForm(null);
 // ---- Multi-select dropdown filters ----
 // A dropdown shows a label + summary of the current selection, and opens a checkbox
@@ -2212,8 +2360,8 @@ function initFilters(){ FILTER_DEFS.forEach(renderFilterDropdown); }
 initFilters();
 document.getElementById('search').oninput=renderGrid;
 document.getElementById('sortBy').onchange=renderGrid;
-['detailOverlay','formOverlay','soonOverlay','exportOverlay','heroOverlay','pnOverlay','batchOverlay','monthsOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();closeExport();closeHero();closePN();closeBatch();closeMonths();document.body.classList.remove('sb-open')}});
+['detailOverlay','formOverlay','soonOverlay','exportOverlay','heroOverlay','pnOverlay','batchOverlay','monthsOverlay','tasksOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();closeExport();closeHero();closePN();closeBatch();closeMonths();closeTasks();document.body.classList.remove('sb-open')}});
 
 // Paint from cache immediately, then connect to Supabase and load the live data.
 renderGrid();
