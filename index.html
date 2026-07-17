@@ -123,7 +123,29 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
     border-radius:999px;background:var(--surface);color:var(--text);cursor:pointer;box-shadow:var(--shadow-sm)}
   select:focus{outline:none;border-color:var(--c-mfc)}
 
-  .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:18px}
+  .msdd{position:relative}
+  .msdd-btn{display:flex;align-items:center;gap:8px;font:inherit;font-size:13px;padding:9px 13px;
+    border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);cursor:pointer;
+    box-shadow:var(--shadow-sm);transition:.14s;white-space:nowrap}
+  .msdd-btn:hover{border-color:var(--border-strong);box-shadow:var(--shadow-md)}
+  .msdd-btn.has{border-color:var(--c-mfc);background:var(--c-mfc-bg)}
+  .msdd-lbl{font-size:11px;font-weight:650;text-transform:uppercase;letter-spacing:.03em;color:var(--muted)}
+  .msdd-btn.has .msdd-lbl{color:var(--c-mfc)}
+  .msdd-val{font-weight:550}
+  .msdd-btn.has .msdd-val{color:var(--c-mfc)}
+  .msdd-caret{opacity:.5;transition:transform .16s;margin-left:-2px}
+  .msdd.open .msdd-caret{transform:rotate(180deg)}
+  .msdd-panel{display:none;position:absolute;top:calc(100% + 6px);left:0;z-index:30;min-width:210px;
+    background:var(--surface);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow-lift);padding:7px}
+  .msdd.open .msdd-panel{display:block;animation:pop .14s ease}
+  .msdd-head{display:flex;align-items:center;justify-content:space-between;padding:5px 9px 7px;margin-bottom:3px;border-bottom:1px solid var(--border)}
+  .msdd-head span{font-size:10.5px;font-weight:650;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+  .msdd-clear{background:none;border:none;font:inherit;font-size:11.5px;font-weight:600;color:var(--c-mfc);cursor:pointer;padding:0}
+  .msdd-clear:disabled{color:var(--hint);cursor:default}
+  .msdd-opt{display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:9px;cursor:pointer;font-size:13px}
+  .msdd-opt:hover{background:var(--bg)}
+  .msdd-opt input{width:16px;height:16px;cursor:pointer;accent-color:var(--c-mfc);flex-shrink:0}
   .filters .flabel{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;font-weight:600;margin-right:2px}
   .live-dash{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin-bottom:28px}
   @media (max-width:980px){.live-dash{grid-template-columns:repeat(4,1fr)}}
@@ -322,6 +344,24 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .h-coltot{color:var(--muted)}
   .h-table tfoot .h-total-h{background:var(--c-mfc);color:#fff}
   .h-empty,.h-empty-row{padding:28px;text-align:center;color:var(--muted);font-size:13px}
+  /* monthwise breakdown chart */
+  .months-modal{max-width:min(880px,94vw)}
+  .mb-chartwrap{overflow-x:auto;padding:8px 2px 4px;border:1px solid var(--border);border-radius:14px;background:var(--bg)}
+  .mb-stats{display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+  .mb-stat{flex:1;min-width:150px;padding:15px 18px;border-radius:14px;border:1px solid var(--border);
+    background:radial-gradient(120% 130% at 0% 0%, var(--c-mfc-bg) 0%, transparent 62%),var(--surface);box-shadow:var(--shadow-sm)}
+  .mb-stat-num{font-size:30px;font-weight:680;letter-spacing:-.02em;line-height:1;color:var(--c-mfc)}
+  .mb-stat-lbl{font-size:12px;color:var(--muted);margin-top:6px;font-weight:500}
+  .mb-chart{display:flex;align-items:flex-end;gap:6px;height:280px;padding:12px 14px 6px}
+  .mb-col{display:flex;flex-direction:column;align-items:center;flex:1;min-width:34px;height:100%}
+  .mb-count{font-size:11px;font-weight:650;color:var(--muted);margin-bottom:4px}
+  .mb-bar-track{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center}
+  .mb-bar{width:66%;max-width:30px;border-radius:6px 6px 3px 3px;
+    background:linear-gradient(180deg,#8b6cf0,#6a5cf0);transition:.4s ease;box-shadow:0 2px 6px rgba(106,92,240,.25)}
+  .mb-bar.peak{background:linear-gradient(180deg,#f0724a,#e85d92)}
+  .mb-mlabel{font-size:10px;color:var(--muted);margin-top:7px;text-align:center;line-height:1.3;white-space:nowrap}
+  .mb-mlabel.yr{font-weight:600;color:var(--text)}
+  .mb-yr{display:block;font-size:9px;color:var(--hint);font-weight:500}
   /* batch import */
   .batch-modal{max-width:min(920px,94vw)}
   .linklike{background:none;border:none;color:var(--c-mfc);font:inherit;font-size:12px;font-weight:600;cursor:pointer;padding:0;text-decoration:underline}
@@ -498,6 +538,7 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
 <div class="overlay" id="heroOverlay"><div class="modal hero-modal" id="heroModal"></div></div>
 <div class="overlay" id="pnOverlay"><div class="modal hero-modal" id="pnModal"></div></div>
 <div class="overlay" id="batchOverlay"><div class="modal batch-modal" id="batchModal"></div></div>
+<div class="overlay" id="monthsOverlay"><div class="modal months-modal" id="monthsModal"></div></div>
 <div id="gate">
   <div class="box">
     <img class="gate-logo" src="data:image/png;base64,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" alt="Polaris">
@@ -530,12 +571,10 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
       <option value="name">Name A–Z</option>
     </select>
   </div>
-  <div class="filters" id="statusFilters">
-    <span class="flabel">Status</span>
-    <button class="chip" data-status="all">All</button>
-    <button class="chip active" data-status="progress">In Progress</button>
-    <button class="chip" data-status="notstarted">Not Started</button>
-    <button class="chip" data-status="completed">Completed</button>
+  <div class="filters" id="filterBar">
+    <div class="msdd" id="dd_status"></div>
+    <div class="msdd" id="dd_kam"></div>
+    <div class="msdd" id="dd_life"></div>
   </div>
   <div id="liveDash" class="live-dash"></div>
   <div id="sections"></div>
@@ -863,6 +902,8 @@ function cardHTML(c){
 }
 
 let statusFilter=new Set(["progress"]);
+let kamFilter=new Set();      // empty = all KAMs
+let lifeFilter=new Set();     // empty = all lifecycle stages
 const expandedCats=new Set();
 
 function renderLiveDash(){
@@ -872,7 +913,7 @@ function renderLiveDash(){
   live.forEach(c=>{ if(counts[c.category]!=null) counts[c.category]++; });
   const el=document.getElementById('liveDash');
   const showingLiveOnly = statusFilter.size===1 && statusFilter.has("progress");
-  let html=`<div class="ld-card ld-total ${showingLiveOnly?'on':''}" data-cat="__live" title="Show all live campaigns">
+  let html=`<div class="ld-card ld-total ${showingLiveOnly?'on':''}" data-cat="__live" title="Monthwise breakdown of active campaigns">
       <div class="ld-num">${live.length}</div><div class="ld-lbl">Live total</div></div>`;
   CAT_ORDER.forEach(k=>{
     const cat=CATS[k];
@@ -881,19 +922,79 @@ function renderLiveDash(){
   });
   el.innerHTML=html;
   el.querySelectorAll('.ld-card').forEach(card=>card.onclick=()=>{
-    // Clicking a category card jumps to live campaigns filtered to that category.
-    statusFilter=new Set(["progress"]);
-    syncStatusChips();
     const cat=card.dataset.cat;
-    const search=document.getElementById('search');
-    if(cat==="__live"){ search.value=''; }
+    if(cat==="__live"){ openMonthsBreakdown(); return; }   // Live total → monthwise breakdown
+    // Clicking a category card jumps to live campaigns filtered to that category.
+    statusFilter.clear(); statusFilter.add("progress");
+    renderFilterDropdown(FILTER_DEFS[0]);
     renderGrid();
-    if(cat!=="__live"){
-      const sec=document.querySelector(`.cat-section[data-cat="${cat}"]`);
-      if(sec) sec.scrollIntoView({behavior:'smooth',block:'start'});
-    }
+    const sec=document.querySelector(`.cat-section[data-cat="${cat}"]`);
+    if(sec) sec.scrollIntoView({behavior:'smooth',block:'start'});
   });
 }
+
+/* ---------- Monthwise breakdown (Live total card) ---------- */
+// A campaign is "active" in a month if its [start,end] range overlaps that month.
+function monthKey(y,m){return y+'-'+String(m+1).padStart(2,'0');}
+function computeMonthlyActive(){
+  const items=state.filter(c=>c.start&&c.end);
+  if(!items.length)return [];
+  let min=Infinity,max=-Infinity;
+  items.forEach(c=>{ const s=new Date(c.start),e=new Date(c.end); if(+s<min)min=+s; if(+e>max)max=+e; });
+  const start=new Date(min); start.setDate(1); start.setHours(0,0,0,0);
+  const end=new Date(max); end.setDate(1); end.setHours(0,0,0,0);
+  const months=[]; const cur=new Date(start);
+  while(cur<=end && months.length<600){
+    const y=cur.getFullYear(), m=cur.getMonth();
+    const mStart=new Date(y,m,1), mEnd=new Date(y,m+1,0,23,59,59);
+    const count=items.reduce((n,c)=>{
+      const s=new Date(c.start), e=new Date(c.end);
+      return n + ((s<=mEnd && e>=mStart)?1:0);   // ranges overlap
+    },0);
+    months.push({key:monthKey(y,m), label:cur.toLocaleDateString('en-GB',{month:'short',year:'numeric'}), short:cur.toLocaleDateString('en-GB',{month:'short'}), year:y, month:m, count});
+    cur.setMonth(cur.getMonth()+1);
+  }
+  return months;
+}
+function openMonthsBreakdown(){
+  const months=computeMonthlyActive();
+  const modal=document.getElementById('monthsModal');
+  if(!months.length){
+    modal.innerHTML=`<button class="x" onclick="closeMonths()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      <h2>Active campaigns by month</h2><div class="h-empty">No campaigns have start and end dates yet.</div>`;
+    document.getElementById('monthsOverlay').classList.add('open'); return;
+  }
+  const maxCount=Math.max(...months.map(m=>m.count),1);
+  const peak=months.reduce((a,b)=>b.count>a.count?b:a,months[0]);
+  // Campaigns "done this year": those whose run overlapped the current calendar year.
+  const yr=new Date().getFullYear();
+  const yStart=new Date(yr,0,1), yEnd=new Date(yr,11,31,23,59,59);
+  const withDates=state.filter(c=>c.start&&c.end);
+  const thisYear=withDates.filter(c=>{const s=new Date(c.start),e=new Date(c.end);return s<=yEnd&&e>=yStart;}).length;
+  const startedThisYear=withDates.filter(c=>new Date(c.start).getFullYear()===yr).length;
+  // group consecutive months by year for a year label under the axis
+  const bars=months.map(m=>{
+    const h=Math.round((m.count/maxCount)*100);
+    const isJan=m.month===0;
+    return `<div class="mb-col" title="${m.label}: ${m.count} active">
+      <div class="mb-count">${m.count}</div>
+      <div class="mb-bar-track"><div class="mb-bar ${m.key===peak.key?'peak':''}" style="height:${Math.max(h,2)}%"></div></div>
+      <div class="mb-mlabel ${isJan?'yr':''}">${m.short}${isJan?`<span class="mb-yr">${m.year}</span>`:''}</div>
+    </div>`;
+  }).join('');
+  modal.innerHTML=`
+    <button class="x" onclick="closeMonths()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <h2>Active campaigns by month</h2>
+    <p class="exp-sub">Each campaign counts toward every month its run overlaps. Peak: <strong>${peak.count}</strong> in ${peak.label}. Spanning ${months.length} month${months.length>1?'s':''} across all campaigns.</p>
+    <div class="mb-stats">
+      <div class="mb-stat"><div class="mb-stat-num">${thisYear}</div><div class="mb-stat-lbl">Campaigns active in ${yr}</div></div>
+      <div class="mb-stat"><div class="mb-stat-num">${startedThisYear}</div><div class="mb-stat-lbl">Started in ${yr}</div></div>
+    </div>
+    <div class="mb-chartwrap"><div class="mb-chart" style="min-width:${Math.max(months.length*44,400)}px">${bars}</div></div>
+    <div class="modal-actions"><button class="btn primary" onclick="closeMonths()">Done</button></div>`;
+  document.getElementById('monthsOverlay').classList.add('open');
+}
+function closeMonths(){document.getElementById('monthsOverlay').classList.remove('open');}
 
 function renderGrid(){
   renderLiveDash();
@@ -901,6 +1002,8 @@ function renderGrid(){
   const sort=document.getElementById('sortBy').value;
   let list=state.filter(c=>{
     if(statusFilter.size>0 && !statusFilter.has(computeStatus(c)))return false;
+    if(kamFilter.size>0 && !kamFilter.has(c.manager||'__none__'))return false;
+    if(lifeFilter.size>0 && !lifeFilter.has(c.lifecycle||''))return false;
     if(q&&!(c.name.toLowerCase().includes(q)||(c.wallet||'').toLowerCase().includes(q)||(c.manager||'').toLowerCase().includes(q)))return false;
     return true;
   });
@@ -2060,26 +2163,57 @@ function exportPNSchedule(){
 }
 
 document.getElementById('addBtn').onclick=()=>openForm(null);
-function syncStatusChips(){
-  document.querySelectorAll('#statusFilters .chip').forEach(c=>{
-    if(c.dataset.status==='all') c.classList.toggle('active', statusFilter.size===0);
-    else c.classList.toggle('active', statusFilter.has(c.dataset.status));
-  });
+// ---- Multi-select dropdown filters ----
+// A dropdown shows a label + summary of the current selection, and opens a checkbox
+// panel. Empty set = "All". Each config: {id, label, filterSet, items:[[val,text]...]}.
+const FILTER_DEFS=[
+  {id:'dd_status', label:'Status', set:()=>statusFilter, items:()=>[['progress','In Progress'],['notstarted','Not Started'],['completed','Completed']]},
+  {id:'dd_kam', label:'KAM', set:()=>kamFilter, items:()=>[...MANAGERS.map(m=>[m,m]),['__none__','Unassigned']]},
+  {id:'dd_life', label:'Lifecycle', set:()=>lifeFilter, items:()=>LIFECYCLE.map(l=>[l,l])}
+];
+function filterSummary(def){
+  const set=def.set(), items=def.items();
+  if(set.size===0) return 'All';
+  if(set.size===1){ const v=[...set][0]; const found=items.find(i=>i[0]===v); return found?found[1]:'1 selected'; }
+  return set.size+' selected';
 }
-document.querySelectorAll('#statusFilters .chip').forEach(chip=>chip.onclick=()=>{
-  const s=chip.dataset.status;
-  if(s==='all'){
-    statusFilter.clear();               // "All" = no filter, show everything
-  }else{
-    statusFilter.has(s)?statusFilter.delete(s):statusFilter.add(s);  // toggle this status
-  }
-  syncStatusChips();
-  renderGrid();
-});
+function renderFilterDropdown(def){
+  const box=document.getElementById(def.id);
+  const set=def.set(), items=def.items();
+  const active=set.size>0;
+  const opts=items.map(([val,text])=>`
+    <label class="msdd-opt"><input type="checkbox" ${set.has(val)?'checked':''} data-val="${esc(String(val))}"><span>${esc(text)}</span></label>`).join('');
+  box.innerHTML=`
+    <button class="msdd-btn ${active?'has':''}" type="button">
+      <span class="msdd-lbl">${def.label}</span>
+      <span class="msdd-val">${esc(filterSummary(def))}</span>
+      <svg class="msdd-caret" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="msdd-panel">
+      <div class="msdd-head"><span>${def.label}</span><button type="button" class="msdd-clear" ${active?'':'disabled'}>Clear</button></div>
+      ${opts}
+    </div>`;
+  const btn=box.querySelector('.msdd-btn');
+  const panel=box.querySelector('.msdd-panel');
+  btn.onclick=e=>{ e.stopPropagation(); const open=box.classList.contains('open'); closeAllDropdowns(); if(!open)box.classList.add('open'); };
+  panel.onclick=e=>e.stopPropagation();
+  box.querySelectorAll('.msdd-opt input').forEach(inp=>inp.onchange=()=>{
+    const v=inp.dataset.val;
+    inp.checked?set.add(v):set.delete(v);
+    renderFilterDropdown(def);      // refresh summary + clear-button state
+    document.getElementById(def.id).classList.add('open'); // keep panel open for more picks
+    renderGrid();
+  });
+  box.querySelector('.msdd-clear').onclick=e=>{ e.stopPropagation(); set.clear(); renderFilterDropdown(def); document.getElementById(def.id).classList.add('open'); renderGrid(); };
+}
+function closeAllDropdowns(){ document.querySelectorAll('.msdd.open').forEach(d=>d.classList.remove('open')); }
+document.addEventListener('click',()=>closeAllDropdowns());
+function initFilters(){ FILTER_DEFS.forEach(renderFilterDropdown); }
+initFilters();
 document.getElementById('search').oninput=renderGrid;
 document.getElementById('sortBy').onchange=renderGrid;
-['detailOverlay','formOverlay','soonOverlay','exportOverlay','heroOverlay','pnOverlay','batchOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();closeExport();closeHero();closePN();closeBatch();document.body.classList.remove('sb-open')}});
+['detailOverlay','formOverlay','soonOverlay','exportOverlay','heroOverlay','pnOverlay','batchOverlay','monthsOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();closeExport();closeHero();closePN();closeBatch();closeMonths();document.body.classList.remove('sb-open')}});
 
 // Paint from cache immediately, then connect to Supabase and load the live data.
 renderGrid();
