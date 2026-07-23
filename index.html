@@ -344,6 +344,21 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .h-coltot{color:var(--muted)}
   .h-table tfoot .h-total-h{background:var(--c-mfc);color:#fff}
   .h-empty,.h-empty-row{padding:28px;text-align:center;color:var(--muted);font-size:13px}
+  /* export selection checkboxes (hero + PN) */
+  .h-sel,.h-sel-h{position:sticky;left:0;z-index:2;background:var(--surface);width:34px;padding:6px 4px !important;text-align:center}
+  .h-table thead .h-sel-h{z-index:4;background:var(--bg)}
+  .h-table tfoot .h-sel-h{background:var(--bg)}
+  .h-sel input,.h-sel-h input{width:15px;height:15px;cursor:pointer;accent-color:var(--c-mfc)}
+  .h-name,.h-name-h{left:34px !important}
+  .pn-band,.h-table thead .pn-band-h{left:214px !important}
+  tr.unsel{opacity:.4}
+  tr.unsel .h-total,tr.unsel .pn-total{filter:grayscale(1)}
+  /* change password */
+  .pw-modal{max-width:430px}
+  .pw-msg{font-size:12.5px;color:var(--muted);min-height:18px;margin-top:4px}
+  .pw-msg.err{color:var(--danger)}
+  .pw-msg.ok{color:var(--ok)}
+  .sb-item-quiet{margin-top:auto;color:var(--hint)}
   /* monthwise breakdown chart */
   .months-modal{max-width:min(880px,94vw)}
   .mb-chartwrap{overflow-x:auto;padding:8px 2px 4px;border:1px solid var(--border);border-radius:14px;background:var(--bg)}
@@ -564,6 +579,10 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 4-6"/></svg>
       <span class="sb-label">Full Analysis Export</span>
     </button>
+    <button class="sb-item sb-item-quiet" data-tool="password" title="Change password">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+      <span class="sb-label">Change password</span>
+    </button>
   </nav>
 </aside>
 <div class="sb-scrim" id="sbScrim"></div>
@@ -577,6 +596,7 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
 <div class="overlay" id="batchOverlay"><div class="modal batch-modal" id="batchModal"></div></div>
 <div class="overlay" id="monthsOverlay"><div class="modal months-modal" id="monthsModal"></div></div>
 <div class="overlay" id="tasksOverlay"><div class="modal tasks-modal" id="tasksModal"></div></div>
+<div class="overlay" id="pwOverlay"><div class="modal pw-modal" id="pwModal"></div></div>
 <div id="gate">
   <div class="box">
     <img class="gate-logo" src="data:image/png;base64,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" alt="Polaris">
@@ -605,6 +625,7 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
     <select id="sortBy">
       <option value="priority">Priority</option>
       <option value="endSoon">Ending soonest</option>
+      <option value="added">Recently added</option>
       <option value="recent">Recently started</option>
       <option value="name">Name A–Z</option>
     </select>
@@ -668,9 +689,31 @@ function setGreeting(){
   const gEl=document.getElementById('greeting'); if(gEl)gEl.textContent=`${part}, ${role}!`;
   const wEl=document.getElementById('witticism'); if(wEl)wEl.textContent=wit;
 }
+// The team can change the password from the sidebar. The new hash is stored in the
+// shared "settings" table (so it applies for everyone) with a localStorage fallback.
+const PW_LOCAL_KEY='cc_pw_hash';
+let gateHashOverride=null;
+function localPwHash(){try{return localStorage.getItem(PW_LOCAL_KEY);}catch(e){return null;}}
+async function fetchPwOverride(){
+  if(gateHashOverride!==null)return gateHashOverride;
+  let v=localPwHash();
+  try{
+    if(typeof sb!=='undefined'&&sb){
+      const {data,error}=await sb.from('settings').select('value').eq('key','gate_hash').maybeSingle();
+      if(!error&&data&&data.value){ v=data.value; try{localStorage.setItem(PW_LOCAL_KEY,v);}catch(e){} }
+    }
+  }catch(e){/* offline or table missing → fall back */}
+  gateHashOverride=v||'';
+  return gateHashOverride;
+}
+async function currentGateHash(){
+  const ov=await fetchPwOverride();
+  return ov||GATE_HASH;
+}
 async function tryUnlock(pw){
   const h=await sha256hex(pw);
-  if(h===GATE_HASH){sessionStorage.setItem(GATE_SESSION_KEY,'1');unlockApp();return true;}
+  const target=await currentGateHash();
+  if(h===target){sessionStorage.setItem(GATE_SESSION_KEY,'1');unlockApp();return true;}
   return false;
 }
 (function initGate(){
@@ -934,7 +977,7 @@ function cardHTML(c){
       ${fmtDate(c.start)} – ${fmtDate(c.end)}
     </div>
     <div class="kpis">
-      ${['PC','PA','CC'].map(m=>`<div class="kpi"><div class="kl">${m}</div><div class="kv">${fmtNum((k[m]||{}).a)}<small>/${fmtNum((k[m]||{}).t)}</small></div></div>`).join('')}
+      ${['PC','PA','CC'].map(m=>`<div class="kpi"><div class="kl">${m}</div><div class="kv">${fmtNum((k[m]||{}).t)}</div></div>`).join('')}
     </div>
   </div>`;
 }
@@ -1048,6 +1091,7 @@ function renderGrid(){
   list.sort((a,b)=>{
     if(sort==="endSoon")return new Date(a.end)-new Date(b.end);
     if(sort==="priority")return PRI_RANK[a.priority]-PRI_RANK[b.priority];
+    if(sort==="added")return new Date(b.addedAt||b.start||0)-new Date(a.addedAt||a.start||0);
     if(sort==="recent")return new Date(b.start)-new Date(a.start);
     if(sort==="name")return a.name.localeCompare(b.name);
     return 0;
@@ -1157,12 +1201,13 @@ function openDetail(cid){
         <div class="cell"><div class="dt">End</div><div class="dd">${fmtDate(c.end)}</div></div>
         <div class="cell"><div class="dt">Duration</div><div class="dd">${dur} days · ${dlCell}</div></div>
         <div class="cell"><div class="dt">Key Account Manager</div><div class="dd">${esc(c.manager||'—')}</div></div>
+        <div class="cell"><div class="dt">Added to Polaris</div><div class="dd">${c.addedAt?fmtDate(c.addedAt):'—'}</div></div>
       </div>
     </div>
 
-    <div class="sec"><div class="sec-t">KPIs — achievement / target</div>
+    <div class="sec"><div class="sec-t">KPI targets</div>
       <div class="kpi-grid">
-        ${['PC','PA','CC'].map(m=>{const x=k[m]||{};return `<div class="kpi-box"><div class="kl">${m}</div><div class="kv">${fmtNum(x.a)}</div><div class="ka">of ${fmtNum(x.t)} · ${pct(x.a,x.t)}%</div></div>`}).join('')}
+        ${['PC','PA','CC'].map(m=>{const x=k[m]||{};return `<div class="kpi-box"><div class="kl">${m}</div><div class="kv">${fmtNum(x.t)}</div><div class="ka">target</div></div>`}).join('')}
       </div>
     </div>
 
@@ -1233,8 +1278,8 @@ function openForm(cid, prefill, questions){
     </div>
     <div class="pri-hint" id="priHint"></div>
 
-    <div class="form-sec-t">KPIs (target now, achievement later)</div>
-    ${['PC','PA','CC'].map(m=>{const x=k[m]||{};return `<div class="frow"><div class="field"><label>${m} target</label><input type="number" id="kpi_${m}_t" class="${ac('kpi_'+m)}" value="${x.t!=null?x.t:''}" placeholder="0"></div><div class="field"><label>${m} achieved</label><input type="number" id="kpi_${m}_a" value="${x.a!=null?x.a:0}" placeholder="0"></div></div>`}).join('')}
+    <div class="form-sec-t">KPI targets</div>
+    <div class="frow3">${['PC','PA','CC'].map(m=>{const x=k[m]||{};return `<div class="field"><label>${m} target</label><input type="number" id="kpi_${m}_t" class="${ac('kpi_'+m)}" value="${x.t!=null?x.t:''}" placeholder="0"></div>`}).join('')}</div>
 
     <div class="form-sec-t">Campaign tracking</div>
     <div class="field"><label>Lifecycle stage</label><select id="f_lifecycle" class="${ac('lifecycle')}">${lifeOpts}</select></div>
@@ -1307,7 +1352,7 @@ function saveForm(cid){
   const g=i=>{const el=document.getElementById(i);return el?el.value:''};
   const name=g('f_name').trim();
   if(!name){alert('Campaign name is required.');return}
-  const kpi={};['PC','PA','CC'].forEach(m=>{kpi[m]={t:Number(g('kpi_'+m+'_t'))||0,a:Number(g('kpi_'+m+'_a'))||0}});
+  const kpi={};['PC','PA','CC'].forEach(m=>{kpi[m]={t:Number(g('kpi_'+m+'_t'))||0}});
   const editions=Math.max(1,Number(g('f_editions'))||1);
   // Collect per-edition asset dates from the edition editor inputs.
   const placements={};PLACEMENTS.forEach(p=>{placements[p.key]={dates:Array.from({length:editions},()=>"" )}});
@@ -1322,7 +1367,7 @@ function saveForm(cid){
   };
   let campaign;
   if(cid){const cur=state.find(x=>x.id===cid)||{};campaign={...cur,...obj,id:cid};}
-  else{campaign={...obj,id:id(),starred:false};}
+  else{campaign={...obj,id:id(),starred:false,addedAt:new Date().toISOString()};}
   closeForm();
   upsertCampaign(campaign);
 }
@@ -1371,7 +1416,7 @@ function parseSheetRows(rows){
     const editions=1;
     const placements={};PLACEMENTS.forEach(p=>{placements[p.key]={dates:[""]}});
     const kpi={};
-    [['PC','pc'],['PA','pa'],['CC','cc']].forEach(([m,c])=>{const ci=col[c];let t=0;if(ci>=0){const v=parseFloat(row[ci]);if(!isNaN(v))t=Math.round(v*100)/100}kpi[m]={t,a:0}});
+    [['PC','pc'],['PA','pa'],['CC','cc']].forEach(([m,c])=>{const ci=col[c];let t=0;if(ci>=0){const v=parseFloat(row[ci]);if(!isNaN(v))t=Math.round(v*100)/100}kpi[m]={t}});
     out.push({
       name:nm,
       wallet:col.wallet>=0?String(row[col.wallet]||'').split('.')[0].trim():'',
@@ -1417,14 +1462,35 @@ function handleImportFile(file){
 
 function exportData(list){
   const data=Array.isArray(list)?list:state;
-  const headers=['Campaign Name','Wallet No','Start Date','Due Date','Status','Priority','Lifecycle','Campaign Type','KAM','Editions','Offer Section Dates','Push Notification Dates','FB Organic Dates','Hero Banner Dates','FB Paid Promotion Dates','PC','PA','CC'];
+  // Break communication dates out per edition: one column per (edition × channel),
+  // sized to the largest edition count in this export.
+  const maxEd=Math.max(1,...data.map(c=>Math.max(1,Number(c.editions)||1)));
+  const edHeaders=[];
+  for(let e=1;e<=maxEd;e++){
+    edHeaders.push('Ed'+e+' Window');
+    PLACEMENTS.forEach(p=>edHeaders.push('Ed'+e+' '+p.label));
+  }
+  const headers=['Campaign Name','Wallet No(s)','Start Date','Due Date','Status','Priority','Lifecycle','Campaign Type','KAM','Date Added','Editions',...edHeaders,'PC','PA','CC'];
   const rows=[headers];
   data.forEach(c=>{
     const k=c.kpi||{};
     const pl=normalizePlacements(c);
+    const nEd=Math.max(1,Number(c.editions)||1);
+    const ranges=computeEditionRanges(c.start,c.end,nEd);
+    const edCells=[];
+    for(let e=0;e<maxEd;e++){
+      if(e<nEd){
+        const r=ranges[e]||{};
+        edCells.push(r.start?(r.start+' → '+r.end):'');
+        PLACEMENTS.forEach(p=>edCells.push((pl[p.key].dates||[])[e]||''));
+      }else{
+        edCells.push('');                       // campaign has fewer editions
+        PLACEMENTS.forEach(()=>edCells.push(''));
+      }
+    }
     rows.push([c.name,c.wallet,c.start,c.end,STATUS_LABEL[computeStatus(c)],PRI_LABEL[c.priority]||'',c.lifecycle||'',(CATS[c.category]||{}).label||'',c.manager||'',
-      Math.max(1,Number(c.editions)||1),
-      ...PLACEMENTS.map(p=>(pl[p.key].dates||[]).filter(Boolean).join(', ')),
+      c.addedAt?String(c.addedAt).slice(0,10):'',
+      nEd, ...edCells,
       (k.PC||{}).t||'',(k.PA||{}).t||'',(k.CC||{}).t||'']);
   });
   const ws=XLSX.utils.aoa_to_sheet(rows);
@@ -1556,7 +1622,7 @@ async function batchProcess(){
         manager:c.manager||'',
         start:c.start||'', end:c.end||'',
         lifecycle:LIFECYCLE.includes(c.lifecycle)?c.lifecycle:LIFECYCLE[0],
-        kpi:{PC:{t:Number((c.kpi||{}).PC)||0,a:0},PA:{t:Number((c.kpi||{}).PA)||0,a:0},CC:{t:Number((c.kpi||{}).CC)||0,a:0}},
+        kpi:{PC:{t:Number((c.kpi||{}).PC)||0},PA:{t:Number((c.kpi||{}).PA)||0},CC:{t:Number((c.kpi||{}).CC)||0}},
         notes:c.notes||''
       };
       item.status='done';
@@ -1680,10 +1746,10 @@ async function batchSaveAll(){
       wallet:walletList(c.wallet).join(', '),
       category:c.category, priority:c.priority, manager:c.manager||'',
       start:c.start||'', end:c.end||'',
-      kpi:c.kpi||{PC:{t:0,a:0},PA:{t:0,a:0},CC:{t:0,a:0}},
+      kpi:c.kpi||{PC:{t:0},PA:{t:0},CC:{t:0}},
       lifecycle:c.lifecycle||LIFECYCLE[0],
       editions:1, placements:blankPlacements(1),
-      notes:c.notes||'', starred:false
+      notes:c.notes||'', starred:false, addedAt:new Date().toISOString()
     };
   });
   // Prefer a single bulk write when Supabase is on; else save locally in a loop.
@@ -1731,6 +1797,7 @@ const TOOL_INFO={
 };
 function handleTool(tool){
   if(tool==='tasks'){ openTasks(); return; }
+  if(tool==='password'){ openChangePassword(); return; }
   if(tool==='export'){ openExportModal(); return; }
   if(tool==='hero'){ openHeroSchedule(); return; }
   if(tool==='pn'){ openPNSchedule(); return; }
@@ -1817,7 +1884,7 @@ function runExport(){
 
 /* ---------- Hero Banner Schedule ---------- */
 // Scratchpad state: which {campaignId, weekStartISO} boxes are ticked. Resets each open.
-let heroState={ from:"", to:"", cats:new Set(), stats:new Set(["progress"]), pris:new Set(["urgent"]), ticks:new Set() };
+let heroState={ from:"", to:"", cats:new Set(), stats:new Set(["progress"]), pris:new Set(["urgent"]), ticks:new Set(), unsel:new Set() };
 
 function mondayOf(d){
   const x=new Date(d); x.setHours(0,0,0,0);
@@ -1837,6 +1904,9 @@ function calendarWeeks(fromISO,toISO){
   }
   return weeks;
 }
+function heroSelectedList(){ return heroFilteredList().filter(c=>!heroState.unsel.has(c.id)); }
+function heroToggleSel(cid){ heroState.unsel.has(cid)?heroState.unsel.delete(cid):heroState.unsel.add(cid); renderHeroModal(); }
+function heroSelAll(v){ const l=heroFilteredList(); if(v)heroState.unsel.clear(); else l.forEach(c=>heroState.unsel.add(c.id)); renderHeroModal(); }
 function heroFilteredList(){
   return state.filter(c=>{
     if(heroState.cats.size&&!heroState.cats.has(c.category))return false;
@@ -1906,7 +1976,7 @@ function renderHeroModal(){
     const head=weeks.map(w=>`<th class="h-wk" title="${w.start} → ${w.end}">${fmtWeek(w.start)}</th>`).join('');
     let body='';
     if(!list.length){
-      body=`<tr><td colspan="${weeks.length+2}" class="h-empty-row">No campaigns match these filters.</td></tr>`;
+      body=`<tr><td colspan="${weeks.length+3}" class="h-empty-row">No campaigns match these filters.</td></tr>`;
     }else{
       body=list.map(c=>{
         const cells=weeks.map(w=>{
@@ -1916,7 +1986,9 @@ function renderHeroModal(){
           return `<td class="h-cell ${outside?'out':''}"><input type="checkbox" ${on?'checked':''} onchange="heroToggleTick('${c.id}','${w.start}')"></td>`;
         }).join('');
         const tot=weeks.reduce((n,w)=>n+(heroState.ticks.has(heroKey(c.id,w.start))?1:0),0);
-        return `<tr>
+        const sel=!heroState.unsel.has(c.id);
+        return `<tr class="${sel?'':'unsel'}">
+          <td class="h-sel"><input type="checkbox" ${sel?'checked':''} onchange="heroToggleSel('${c.id}')" title="Include in export"></td>
           <td class="h-name"><span class="h-dot" style="--cd:var(${(CATS[c.category]||{}).cat})"></span><span class="h-nm" title="${esc(c.name)}">${esc(c.name)}</span><span class="h-pri pri-${c.priority}">${PRI_LABEL[c.priority]}</span></td>
           ${cells}
           <td class="h-total" data-cid="${c.id}">${tot}</td>
@@ -1925,9 +1997,9 @@ function renderHeroModal(){
     }
     let grand=0; list.forEach(c=>weeks.forEach(w=>{if(heroState.ticks.has(heroKey(c.id,w.start)))grand++;}));
     table=`<div class="h-tablewrap"><table class="h-table">
-      <thead><tr><th class="h-name-h">Campaign (${list.length})</th>${head}<th class="h-total-h">Total</th></tr></thead>
+      <thead><tr><th class="h-sel-h"><input type="checkbox" ${heroState.unsel.size===0?'checked':''} onchange="heroSelAll(this.checked)" title="Select all"></th><th class="h-name-h">Campaign (${heroSelectedList().length}/${list.length})</th>${head}<th class="h-total-h">Total</th></tr></thead>
       <tbody>${body}</tbody>
-      <tfoot><tr><td class="h-name-h">Grand total</td>${weeks.map(w=>{
+      <tfoot><tr><td class="h-sel-h"></td><td class="h-name-h">Grand total</td>${weeks.map(w=>{
         const col=list.reduce((n,c)=>n+(heroState.ticks.has(heroKey(c.id,w.start))?1:0),0);
         return `<td class="h-coltot">${col||''}</td>`;}).join('')}<td class="h-total-h" id="h_grandtotal">${grand}</td></tr></tfoot>
     </table></div>`;
@@ -1951,25 +2023,25 @@ function renderHeroModal(){
     ${table}
     <div class="modal-actions">
       <button class="btn" onclick="closeHero()">Close</button>
-      <button class="btn primary" onclick="exportHeroSchedule()" ${(!weeks.length||!list.length)?'disabled':''}>Export schedule</button>
+      <button class="btn primary" onclick="exportHeroSchedule()" ${(!weeks.length||!heroSelectedList().length)?'disabled':''}>Export ${heroSelectedList().length} campaign${heroSelectedList().length===1?'':'s'}</button>
     </div>`;
 }
 
 function exportHeroSchedule(){
   const weeks=calendarWeeks(heroState.from,heroState.to);
-  const list=heroFilteredList();
+  const list=heroSelectedList();          // only ticked campaigns
   if(!weeks.length||!list.length)return;
-  const header=['Campaign','Priority','Status',...weeks.map(w=>fmtWeek(w.start)+' – '+fmtWeek(w.end)),'Total Hero Requirements'];
+  const header=['Campaign','Priority','Status','Start Date','End Date',...weeks.map(w=>fmtWeek(w.start)+' – '+fmtWeek(w.end)),'Total Hero Requirements'];
   const rows=[header];
   list.forEach(c=>{
     let tot=0;
     const marks=weeks.map(w=>{const on=heroState.ticks.has(heroKey(c.id,w.start));if(on)tot++;return on?'Yes':'';});
-    rows.push([c.name,PRI_LABEL[c.priority]||'',STATUS_LABEL[computeStatus(c)],...marks,tot]);
+    rows.push([c.name,PRI_LABEL[c.priority]||'',STATUS_LABEL[computeStatus(c)],c.start||'',c.end||'',...marks,tot]);
   });
   // grand-total footer row
   const colTotals=weeks.map(w=>list.reduce((n,c)=>n+(heroState.ticks.has(heroKey(c.id,w.start))?1:0),0));
   const grand=colTotals.reduce((a,b)=>a+b,0);
-  rows.push(['Grand total','','',...colTotals,grand]);
+  rows.push(['Grand total','','','','',...colTotals,grand]);
   const ws=XLSX.utils.aoa_to_sheet(rows);
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'Hero Schedule');
@@ -1981,7 +2053,7 @@ function exportHeroSchedule(){
 const PN_FREQ={ urgent:[3,4], high:[2,3], normal:[1,2], low:[0,1] };
 const PN_DAILY_CAP=2;
 // Scratchpad state. ticks: Set of "campaignId|YYYY-MM-DD". Resets each open.
-let pnState={ from:"", to:"", cats:new Set(), stats:new Set(["progress"]), pris:new Set(), ticks:new Set() };
+let pnState={ from:"", to:"", cats:new Set(), stats:new Set(["progress"]), pris:new Set(), ticks:new Set(), unsel:new Set() };
 
 function nextMonthRange(){
   const now=new Date();
@@ -1996,6 +2068,9 @@ function dayList(fromISO,toISO){
   while(cur<=end && days.length<400){ days.push(isoOf(cur)); cur.setDate(cur.getDate()+1); }
   return days;
 }
+function pnSelectedList(){ return pnFilteredList().filter(c=>!pnState.unsel.has(c.id)); }
+function pnToggleSel(cid){ pnState.unsel.has(cid)?pnState.unsel.delete(cid):pnState.unsel.add(cid); renderPNModal(); }
+function pnSelAll(v){ const l=pnFilteredList(); if(v)pnState.unsel.clear(); else l.forEach(c=>pnState.unsel.add(c.id)); renderPNModal(); }
 function pnFilteredList(){
   return state.filter(c=>{
     if(pnState.cats.size&&!pnState.cats.has(c.category))return false;
@@ -2136,7 +2211,9 @@ function renderPNModal(){
       const days_c=days.reduce((n,d)=>n+(pnState.ticks.has(pnKey(c.id,d))?1:0),0);
       const band=PN_FREQ[c.priority]||[0,0];
       const cls=days_c<band[0]?'under':(days_c<=band[1]?'good':'over');
-      return `<tr>
+      const sel=!pnState.unsel.has(c.id);
+      return `<tr class="${sel?'':'unsel'}">
+        <td class="h-sel"><input type="checkbox" ${sel?'checked':''} onchange="pnToggleSel('${c.id}')" title="Include in export"></td>
         <td class="h-name"><span class="h-dot" style="--cd:var(${(CATS[c.category]||{}).cat})"></span><span class="h-nm" title="${esc(c.name)}">${esc(c.name)}</span><span class="h-pri pri-${c.priority}">${PRI_LABEL[c.priority]}</span></td>
         <td class="pn-band" title="Target for ${PRI_LABEL[c.priority]}">${band[0]}–${band[1]}</td>
         ${cells}
@@ -2145,9 +2222,9 @@ function renderPNModal(){
     }).join('');
     const grand=[...pnState.ticks].filter(k=>{const cid=k.split('|')[0];return list.some(c=>c.id===cid);}).length;
     table=`<div class="h-tablewrap pn-wrap"><table class="h-table pn-table">
-      <thead><tr><th class="h-name-h">Campaign (${list.length})</th><th class="pn-band-h">Target</th>${dhead}<th class="h-total-h">Total</th></tr></thead>
+      <thead><tr><th class="h-sel-h"><input type="checkbox" ${pnState.unsel.size===0?'checked':''} onchange="pnSelAll(this.checked)" title="Select all"></th><th class="h-name-h">Campaign (${pnSelectedList().length}/${list.length})</th><th class="pn-band-h">Target</th>${dhead}<th class="h-total-h">Total</th></tr></thead>
       <tbody>${body}</tbody>
-      <tfoot><tr><td class="h-name-h">PNs / day</td><td class="pn-band-h"></td>${days.map(d=>{
+      <tfoot><tr><td class="h-sel-h"></td><td class="h-name-h">PNs / day</td><td class="pn-band-h"></td>${days.map(d=>{
         const t=pnDayTotal(d,list);
         return `<td class="pn-coltot ${t>PN_DAILY_CAP?'over':''}" data-day="${d}">${t||''}</td>`;}).join('')}<td class="h-total-h" id="pn_grand">${grand}</td></tr></tfoot>
     </table></div>`;
@@ -2176,25 +2253,25 @@ function renderPNModal(){
     ${table}
     <div class="modal-actions">
       <button class="btn" onclick="closePN()">Close</button>
-      <button class="btn primary" onclick="exportPNSchedule()" ${(!days.length||!list.length)?'disabled':''}>Export schedule</button>
+      <button class="btn primary" onclick="exportPNSchedule()" ${(!days.length||!pnSelectedList().length)?'disabled':''}>Export ${pnSelectedList().length} campaign${pnSelectedList().length===1?'':'s'}</button>
     </div>`;
 }
 
 function exportPNSchedule(){
   const days=dayList(pnState.from,pnState.to);
-  const list=pnFilteredList();
+  const list=pnSelectedList();          // only ticked campaigns
   if(!days.length||!list.length)return;
-  const header=['Campaign','Priority','Status','Target',...days.map(d=>fmtDay(d)+' '+new Date(d).toLocaleDateString('en-GB',{month:'short'})),'Total PNs'];
+  const header=['Campaign','Priority','Status','Target','Start Date','End Date',...days.map(d=>fmtDay(d)+' '+new Date(d).toLocaleDateString('en-GB',{month:'short'})),'Total PNs'];
   const rows=[header];
   list.forEach(c=>{
     let tot=0;
     const band=PN_FREQ[c.priority]||[0,0];
     const marks=days.map(d=>{const on=pnState.ticks.has(pnKey(c.id,d));if(on)tot++;return on?'PN':'';});
-    rows.push([c.name,PRI_LABEL[c.priority]||'',STATUS_LABEL[computeStatus(c)],band[0]+'-'+band[1],...marks,tot]);
+    rows.push([c.name,PRI_LABEL[c.priority]||'',STATUS_LABEL[computeStatus(c)],band[0]+'-'+band[1],c.start||'',c.end||'',...marks,tot]);
   });
   const colTotals=days.map(d=>pnDayTotal(d,list));
   const grand=colTotals.reduce((a,b)=>a+b,0);
-  rows.push(['PNs per day','','','',...colTotals,grand]);
+  rows.push(['PNs per day','','','','','',...colTotals,grand]);
   const ws=XLSX.utils.aoa_to_sheet(rows);
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'PN Schedule');
@@ -2310,6 +2387,58 @@ function addTask(){
 function toggleTask(tid){ const t=tasks.find(x=>x.id===tid); if(t){ t.done=!t.done; upsertTask(t); } }
 function removeTask(tid){ if(confirm('Delete this task?')) deleteTask(tid); }
 
+/* ---------- Change password ---------- */
+function openChangePassword(){
+  document.getElementById('pwModal').innerHTML=`
+    <button class="x" onclick="closePw()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <h2>Change team password</h2>
+    <p class="exp-sub">This changes the password for everyone on the team. Anyone already signed in stays signed in until they close their browser.</p>
+    <div class="field"><label>Current password</label><input type="password" id="pw_cur" autocomplete="off"></div>
+    <div class="field"><label>New password</label><input type="password" id="pw_new" autocomplete="off"></div>
+    <div class="field"><label>Confirm new password</label><input type="password" id="pw_new2" autocomplete="off" onkeydown="if(event.key==='Enter')savePassword()"></div>
+    <div id="pw_msg" class="pw-msg"></div>
+    <div class="modal-actions">
+      <button class="btn" onclick="closePw()">Cancel</button>
+      <button class="btn primary" id="pw_save" onclick="savePassword()">Update password</button>
+    </div>`;
+  document.getElementById('pwOverlay').classList.add('open');
+  setTimeout(()=>{const el=document.getElementById('pw_cur');if(el)el.focus();},50);
+}
+function closePw(){document.getElementById('pwOverlay').classList.remove('open');}
+
+async function savePassword(){
+  const msg=document.getElementById('pw_msg');
+  const cur=document.getElementById('pw_cur').value;
+  const a=document.getElementById('pw_new').value;
+  const b=document.getElementById('pw_new2').value;
+  const btn=document.getElementById('pw_save');
+  msg.className='pw-msg';
+  if(!cur||!a||!b){ msg.classList.add('err'); msg.textContent='Please fill in all three fields.'; return; }
+  if(a!==b){ msg.classList.add('err'); msg.textContent='The new passwords do not match.'; return; }
+  if(a.length<8){ msg.classList.add('err'); msg.textContent='Use at least 8 characters.'; return; }
+  const curHash=await sha256hex(cur);
+  const target=await currentGateHash();
+  if(curHash!==target){ msg.classList.add('err'); msg.textContent='Current password is incorrect.'; return; }
+  btn.disabled=true; msg.textContent='Saving…';
+  const newHash=await sha256hex(a);
+  let synced=false;
+  try{
+    if(typeof sb!=='undefined'&&sb){
+      const {error}=await sb.from('settings').upsert({key:'gate_hash',value:newHash});
+      if(error)throw error;
+      synced=true;
+    }
+  }catch(e){ console.error('pw save',e); }
+  try{ localStorage.setItem(PW_LOCAL_KEY,newHash); }catch(e){}
+  gateHashOverride=newHash;
+  btn.disabled=false;
+  msg.className='pw-msg ok';
+  msg.textContent = synced
+    ? '✓ Password updated for the whole team.'
+    : "\u2713 Password updated on this browser only \u2014 the shared settings table isn't set up yet, so teammates still use the old password.";
+  setTimeout(()=>{ if(synced) closePw(); }, 1800);
+}
+
 document.getElementById('addBtn').onclick=()=>openForm(null);
 // ---- Multi-select dropdown filters ----
 // A dropdown shows a label + summary of the current selection, and opens a checkbox
@@ -2360,8 +2489,8 @@ function initFilters(){ FILTER_DEFS.forEach(renderFilterDropdown); }
 initFilters();
 document.getElementById('search').oninput=renderGrid;
 document.getElementById('sortBy').onchange=renderGrid;
-['detailOverlay','formOverlay','soonOverlay','exportOverlay','heroOverlay','pnOverlay','batchOverlay','monthsOverlay','tasksOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();closeExport();closeHero();closePN();closeBatch();closeMonths();closeTasks();document.body.classList.remove('sb-open')}});
+['detailOverlay','formOverlay','soonOverlay','exportOverlay','heroOverlay','pnOverlay','batchOverlay','monthsOverlay','tasksOverlay','pwOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();closeExport();closeHero();closePN();closeBatch();closeMonths();closeTasks();closePw();document.body.classList.remove('sb-open')}});
 
 // Paint from cache immediately, then connect to Supabase and load the live data.
 renderGrid();
