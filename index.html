@@ -265,13 +265,21 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .kpi-box .kv{font-size:18px;font-weight:600;margin-top:3px}
   .kpi-box .ka{font-size:11px;color:var(--hint);margin-top:2px}
   /* lifecycle */
-  .life{display:flex;flex-wrap:wrap;gap:0}
-  .life-step{display:flex;align-items:center;font-size:12px}
-  .life-step .dot{width:9px;height:9px;border-radius:50%;background:var(--border-strong);margin-right:6px}
+  .life{display:flex;flex-direction:column;gap:0}
+  .life-step{display:flex;align-items:center;font-size:12.5px;padding:5px 0}
+  .life-step .dot{width:10px;height:10px;border-radius:50%;background:var(--border-strong);margin-right:10px;flex-shrink:0}
   .life-step.done .dot{background:var(--c-jfc)}
   .life-step.done{color:var(--text);font-weight:500}
   .life-step:not(.done){color:var(--hint)}
-  .life-step .sep{width:18px;height:.5px;background:var(--border);margin:0 8px}
+  .life-step .sep{display:none}
+  .life-lbl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .life-when{font-size:11px;font-weight:600;color:var(--c-jfc);background:var(--c-jfc-bg);padding:2px 8px;border-radius:999px}
+  .life-dates{display:flex;flex-direction:column;gap:8px;margin-bottom:6px}
+  .life-date-row{display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:center}
+  .life-date-row label{font-size:13px;color:var(--text);font-weight:500;margin:0}
+  .life-date-row input{font:inherit;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:9px;background:var(--surface);color:var(--text);width:100%}
+  .life-date-row input:focus{outline:none;border-color:var(--c-mfc);box-shadow:0 0 0 3px rgba(106,92,240,.1)}
+  @media (max-width:460px){.life-date-row{grid-template-columns:1fr}}
   /* editions — detail view */
   .editions{display:flex;flex-direction:column;gap:12px}
   .ed-block{border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:var(--shadow-sm)}
@@ -352,6 +360,9 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .h-name,.h-name-h{left:34px !important}
   .pn-band,.h-table thead .pn-band-h{left:214px !important}
   tr.unsel{opacity:.4}
+  .h-run,.h-run-h{white-space:nowrap;font-size:11px;color:var(--muted);text-align:center;min-width:150px}
+  .h-run-h{font-size:10.5px}
+  .h-run-sep{margin:0 5px;color:var(--hint)}
   tr.unsel .h-total,tr.unsel .pn-total{filter:grayscale(1)}
   /* change password */
   .pw-modal{max-width:430px}
@@ -741,7 +752,7 @@ const MANAGERS = ["Md. Tanvir Rahman","Syed Mustafa Tanveer Hasan"];
 const PRIORITIES = ["urgent","high","normal","low"];
 const PRI_LABEL = {urgent:"Urgent",high:"High",normal:"Normal",low:"Low"};
 const PRI_RANK = {urgent:0,high:1,normal:2,low:3};
-const LIFECYCLE = ["Proposal Under Review","Modality Confirmed","Assets Confirmed","KV Confirmed","Assets Uploaded"];
+const LIFECYCLE = ["Proposal Under Review","Modality Confirmed","Assets Confirmed","KV Confirmed","Google Drive Received","Assets Uploaded"];
 const PLACEMENTS = [
   {key:"offer",label:"Offer Section"},
   {key:"push",label:"Push Notification"},
@@ -1166,7 +1177,8 @@ function openDetail(cid){
   const k=c.kpi||{PC:{},PA:{},CC:{}};
   const exp=expectedPlacements(c.priority);
   const lifeIdx=LIFECYCLE.indexOf(c.lifecycle);
-  const lifeHTML=LIFECYCLE.map((s,i)=>`<div class="life-step ${i<=lifeIdx?'done':''}"><span class="dot"></span>${s}${i<LIFECYCLE.length-1?'<span class="sep"></span>':''}</div>`).join('');
+  const lifeDates=c.lifecycleDates||{};
+  const lifeHTML=LIFECYCLE.map((s,i)=>`<div class="life-step ${i<=lifeIdx?'done':''}"><span class="dot"></span><span class="life-lbl">${s}${lifeDates[s]?`<span class="life-when">${fmtDate(lifeDates[s])}</span>`:''}</span>${i<LIFECYCLE.length-1?'<span class="sep"></span>':''}</div>`).join('');
   const editions=Math.max(1,Number(c.editions)||1);
   const ranges=computeEditionRanges(c.start,c.end,editions);
   const pl=normalizePlacements(c);
@@ -1282,7 +1294,9 @@ function openForm(cid, prefill, questions){
     <div class="frow3">${['PC','PA','CC'].map(m=>{const x=k[m]||{};return `<div class="field"><label>${m} target</label><input type="number" id="kpi_${m}_t" class="${ac('kpi_'+m)}" value="${x.t!=null?x.t:''}" placeholder="0"></div>`}).join('')}</div>
 
     <div class="form-sec-t">Campaign tracking</div>
-    <div class="field"><label>Lifecycle stage</label><select id="f_lifecycle" class="${ac('lifecycle')}">${lifeOpts}</select></div>
+    <div class="field"><label>Current lifecycle stage</label><select id="f_lifecycle" class="${ac('lifecycle')}">${lifeOpts}</select></div>
+    <label style="display:block;font-size:12.5px;color:var(--muted);margin:8px 0 8px;font-weight:500">Stage dates <span style="color:var(--hint);font-weight:400">— when each stage was reached (optional, for tracking delays)</span></label>
+    <div class="life-dates">${LIFECYCLE.map(s=>{const d=(f.lifecycleDates||{})[s]||'';return `<div class="life-date-row"><label>${s}</label><input type="date" data-life="${esc(s)}" value="${esc(d)}"></div>`}).join('')}</div>
     <div class="form-sec-t">Editions & asset schedule</div>
     <div class="field">
       <label>Number of editions</label>
@@ -1363,7 +1377,7 @@ function saveForm(cid){
   const obj={
     name, wallet:walletList(g('f_wallet')).join(', '), category:g('f_category'), priority:g('f_priority'),
     manager:g('f_manager'), start:g('f_start'), end:g('f_end'),
-    kpi, lifecycle:g('f_lifecycle'), editions, placements, notes:g('f_notes').trim()
+    kpi, lifecycle:g('f_lifecycle'), lifecycleDates:(()=>{const o={};document.querySelectorAll('#formModal input[data-life]').forEach(inp=>{if(inp.value)o[inp.dataset.life]=inp.value;});return o;})(), editions, placements, notes:g('f_notes').trim()
   };
   let campaign;
   if(cid){const cur=state.find(x=>x.id===cid)||{};campaign={...cur,...obj,id:cid};}
@@ -1912,6 +1926,8 @@ function heroFilteredList(){
     if(heroState.cats.size&&!heroState.cats.has(c.category))return false;
     if(heroState.stats.size&&!heroState.stats.has(computeStatus(c)))return false;
     if(heroState.pris.size&&!heroState.pris.has(c.priority))return false;
+    // Hide campaigns that already ended before the schedule's start date.
+    if(heroState.from&&c.end&&c.end<heroState.from)return false;
     return true;
   });
 }
@@ -1976,7 +1992,7 @@ function renderHeroModal(){
     const head=weeks.map(w=>`<th class="h-wk" title="${w.start} → ${w.end}">${fmtWeek(w.start)}</th>`).join('');
     let body='';
     if(!list.length){
-      body=`<tr><td colspan="${weeks.length+3}" class="h-empty-row">No campaigns match these filters.</td></tr>`;
+      body=`<tr><td colspan="${weeks.length+4}" class="h-empty-row">No campaigns match these filters.</td></tr>`;
     }else{
       body=list.map(c=>{
         const cells=weeks.map(w=>{
@@ -1990,6 +2006,7 @@ function renderHeroModal(){
         return `<tr class="${sel?'':'unsel'}">
           <td class="h-sel"><input type="checkbox" ${sel?'checked':''} onchange="heroToggleSel('${c.id}')" title="Include in export"></td>
           <td class="h-name"><span class="h-dot" style="--cd:var(${(CATS[c.category]||{}).cat})"></span><span class="h-nm" title="${esc(c.name)}">${esc(c.name)}</span><span class="h-pri pri-${c.priority}">${PRI_LABEL[c.priority]}</span></td>
+          <td class="h-run">${c.start?fmtDate(c.start):'—'}<span class="h-run-sep">→</span>${c.end?fmtDate(c.end):'—'}</td>
           ${cells}
           <td class="h-total" data-cid="${c.id}">${tot}</td>
         </tr>`;
@@ -1997,9 +2014,9 @@ function renderHeroModal(){
     }
     let grand=0; list.forEach(c=>weeks.forEach(w=>{if(heroState.ticks.has(heroKey(c.id,w.start)))grand++;}));
     table=`<div class="h-tablewrap"><table class="h-table">
-      <thead><tr><th class="h-sel-h"><input type="checkbox" ${heroState.unsel.size===0?'checked':''} onchange="heroSelAll(this.checked)" title="Select all"></th><th class="h-name-h">Campaign (${heroSelectedList().length}/${list.length})</th>${head}<th class="h-total-h">Total</th></tr></thead>
+      <thead><tr><th class="h-sel-h"><input type="checkbox" ${heroState.unsel.size===0?'checked':''} onchange="heroSelAll(this.checked)" title="Select all"></th><th class="h-name-h">Campaign (${heroSelectedList().length}/${list.length})</th><th class="h-run-h">Run dates</th>${head}<th class="h-total-h">Total</th></tr></thead>
       <tbody>${body}</tbody>
-      <tfoot><tr><td class="h-sel-h"></td><td class="h-name-h">Grand total</td>${weeks.map(w=>{
+      <tfoot><tr><td class="h-sel-h"></td><td class="h-name-h">Grand total</td><td class="h-run-h"></td>${weeks.map(w=>{
         const col=list.reduce((n,c)=>n+(heroState.ticks.has(heroKey(c.id,w.start))?1:0),0);
         return `<td class="h-coltot">${col||''}</td>`;}).join('')}<td class="h-total-h" id="h_grandtotal">${grand}</td></tr></tfoot>
     </table></div>`;
