@@ -274,6 +274,16 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .life-step .sep{display:none}
   .life-lbl{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
   .life-when{font-size:11px;font-weight:600;color:var(--c-jfc);background:var(--c-jfc-bg);padding:2px 8px;border-radius:999px}
+  .life-elapsed{font-weight:500;color:var(--muted);opacity:.85}
+  /* Offer Section — campaign-level, always-live asset */
+  .offer-live{display:flex;justify-content:space-between;align-items:center;gap:12px;
+    border:1px solid var(--border);border-radius:12px;padding:12px 15px;
+    background:radial-gradient(140% 200% at 0% 0%, var(--c-jfc-bg) 0%, transparent 62%),var(--surface)}
+  .offer-live-label{display:flex;align-items:center;gap:9px;font-size:13px;font-weight:550;color:var(--text)}
+  .offer-live-dot{width:9px;height:9px;border-radius:50%;background:var(--c-jfc);flex-shrink:0;
+    box-shadow:0 0 0 4px var(--c-jfc-bg)}
+  .offer-live-date{font-size:13.5px;font-weight:650;color:var(--c-jfc)}
+  .offer-live-unset{color:var(--hint);font-weight:400}
   .life-dates{display:flex;flex-direction:column;gap:8px;margin-bottom:6px}
   .life-date-row{display:grid;grid-template-columns:1fr 150px;gap:10px;align-items:center}
   .life-date-row label{font-size:13px;color:var(--text);font-weight:500;margin:0}
@@ -290,13 +300,21 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
     background:var(--c-mfc);color:#fff;white-space:nowrap}
   .ed-range{font-size:12.5px;color:var(--muted);font-weight:550}
   .ed-assets{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border)}
-  .ed-asset{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--surface);padding:9px 14px;font-size:13px}
+  .ed-asset{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;background:var(--surface);padding:9px 14px;font-size:13px}
   .ed-asset-name{color:var(--text);font-weight:500}
   .ed-asset-date{color:var(--c-jfc);font-weight:600;font-size:12.5px}
   .ed-asset.off .ed-asset-name{color:var(--hint);font-weight:400}
   .ed-asset.off .ed-asset-date{color:var(--hint)}
+  .ed-asset-dates{display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end}
+  .ed-date-chip{font-size:11.5px;font-weight:600;color:var(--c-jfc);background:var(--c-jfc-bg);
+    border-radius:999px;padding:2px 9px;white-space:nowrap}
   @media (max-width:560px){.ed-assets{grid-template-columns:1fr}}
   .modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:22px}
+  .form-save-status{margin-right:auto;font-size:12.5px;font-weight:550;display:inline-flex;align-items:center;gap:6px}
+  .form-save-status::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}
+  .form-save-status.saved{color:var(--c-jfc)}
+  .form-save-status.saving{color:var(--muted)}
+  .form-save-status.warn{color:#e0a000}
   .modal-actions .btn.danger{color:var(--danger);border-color:var(--danger)}
   .soon-modal{max-width:440px;text-align:left}
   .soon-badge{display:inline-block;font-size:11px;font-weight:650;letter-spacing:.03em;text-transform:uppercase;
@@ -541,6 +559,20 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
     border-radius:9px;background:var(--surface);color:var(--text);width:100%;transition:.14s}
   .ed-edit-row input:focus{outline:none;border-color:var(--c-mfc);box-shadow:0 0 0 3px rgba(106,92,240,.10)}
   @media (max-width:460px){.ed-edit-row{grid-template-columns:1fr}}
+  /* multi-date per asset (editions form editor) */
+  .ed-edit-row.multi{align-items:start}
+  .ed-edit-row.multi label{padding-top:9px}
+  .ed-date-list{display:flex;flex-direction:column;gap:7px}
+  .ed-date-input{display:flex;align-items:center;gap:6px}
+  .ed-date-input input{flex:1}
+  .ed-date-rm{flex-shrink:0;width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--muted);cursor:pointer;transition:.14s}
+  .ed-date-rm:hover{border-color:var(--danger);color:var(--danger);background:var(--surface)}
+  .ed-date-add{display:inline-flex;align-items:center;gap:5px;align-self:flex-start;font:inherit;font-size:12px;
+    font-weight:600;color:var(--c-mfc);background:none;border:1px dashed var(--c-mfc);border-radius:8px;
+    padding:5px 10px;cursor:pointer;transition:.14s;margin-top:1px}
+  .ed-date-add:hover{background:var(--c-mfc-bg)}
+  .ed-date-add svg{opacity:.9}
   .pri-hint{font-size:12px;color:var(--c-jfc);margin:-4px 0 12px}
 
   .divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--hint);font-size:12px}
@@ -773,19 +805,21 @@ const PRIORITIES = ["urgent","high","normal","low"];
 const PRI_LABEL = {urgent:"Urgent",high:"High",normal:"Normal",low:"Low"};
 const PRI_RANK = {urgent:0,high:1,normal:2,low:3};
 const LIFECYCLE = ["Proposal Under Review","Modality Confirmed","Assets Confirmed","KV Confirmed","Google Drive Received","Assets Uploaded"];
+// Campaign-level asset: placed once, stays live for the whole campaign (not per-edition).
+const OFFER_PLACEMENT = {key:"offer",label:"Offer Section"};
+// Per-edition placements (each can have multiple dates within each edition).
 const PLACEMENTS = [
-  {key:"offer",label:"Offer Section"},
   {key:"push",label:"Push Notification"},
   {key:"fborganic",label:"FB Organic"},
   {key:"hero",label:"Hero Banner"},
   {key:"fbpaid",label:"FB Paid Promotion"},
 ];
-// priority matrix -> expected placements (cumulative)
+// priority matrix -> expected placements (cumulative). Offer is implied for all.
 const PRI_PLACEMENTS = {
-  urgent:["offer","push","fborganic","hero","fbpaid"],
-  high:["offer","push","fborganic","hero"],
-  normal:["offer","push","fborganic"],
-  low:["offer","push"],
+  urgent:["push","fborganic","hero","fbpaid"],
+  high:["push","fborganic","hero"],
+  normal:["push","fborganic"],
+  low:["push"],
 };
 function expectedPlacements(pri){return PRI_PLACEMENTS[pri]||[]}
 
@@ -934,12 +968,48 @@ async function bulkUpsert(list){
 
 function reloadShared(){loadFromDB();}
 
+// The Offer Section is a single campaign-level date. Prefer the new top-level
+// c.offerDate, but fall back to any legacy placements.offer date (first date found).
+// Human-readable elapsed time between a past date and today (e.g. "12 days ago").
+function elapsedSince(dateStr){
+  if(!dateStr)return "";
+  const then=new Date(dateStr); if(isNaN(then))return "";
+  const now=new Date();
+  const d0=new Date(then.getFullYear(),then.getMonth(),then.getDate());
+  const d1=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const days=Math.round((d1-d0)/864e5);
+  if(days===0)return "today";
+  if(days<0){const a=Math.abs(days);return "in "+a+" day"+(a>1?"s":"");}
+  if(days<31)return days+" day"+(days>1?"s":"")+" ago";
+  const months=Math.floor(days/30.44);
+  if(months<12)return months+" mo ago";
+  const years=Math.floor(days/365.25);const rem=Math.floor((days%365.25)/30.44);
+  return years+"y"+(rem?" "+rem+"mo":"")+" ago";
+}
+function getOfferDate(c){
+  if(!c)return "";
+  if(c.offerDate)return c.offerDate;
+  const leg=c.placements&&c.placements.offer;
+  if(leg){
+    if(Array.isArray(leg.dates)){for(const d of leg.dates){const a=slotToArray(d);if(a.length)return a[0];}}
+    if(typeof leg.planned==='string'&&leg.planned)return leg.planned;
+  }
+  return "";
+}
 function blankPlacements(editions){
   const n=Math.max(1,Number(editions)||1);
   const o={};
-  // Each channel holds an array of date strings, one slot per edition (blank by default).
-  PLACEMENTS.forEach(p=>o[p.key]={dates:Array.from({length:n},()=>"" )});
+  // Each channel holds one slot per edition; each slot is an ARRAY of date strings
+  // (an asset can appear on multiple dates within a single edition).
+  PLACEMENTS.forEach(p=>o[p.key]={dates:Array.from({length:n},()=>[])});
   return o;
+}
+// Coerce any legacy slot value into an array of date strings.
+// Old data stored a single string per edition; new data stores an array.
+function slotToArray(v){
+  if(Array.isArray(v))return v.filter(Boolean);
+  if(typeof v==='string'&&v)return [v];
+  return [];
 }
 // Normalize any campaign's placements to the current edition count, preserving
 // existing dates. Handles old planned/actual data by discarding it cleanly.
@@ -949,8 +1019,9 @@ function normalizePlacements(c){
   const out={};
   PLACEMENTS.forEach(p=>{
     const prev=src[p.key]||{};
-    const arr=Array.isArray(prev.dates)?prev.dates.slice(0,n):[];
-    while(arr.length<n)arr.push("");
+    const raw=Array.isArray(prev.dates)?prev.dates.slice(0,n):[];
+    const arr=raw.map(slotToArray);
+    while(arr.length<n)arr.push([]);
     out[p.key]={dates:arr};
   });
   return out;
@@ -1153,7 +1224,7 @@ function renderGrid(){
   });
   wrap.innerHTML=html;
   document.querySelectorAll('.star').forEach(btn=>btn.onclick=e=>{e.stopPropagation();toggleStar(btn.dataset.star)});
-  document.querySelectorAll('.card').forEach(card=>card.onclick=()=>openDetail(card.dataset.id));
+  document.querySelectorAll('.card').forEach(card=>card.onclick=()=>openForm(card.dataset.id));
   document.querySelectorAll('.cat-expand').forEach(btn=>btn.onclick=()=>{
     const k=btn.dataset.expand;
     if(expandedCats.has(k))expandedCats.delete(k);else expandedCats.add(k);
@@ -1198,15 +1269,20 @@ function openDetail(cid){
   const exp=expectedPlacements(c.priority);
   const lifeIdx=LIFECYCLE.indexOf(c.lifecycle);
   const lifeDates=c.lifecycleDates||{};
-  const lifeHTML=LIFECYCLE.map((s,i)=>`<div class="life-step ${i<=lifeIdx?'done':''}"><span class="dot"></span><span class="life-lbl">${s}${lifeDates[s]?`<span class="life-when">${fmtDate(lifeDates[s])}</span>`:''}</span>${i<LIFECYCLE.length-1?'<span class="sep"></span>':''}</div>`).join('');
+  const lifeHTML=LIFECYCLE.map((s,i)=>{
+    const when=lifeDates[s];
+    const el=when?elapsedSince(when):"";
+    return `<div class="life-step ${i<=lifeIdx?'done':''}"><span class="dot"></span><span class="life-lbl">${s}${when?`<span class="life-when">${fmtDate(when)}${el?` <span class="life-elapsed">· ${el}</span>`:''}</span>`:''}</span>${i<LIFECYCLE.length-1?'<span class="sep"></span>':''}</div>`;
+  }).join('');
+  const offerDate=getOfferDate(c);
   const editions=Math.max(1,Number(c.editions)||1);
   const ranges=computeEditionRanges(c.start,c.end,editions);
   const pl=normalizePlacements(c);
   const editionsHTML=ranges.map(r=>{
     const assetsForEd=PLACEMENTS.map(p=>{
-      const dt=(pl[p.key].dates||[])[r.idx-1]||"";
-      return dt
-        ? `<div class="ed-asset"><span class="ed-asset-name">${p.label}</span><span class="ed-asset-date">${fmtDate(dt)}</span></div>`
+      const dts=slotToArray((pl[p.key].dates||[])[r.idx-1]);
+      return dts.length
+        ? `<div class="ed-asset"><span class="ed-asset-name">${p.label}</span><span class="ed-asset-dates">${dts.map(d=>`<span class="ed-date-chip">${fmtDate(d)}</span>`).join('')}</span></div>`
         : `<div class="ed-asset off"><span class="ed-asset-name">${p.label}</span><span class="ed-asset-date">—</span></div>`;
     }).join('');
     return `<div class="ed-block">
@@ -1245,6 +1321,13 @@ function openDetail(cid){
 
     <div class="sec"><div class="sec-t">Lifecycle</div><div class="life">${lifeHTML}</div></div>
 
+    <div class="sec"><div class="sec-t">Offer Section</div>
+      <div class="offer-live">
+        <div class="offer-live-label"><span class="offer-live-dot"></span>Live for the full campaign</div>
+        <div class="offer-live-date">${offerDate?fmtDate(offerDate):'<span class="offer-live-unset">Date not set</span>'}</div>
+      </div>
+    </div>
+
     <div class="sec"><div class="sec-t">Editions & asset schedule (${editions} edition${editions>1?'s':''})</div>
       <div class="editions">${editionsHTML}</div>
     </div>
@@ -1266,7 +1349,7 @@ function openForm(cid, prefill, questions){
   const f = c || {};
   const k = f.kpi || {PC:{},PA:{},CC:{}};
   const pl = normalizePlacements({placements:f.placements, editions:f.editions});
-  window._formPlDates = {}; PLACEMENTS.forEach(p=>{window._formPlDates[p.key]=(pl[p.key].dates||[]).slice();});
+  seedEditionState(pl, Math.max(1,Number(f.editions)||1));
   const aiFields = prefill ? (prefill._aiFields||[]) : [];
   const ac = n => aiFields.includes(n) ? 'ai-filled' : '';
   const catOpts=Object.keys(CATS).map(x=>`<option value="${x}" ${f.category===x?'selected':''}>${CATS[x].label}</option>`).join('');
@@ -1317,47 +1400,108 @@ function openForm(cid, prefill, questions){
     <div class="field"><label>Current lifecycle stage</label><select id="f_lifecycle" class="${ac('lifecycle')}">${lifeOpts}</select></div>
     <label style="display:block;font-size:12.5px;color:var(--muted);margin:8px 0 8px;font-weight:500">Stage dates <span style="color:var(--hint);font-weight:400">— when each stage was reached (optional, for tracking delays)</span></label>
     <div class="life-dates">${LIFECYCLE.map(s=>{const d=(f.lifecycleDates||{})[s]||'';return `<div class="life-date-row"><label>${s}</label><input type="date" data-life="${esc(s)}" value="${esc(d)}"></div>`}).join('')}</div>
+    <div class="form-sec-t">Offer Section</div>
+    <div class="field">
+      <label>Offer live date <span style="color:var(--hint);font-weight:400">— placed once, stays live for the whole campaign</span></label>
+      <input type="date" id="f_offerdate" class="${ac('offerdate')}" value="${esc(getOfferDate(f))}">
+    </div>
     <div class="form-sec-t">Editions & asset schedule</div>
     <div class="field">
       <label>Number of editions</label>
-      <select id="f_editions" onchange="renderEditionEditor()">${edOpts}</select>
+      <select id="f_editions" onchange="syncEditionStateFromDOM();renderEditionEditor()">${edOpts}</select>
     </div>
     <p class="pri-hint" style="margin-top:-4px">Editions split the campaign run into equal date windows. Set a start and end date to see each edition's range. Asset dates are optional — fill them whenever you're ready.</p>
     <div id="editionEditor"></div>
 
     <div class="field" style="margin-top:18px"><label>Notes</label><textarea id="f_notes" class="${ac('notes')}" placeholder="Optional context…">${esc(f.notes||'')}</textarea></div>
 
-    <div class="modal-actions">
-      <button class="btn" onclick="closeForm()">Cancel</button>
-      <button class="btn primary" onclick="saveForm('${cid||''}')">${cid?'Save changes':'Create campaign'}</button>
+    <div class="modal-actions" style="align-items:center">
+      ${cid?`<span class="form-save-status saved" id="formSaveStatus">All changes saved</span>
+      <button class="btn danger" onclick="delCampaign('${cid}')">Delete</button>
+      <button class="btn" onclick="toggleStar('${cid}');refreshFormStar('${cid}')" id="formStarBtn">${f.starred?'★ Unfavorite':'☆ Favorite'}</button>
+      <button class="btn primary" onclick="closeForm()">Done</button>`
+      :`<button class="btn" onclick="closeForm()">Cancel</button>
+      <button class="btn primary" onclick="saveForm('')">Create campaign</button>`}
     </div>`;
   document.getElementById('formOverlay').classList.add('open');
   updatePriHint();
   renderEditionEditor();
-  ['f_start','f_end'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('change',renderEditionEditor);});
+  ['f_start','f_end'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('change',()=>{syncEditionStateFromDOM();renderEditionEditor();});});
+  // Enable instant auto-save for existing campaigns.
+  _autosaveCid = cid || null;
+  clearTimeout(_autosaveTimer);
+  if(cid){ wireAutoSave(); }
   if(!cid) wireAIZone();
 }
-function closeForm(){document.getElementById('formOverlay').classList.remove('open')}
+// Keep the favorite button label in sync after toggling from inside the form.
+function refreshFormStar(cid){
+  const c=state.find(x=>x.id===cid); const btn=document.getElementById('formStarBtn');
+  if(c&&btn)btn.textContent=c.starred?'★ Unfavorite':'☆ Favorite';
+}
+function closeForm(){_autosaveCid=null;clearTimeout(_autosaveTimer);document.getElementById('formOverlay').classList.remove('open')}
 
 // Renders the per-edition asset-date inputs based on current editions count + dates.
-// Preserves any dates the user already typed before a re-render.
+// Each asset can hold MULTIPLE dates within an edition. State is held in
+// _edEditState[channel][editionIndex] = [dateStr, ...] so add/remove survives re-render.
+let _edEditState=null;
+// Seed the editor state from a campaign's placements (or blanks) once when the form opens.
+function seedEditionState(placements,editions){
+  const n=Math.max(1,Number(editions)||1);
+  _edEditState={};
+  PLACEMENTS.forEach(p=>{
+    const src=(placements&&placements[p.key]&&placements[p.key].dates)||[];
+    _edEditState[p.key]=Array.from({length:n},(_,i)=>slotToArray(src[i]));
+  });
+}
+// Pull the latest values typed into the DOM back into state before a structural re-render.
+function syncEditionStateFromDOM(){
+  if(!_edEditState)return;
+  document.querySelectorAll('#editionEditor input[data-ed]').forEach(inp=>{
+    const ch=inp.dataset.ch, ed=Number(inp.dataset.ed)-1, slot=Number(inp.dataset.slot);
+    if(_edEditState[ch]&&_edEditState[ch][ed]&&slot>=0)_edEditState[ch][ed][slot]=inp.value||"";
+  });
+}
+function addEditionDate(ch,ed){
+  syncEditionStateFromDOM();
+  if(_edEditState&&_edEditState[ch]&&_edEditState[ch][ed-1])_edEditState[ch][ed-1].push("");
+  renderEditionEditor();
+  autoSaveForm();
+}
+function removeEditionDate(ch,ed,slot){
+  syncEditionStateFromDOM();
+  if(_edEditState&&_edEditState[ch]&&_edEditState[ch][ed-1])_edEditState[ch][ed-1].splice(slot,1);
+  renderEditionEditor();
+  autoSaveForm();
+}
 function renderEditionEditor(){
   const box=document.getElementById('editionEditor'); if(!box) return;
   const n=Math.max(1,Number((document.getElementById('f_editions')||{}).value)||1);
   const start=(document.getElementById('f_start')||{}).value||"";
   const end=(document.getElementById('f_end')||{}).value||"";
   const ranges=computeEditionRanges(start,end,n);
-  // capture existing values keyed by channel+edition so re-render keeps them
-  const existing={};
-  box.querySelectorAll('input[data-ed]').forEach(inp=>{existing[inp.dataset.ch+'_'+inp.dataset.ed]=inp.value;});
+  // Ensure state exists and matches the current edition count.
+  if(!_edEditState)seedEditionState(null,n);
+  PLACEMENTS.forEach(p=>{
+    if(!_edEditState[p.key])_edEditState[p.key]=[];
+    while(_edEditState[p.key].length<n)_edEditState[p.key].push([]);
+    _edEditState[p.key].length=n;
+  });
   box.innerHTML=ranges.map(r=>{
     const assets=PLACEMENTS.map(p=>{
-      const key=p.key+'_'+r.idx;
-      const val=existing[key]!==undefined?existing[key]:( (window._formPlDates&&window._formPlDates[p.key]&&window._formPlDates[p.key][r.idx-1])||"" );
-      return `<div class="ed-edit-row">
+      let slots=_edEditState[p.key][r.idx-1];
+      if(!Array.isArray(slots)||!slots.length)slots=[""];   // always show at least one input
+      _edEditState[p.key][r.idx-1]=slots;
+      const inputs=slots.map((val,si)=>`<div class="ed-date-input">
+          <input type="date" data-ch="${p.key}" data-ed="${r.idx}" data-slot="${si}" value="${val||''}"
+            min="${r.start||''}" max="${r.end||''}">
+          ${slots.length>1?`<button type="button" class="ed-date-rm" title="Remove this date" onclick="removeEditionDate('${p.key}',${r.idx},${si})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>`:''}
+        </div>`).join('');
+      return `<div class="ed-edit-row multi">
         <label>${p.label}</label>
-        <input type="date" data-ch="${p.key}" data-ed="${r.idx}" value="${val}"
-          min="${r.start||''}" max="${r.end||''}">
+        <div class="ed-date-list">
+          ${inputs}
+          <button type="button" class="ed-date-add" onclick="addEditionDate('${p.key}',${r.idx})"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg> Add date</button>
+        </div>
       </div>`;
     }).join('');
     return `<div class="ed-edit-block">
@@ -1368,6 +1512,11 @@ function renderEditionEditor(){
       ${assets}
     </div>`;
   }).join('');
+  // Wire the freshly-rendered edition inputs into auto-save.
+  box.querySelectorAll('input').forEach(el=>{
+    el.addEventListener('input',autoSaveForm);
+    el.addEventListener('change',autoSaveForm);
+  });
 }
 
 function updatePriHint(){
@@ -1382,30 +1531,71 @@ function updatePriHint(){
 
 
 
-function saveForm(cid){
+// Read the current form state into a campaign-shaped object (no id).
+// Returns null if the required name is empty.
+function readFormObject(){
   const g=i=>{const el=document.getElementById(i);return el?el.value:''};
   const name=g('f_name').trim();
-  if(!name){alert('Campaign name is required.');return}
+  if(!name)return null;
   const kpi={};['PC','PA','CC'].forEach(m=>{kpi[m]={t:Number(g('kpi_'+m+'_t'))||0}});
   const editions=Math.max(1,Number(g('f_editions'))||1);
-  // Collect per-edition asset dates from the edition editor inputs.
-  const placements={};PLACEMENTS.forEach(p=>{placements[p.key]={dates:Array.from({length:editions},()=>"" )}});
-  document.querySelectorAll('#editionEditor input[data-ed]').forEach(inp=>{
-    const ch=inp.dataset.ch, ed=Number(inp.dataset.ed)-1;
-    if(placements[ch]&&ed>=0&&ed<editions)placements[ch].dates[ed]=inp.value||"";
+  syncEditionStateFromDOM();
+  const placements={};
+  PLACEMENTS.forEach(p=>{
+    const arr=Array.from({length:editions},(_,i)=>{
+      const slots=(_edEditState&&_edEditState[p.key]&&_edEditState[p.key][i])||[];
+      return [...new Set(slots.filter(Boolean))].sort();
+    });
+    placements[p.key]={dates:arr};
   });
-  const obj={
+  return {
     name, wallet:walletList(g('f_wallet')).join(', '), category:g('f_category'), priority:g('f_priority'),
     manager:g('f_manager'), start:g('f_start'), end:g('f_end'),
-    kpi, lifecycle:g('f_lifecycle'), lifecycleDates:(()=>{const o={};document.querySelectorAll('#formModal input[data-life]').forEach(inp=>{if(inp.value)o[inp.dataset.life]=inp.value;});return o;})(), editions, placements, notes:g('f_notes').trim()
+    kpi, lifecycle:g('f_lifecycle'), lifecycleDates:(()=>{const o={};document.querySelectorAll('#formModal input[data-life]').forEach(inp=>{if(inp.value)o[inp.dataset.life]=inp.value;});return o;})(), editions, placements, offerDate:g('f_offerdate')||"", notes:g('f_notes').trim()
   };
+}
+
+// Auto-save state for the currently open edit form.
+let _autosaveCid=null, _autosaveTimer=null;
+function setSaveStatus(kind){
+  const el=document.getElementById('formSaveStatus'); if(!el)return;
+  if(kind==='saving'){el.textContent='Saving…';el.className='form-save-status saving';}
+  else if(kind==='saved'){el.textContent='All changes saved';el.className='form-save-status saved';}
+  else if(kind==='need-name'){el.textContent='Add a name to save';el.className='form-save-status warn';}
+}
+// Debounced auto-save; only runs for existing campaigns (cid present).
+function autoSaveForm(){
+  if(!_autosaveCid)return;
+  const obj=readFormObject();
+  if(!obj){setSaveStatus('need-name');return;}
+  setSaveStatus('saving');
+  clearTimeout(_autosaveTimer);
+  _autosaveTimer=setTimeout(()=>{
+    const cur=state.find(x=>x.id===_autosaveCid)||{};
+    const campaign={...cur,...obj,id:_autosaveCid};
+    upsertCampaign(campaign);
+    setSaveStatus('saved');
+  },450);
+}
+// Wire every input/select/textarea in the form to trigger auto-save.
+function wireAutoSave(){
+  const modal=document.getElementById('formModal'); if(!modal)return;
+  modal.querySelectorAll('input,select,textarea').forEach(el=>{
+    el.addEventListener('input',autoSaveForm);
+    el.addEventListener('change',autoSaveForm);
+  });
+}
+
+function saveForm(cid){
+  const obj=readFormObject();
+  if(!obj){alert('Campaign name is required.');return}
   let campaign;
   if(cid){const cur=state.find(x=>x.id===cid)||{};campaign={...cur,...obj,id:cid};}
   else{campaign={...obj,id:id(),starred:false,addedAt:new Date().toISOString()};}
   closeForm();
   upsertCampaign(campaign);
 }
-function delCampaign(cid){if(!confirm('Delete this campaign? This cannot be undone.'))return;closeDetail();deleteCampaignDB(cid);}
+function delCampaign(cid){if(!confirm('Delete this campaign? This cannot be undone.'))return;closeForm();closeDetail();deleteCampaignDB(cid);}
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 
@@ -1448,7 +1638,8 @@ function parseSheetRows(rows){
     if(!nm||normHdr(nm)==='campaign name')continue;
     const ct=col.ctype>=0?IMPORT_TYPE[normHdr(row[col.ctype])]:null;
     const editions=1;
-    const placements={};PLACEMENTS.forEach(p=>{placements[p.key]={dates:[""]}});
+    const placements={};PLACEMENTS.forEach(p=>{placements[p.key]={dates:[[]]}});
+    const offerDate=(pcol.offer>=0)?excelDate(row[pcol.offer]):"";
     const kpi={};
     [['PC','pc'],['PA','pa'],['CC','cc']].forEach(([m,c])=>{const ci=col[c];let t=0;if(ci>=0){const v=parseFloat(row[ci]);if(!isNaN(v))t=Math.round(v*100)/100}kpi[m]={t}});
     out.push({
@@ -1461,7 +1652,7 @@ function parseSheetRows(rows){
       end:col.end>=0?excelDate(row[col.end]):"",
       kpi,
       lifecycle:col.lifecycle>=0&&LIFECYCLE.includes(String(row[col.lifecycle]).trim())?String(row[col.lifecycle]).trim():LIFECYCLE[0],
-      placements,editions,notes:'',starred:false
+      placements,editions,offerDate,notes:'',starred:false
     });
   }
   return out;
@@ -1504,7 +1695,7 @@ function exportData(list){
     edHeaders.push('Ed'+e+' Window');
     PLACEMENTS.forEach(p=>edHeaders.push('Ed'+e+' '+p.label));
   }
-  const headers=['Campaign Name','Wallet No(s)','Start Date','Due Date','Status','Priority','Lifecycle','Campaign Type','KAM','Date Added','Editions',...edHeaders,'PC','PA','CC'];
+  const headers=['Campaign Name','Wallet No(s)','Start Date','Due Date','Status','Priority','Lifecycle','Campaign Type','KAM','Date Added','Editions','Offer Section',...edHeaders,'PC','PA','CC'];
   const rows=[headers];
   data.forEach(c=>{
     const k=c.kpi||{};
@@ -1516,7 +1707,7 @@ function exportData(list){
       if(e<nEd){
         const r=ranges[e]||{};
         edCells.push(r.start?(r.start+' → '+r.end):'');
-        PLACEMENTS.forEach(p=>edCells.push((pl[p.key].dates||[])[e]||''));
+        PLACEMENTS.forEach(p=>edCells.push(slotToArray((pl[p.key].dates||[])[e]).map(fmtDate).join(', ')));
       }else{
         edCells.push('');                       // campaign has fewer editions
         PLACEMENTS.forEach(()=>edCells.push(''));
@@ -1524,7 +1715,7 @@ function exportData(list){
     }
     rows.push([c.name,c.wallet,c.start,c.end,STATUS_LABEL[computeStatus(c)],PRI_LABEL[c.priority]||'',c.lifecycle||'',(CATS[c.category]||{}).label||'',c.manager||'',
       c.addedAt?String(c.addedAt).slice(0,10):'',
-      nEd, ...edCells,
+      nEd, (getOfferDate(c)||''), ...edCells,
       (k.PC||{}).t||'',(k.PA||{}).t||'',(k.CC||{}).t||'']);
   });
   const ws=XLSX.utils.aoa_to_sheet(rows);
@@ -1782,7 +1973,7 @@ async function batchSaveAll(){
       start:c.start||'', end:c.end||'',
       kpi:c.kpi||{PC:{t:0},PA:{t:0},CC:{t:0}},
       lifecycle:c.lifecycle||LIFECYCLE[0],
-      editions:1, placements:blankPlacements(1),
+      editions:1, placements:blankPlacements(1), offerDate:c.offerDate||'',
       notes:c.notes||'', starred:false, addedAt:new Date().toISOString()
     };
   });
