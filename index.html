@@ -225,23 +225,27 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .ctodo-badge{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;color:var(--c-mfc);
     background:var(--c-mfc-bg);border-radius:999px;padding:2px 7px 2px 6px;flex-shrink:0}
   .ctodo-badge svg{flex-shrink:0}
-  .ctodo{margin-top:12px;padding-top:12px;border-top:1px dashed var(--border)}
-  .ctodo-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-  .ctodo-title{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:650;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
-  .ctodo-count{font-size:11px;font-weight:700;color:var(--c-mfc);background:var(--c-mfc-bg);border-radius:999px;padding:1px 7px;min-width:18px;text-align:center}
-  .ctodo-list{display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
-  .ctodo-item{display:flex;align-items:center;gap:7px}
-  .ctodo-check{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--border-strong);background:var(--surface);cursor:pointer;flex-shrink:0;padding:0;transition:.14s}
+  .ctodo-check{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--border-strong);background:var(--surface);color:#fff;
+    cursor:pointer;flex-shrink:0;padding:0;display:flex;align-items:center;justify-content:center;transition:.14s}
   .ctodo-check:hover{border-color:var(--c-jfc)}
-  .ctodo-text{flex:1;font-size:12.5px;color:var(--text);line-height:1.35;word-break:break-word}
+  .ctodo-check.on{background:var(--c-jfc);border-color:var(--c-jfc)}
   .ctodo-del{background:none;border:none;color:var(--hint);cursor:pointer;font-size:12px;padding:2px;flex-shrink:0;opacity:0;transition:.14s}
-  .ctodo-item:hover .ctodo-del{opacity:1}
+  .ftodo-item:hover .ctodo-del{opacity:1}
   .ctodo-del:hover{color:var(--danger)}
-  .ctodo-add{display:flex;gap:6px}
-  .ctodo-input{flex:1;font:inherit;font-size:12.5px;padding:6px 9px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);min-width:0}
+  .ctodo-add{display:flex;gap:6px;margin-bottom:10px}
+  .ctodo-input{flex:1;font:inherit;font-size:13px;padding:8px 10px;border:1px solid var(--border);border-radius:9px;background:var(--surface);color:var(--text);min-width:0}
   .ctodo-input:focus{outline:none;border-color:var(--c-mfc);box-shadow:0 0 0 3px rgba(106,92,240,.1)}
-  .ctodo-addbtn{width:28px;height:28px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:none;border-radius:8px;background:var(--c-mfc);color:#fff;cursor:pointer;transition:.14s}
+  .ctodo-addbtn{width:34px;height:34px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:none;border-radius:9px;background:var(--c-mfc);color:#fff;cursor:pointer;transition:.14s}
   .ctodo-addbtn:hover{opacity:.88}
+  /* To-Dos section inside the campaign edit form */
+  .ftodo-list{display:flex;flex-direction:column;gap:6px}
+  .ftodo-item{display:flex;align-items:center;gap:9px;padding:2px 0}
+  .ftodo-text{flex:1;font-size:13px;color:var(--text);line-height:1.35;word-break:break-word}
+  .ftodo-item.done .ftodo-text{text-decoration:line-through;color:var(--hint)}
+  .ftodo-empty{font-size:12.5px;color:var(--hint);margin:2px 0 4px}
+  .ftodo-done{margin-top:10px}
+  .ftodo-done summary{font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;margin-bottom:8px}
+  .ftodo-done .ftodo-item .ftodo-text{text-decoration:line-through;color:var(--hint)}
   .caution svg{display:block}
   .wchip{background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:1px 7px;color:var(--muted);white-space:nowrap}
   .dates{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);margin-bottom:11px}
@@ -1109,25 +1113,7 @@ function cardHTML(c){
   const openTasksForCard=cTasks.filter(t=>!t.done);
   const todoIcon='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>';
   const todoBadge = openTasksForCard.length
-    ? `<span class="ctodo-badge" title="${openTasksForCard.length} open to-do${openTasksForCard.length>1?'s':''}">${todoIcon}${openTasksForCard.length}</span>` : '';
-  const todoWidget=`<div class="ctodo" data-ctodo-cid="${c.id}">
-    <div class="ctodo-head">
-      <span class="ctodo-title">${todoIcon}To-Dos</span>
-      ${openTasksForCard.length?`<span class="ctodo-count">${openTasksForCard.length}</span>`:''}
-    </div>
-    ${openTasksForCard.length?`<div class="ctodo-list">${openTasksForCard.map(t=>`
-      <div class="ctodo-item">
-        <button class="ctodo-check" data-tidt="${t.id}" title="Mark done"></button>
-        <span class="ctodo-text">${esc(t.text)}</span>
-        <button class="ctodo-del" data-tidd="${t.id}" title="Delete">✕</button>
-      </div>`).join('')}</div>`:''}
-    <div class="ctodo-add">
-      <input class="ctodo-input" placeholder="Add a to-do…" data-ctin="${c.id}">
-      <button class="ctodo-addbtn" data-ctadd="${c.id}" title="Add to-do">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-      </button>
-    </div>
-  </div>`;
+    ? `<span class="ctodo-badge" title="${openTasksForCard.length} open to-do${openTasksForCard.length>1?'s':''} — open the campaign to view">${todoIcon}${openTasksForCard.length}</span>` : '';
   return `<div class="card ${missing.length?'incomplete':''}" data-id="${c.id}" style="--cat:var(${cat.cat});--catbg:var(${cat.bg})">
     <div class="chead">
       <span class="pri pri-${c.priority}">${PRI_LABEL[c.priority]}</span>
@@ -1149,7 +1135,6 @@ function cardHTML(c){
     <div class="kpis">
       ${['PC','PA','CC'].map(m=>`<div class="kpi"><div class="kl">${m}</div><div class="kv">${fmtNum((k[m]||{}).t)}</div></div>`).join('')}
     </div>
-    ${todoWidget}
   </div>`;
 }
 
@@ -1294,11 +1279,6 @@ function renderGrid(){
   wrap.innerHTML=html;
   document.querySelectorAll('.star').forEach(btn=>btn.onclick=e=>{e.stopPropagation();toggleStar(btn.dataset.star)});
   document.querySelectorAll('.card').forEach(card=>card.onclick=()=>openForm(card.dataset.id));
-  document.querySelectorAll('.ctodo').forEach(el=>el.addEventListener('click',e=>e.stopPropagation()));
-  document.querySelectorAll('[data-tidt]').forEach(btn=>btn.onclick=e=>{e.stopPropagation();toggleTask(btn.dataset.tidt)});
-  document.querySelectorAll('[data-tidd]').forEach(btn=>btn.onclick=e=>{e.stopPropagation();removeTask(btn.dataset.tidd)});
-  document.querySelectorAll('[data-ctadd]').forEach(btn=>btn.onclick=e=>{e.stopPropagation();addCardTask(btn.dataset.ctadd)});
-  document.querySelectorAll('[data-ctin]').forEach(inp=>inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.stopPropagation();addCardTask(inp.dataset.ctin)}}));
   document.querySelectorAll('.cat-expand').forEach(btn=>btn.onclick=()=>{
     const k=btn.dataset.expand;
     if(expandedCats.has(k))expandedCats.delete(k);else expandedCats.add(k);
@@ -1497,6 +1477,9 @@ function openForm(cid, prefill, questions){
     <p class="pri-hint" style="margin-top:-4px">Editions split the campaign run into equal date windows. Set a start and end date to see each edition's range. Asset dates are optional — fill them whenever you're ready.</p>
     <div id="editionEditor"></div>
 
+    <div class="form-sec-t">To-Dos</div>
+    <div id="formTodos"></div>
+
     <div class="field" style="margin-top:18px"><label>Notes</label><textarea id="f_notes" class="${ac('notes')}" placeholder="Optional context…">${esc(f.notes||'')}</textarea></div>
 
     <div class="modal-actions" style="align-items:center">
@@ -1510,6 +1493,7 @@ function openForm(cid, prefill, questions){
   document.getElementById('formOverlay').classList.add('open');
   updatePriHint();
   renderEditionEditor();
+  renderFormTodos(cid);
   ['f_start','f_end'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('change',()=>{syncEditionStateFromDOM();renderEditionEditor();});});
   // Enable instant auto-save for existing campaigns.
   _autosaveCid = cid || null;
@@ -1521,6 +1505,37 @@ function openForm(cid, prefill, questions){
 function refreshFormStar(cid){
   const c=state.find(x=>x.id===cid); const btn=document.getElementById('formStarBtn');
   if(c&&btn)btn.textContent=c.starred?'★ Unfavorite':'☆ Favorite';
+}
+// To-Dos live inside the campaign's edit form (not on the card face). Uses the
+// same shared `tasks` table as the sidebar To-Do List, tagged by campaignId.
+function renderFormTodos(cid){
+  const box=document.getElementById('formTodos'); if(!box)return;
+  if(!cid){ box.innerHTML=`<p class="exp-sub" style="margin:-4px 0 4px">Create the campaign first, then come back here to add to-dos.</p>`; return; }
+  const list=tasks.filter(t=>t.campaignId===cid);
+  const open=list.filter(t=>!t.done), done=list.filter(t=>t.done);
+  const itemHTML=t=>`<div class="ftodo-item ${t.done?'done':''}">
+      <button class="ctodo-check ${t.done?'on':''}" data-ftt="${t.id}" title="${t.done?'Mark as not done':'Mark done'}">${t.done?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>':''}</button>
+      <span class="ftodo-text">${esc(t.text)}</span>
+      <button class="ctodo-del" data-ftd="${t.id}" title="Delete">✕</button>
+    </div>`;
+  box.innerHTML=`
+    <div class="ctodo-add">
+      <input class="ctodo-input" id="ftodo_input" placeholder="Add a to-do…" data-no-autosave>
+      <button class="ctodo-addbtn" type="button" id="ftodo_addbtn" title="Add to-do"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+    </div>
+    ${open.length?`<div class="ftodo-list">${open.map(itemHTML).join('')}</div>`:'<p class="ftodo-empty">No open to-dos for this campaign.</p>'}
+    ${done.length?`<details class="ftodo-done"><summary>Completed (${done.length})</summary><div class="ftodo-list">${done.map(itemHTML).join('')}</div></details>`:''}`;
+  document.getElementById('ftodo_addbtn').onclick=()=>addFormTodo(cid);
+  document.getElementById('ftodo_input').addEventListener('keydown',e=>{if(e.key==='Enter')addFormTodo(cid);});
+  box.querySelectorAll('[data-ftt]').forEach(btn=>btn.onclick=()=>toggleTask(btn.dataset.ftt));
+  box.querySelectorAll('[data-ftd]').forEach(btn=>btn.onclick=()=>removeTask(btn.dataset.ftd));
+}
+function addFormTodo(cid){
+  const inp=document.getElementById('ftodo_input'); if(!inp)return;
+  const text=(inp.value||'').trim();
+  if(!text){inp.focus();return;}
+  const t={id:id(), text, campaignId:cid, kam:'', added:isoOf(new Date()), done:false};
+  upsertTask(t);
 }
 function closeForm(){_autosaveCid=null;clearTimeout(_autosaveTimer);document.getElementById('formOverlay').classList.remove('open')}
 
@@ -1665,6 +1680,7 @@ function autoSaveForm(){
 function wireAutoSave(){
   const modal=document.getElementById('formModal'); if(!modal)return;
   modal.querySelectorAll('input,select,textarea').forEach(el=>{
+    if(el.hasAttribute('data-no-autosave'))return;   // e.g. the To-Dos quick-add box, which saves via its own path
     el.addEventListener('input',autoSaveForm);
     el.addEventListener('change',autoSaveForm);
   });
@@ -2613,6 +2629,7 @@ async function upsertTask(t){
   const i=tasks.findIndex(x=>x.id===t.id);
   if(i>=0)tasks[i]=t;else tasks.unshift(t);
   writeTaskCache(); renderTasks(); renderGrid();
+  if(document.getElementById('formTodos') && _autosaveCid) renderFormTodos(_autosaveCid);
   if(!sb)return;
   try{ const {id,...rest}=t; const {error}=await sb.from('tasks').upsert({id:t.id,data:rest}); if(error)throw error; }
   catch(e){console.error('task save',e); alert('Could not save the task to the database.');}
@@ -2620,17 +2637,10 @@ async function upsertTask(t){
 async function deleteTask(tid){
   tasks=tasks.filter(x=>x.id!==tid);
   writeTaskCache(); renderTasks(); renderGrid();
+  if(document.getElementById('formTodos') && _autosaveCid) renderFormTodos(_autosaveCid);
   if(!sb)return;
   try{ const {error}=await sb.from('tasks').delete().eq('id',tid); if(error)throw error; }
   catch(e){console.error('task delete',e);}
-}
-// Quick-add a to-do straight from a campaign card's mini widget.
-function addCardTask(cid){
-  const inp=document.querySelector(`[data-ctin="${cid}"]`); if(!inp)return;
-  const text=(inp.value||'').trim();
-  if(!text){inp.focus();return;}
-  const t={id:id(), text, campaignId:cid, kam:'', added:isoOf(new Date()), done:false};
-  upsertTask(t);
 }
 
 function daysElapsed(iso){
