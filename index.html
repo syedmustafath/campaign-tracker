@@ -1852,7 +1852,11 @@ function readFileAsDataURL(f){
 // Shared core: send one file to /api/extract, return the parsed campaign object.
 // Throws on failure so callers can handle errors per-file.
 async function extractFromFile(f){
-  if(f.size>25*1024*1024) throw new Error('File is over 25 MB');
+  // Vercel's serverless functions hard-cap the request body at 4.5 MB and this
+  // cannot be raised via config. Base64-encoding a file inflates its size by
+  // ~33%, so the raw file must stay well under that to survive the round trip.
+  const MAX_RAW_BYTES = 3*1024*1024; // ~3 MB raw -> ~4 MB base64, safely under the 4.5 MB cap
+  if(f.size>MAX_RAW_BYTES) throw new Error(`File is ${(f.size/1024/1024).toFixed(1)} MB — please keep uploads under 3 MB (Vercel rejects larger requests). Try a smaller export, a lower-res scan, or a screenshot instead of the full file.`);
   const dataUrl=await readFileAsDataURL(f);
   const comma=dataUrl.indexOf(',');
   const b64=dataUrl.slice(comma+1);
@@ -1862,9 +1866,20 @@ async function extractFromFile(f){
     headers:{'content-type':'application/json'},
     body:JSON.stringify({ filename:f.name, mime, data:b64 })
   });
-  const out=await resp.json();
-  if(!resp.ok||out.ok===false){
-    throw new Error((out&&out.error)||('HTTP '+resp.status));
+  // The server doesn't always return JSON (e.g. Vercel's own "Request Entity Too
+  // Large" / gateway errors are plain text), so parse defensively and surface a
+  // readable message instead of a raw JSON-parse crash.
+  const raw=await resp.text();
+  let out=null;
+  try{ out=JSON.parse(raw); }catch(e){ /* not JSON */ }
+  if(!resp.ok||!out||out.ok===false){
+    let msg=(out&&out.error) || raw || ('HTTP '+resp.status);
+    if(/request entity too large/i.test(msg) || resp.status===413){
+      msg='The file is too large for the server to accept (over ~4.5 MB once uploaded). Please use a smaller file — under 3 MB usually works.';
+    }else if(/^\s*</.test(raw) && !out){
+      msg='Server returned an unexpected response (HTTP '+resp.status+'). Please try again in a moment.';
+    }
+    throw new Error(msg);
   }
   return out.campaign||{};
 }
