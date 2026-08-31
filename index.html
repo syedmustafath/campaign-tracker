@@ -2,8 +2,16 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Polaris</title>
+<!-- PWA: installable app shell. manifest.json, sw.js, and /icons live alongside index.html at the repo root — no build step, Vercel serves them as static files automatically. -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#6a5cf0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Polaris">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <link rel="icon" type="image/png" href="data:image/png;base64,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">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <!-- ↓↓↓ SET THESE TWO VALUES from your Supabase project (Settings → API) ↓↓↓ -->
@@ -86,7 +94,6 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
 
   @media (max-width:760px){
     /* sidebar becomes an overlay drawer on small screens */
-    /* sidebar becomes an overlay drawer on small screens */
     body,body.sb-collapsed{padding-left:24px}
     .sidebar{transform:translateX(-100%);transition:transform .22s ease;width:var(--sb-w)}
     body.sb-open .sidebar{transform:none}
@@ -95,6 +102,17 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
     .sb-toggle{right:14px} /* becomes a close affordance inside the drawer */
     body.sb-open .sb-scrim{display:block;position:fixed;inset:0;background:rgba(30,30,50,.32);z-index:55}
     .sb-fab{display:flex}
+    /* 16px prevents iOS Safari's auto-zoom-on-focus, which is disruptive when
+       editing a campaign on a phone; desktop keeps its tighter, denser sizing. */
+    input,select,textarea{font-size:16px!important}
+  }
+  /* PWA installed / standalone mode: pad around the device notch and home
+     indicator so fixed UI (sidebar toggle, slide-out panels) isn't obscured. */
+  @media (display-mode:standalone){
+    body{padding-top:calc(24px + env(safe-area-inset-top));padding-bottom:calc(80px + env(safe-area-inset-bottom))}
+    .sb-fab{top:calc(20px + env(safe-area-inset-top))}
+    .sidebar{padding-top:env(safe-area-inset-top)}
+    .tasks-panel{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
   }
   /* floating open button (mobile only) */
   .sb-fab{display:none;position:fixed;top:20px;left:16px;z-index:50;width:40px;height:40px;border-radius:12px;
@@ -344,12 +362,6 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   .form-save-status.saving{color:var(--muted)}
   .form-save-status.warn{color:#e0a000}
   .modal-actions .btn.danger{color:var(--danger);border-color:var(--danger)}
-  .soon-modal{max-width:440px;text-align:left}
-  .soon-badge{display:inline-block;font-size:11px;font-weight:650;letter-spacing:.03em;text-transform:uppercase;
-    padding:5px 12px;border-radius:999px;color:#fff;margin-bottom:14px;
-    background:linear-gradient(120deg,#6a5cf0,#8b6cf0 55%,#c07af0)}
-  .soon-modal h2{font-size:20px;font-weight:650;letter-spacing:-.02em;margin-bottom:8px;padding-right:30px}
-  .soon-desc{font-size:14px;color:var(--muted);line-height:1.6}
   .export-modal{max-width:560px}
   .exp-sub{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:18px}
   .exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 24px}
@@ -655,17 +667,9 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="11" rx="2"/><path d="M3 20h18"/></svg>
       <span class="sb-label">Hero Banner Schedule</span>
     </button>
-    <button class="sb-item" data-tool="marketing" title="Marketing Export">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 11l18-5v12L3 13v-2z"/><path d="M11.6 16.8a3 3 0 0 1-5.8-1.6"/></svg>
-      <span class="sb-label">Marketing Export</span>
-    </button>
     <button class="sb-item" data-tool="pn" title="PN Scheduling">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
       <span class="sb-label">PN Scheduling</span>
-    </button>
-    <button class="sb-item" data-tool="analysis" title="Full Analysis Export">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><path d="M7 15l3-4 3 3 4-6"/></svg>
-      <span class="sb-label">Full Analysis Export</span>
     </button>
     <button class="sb-item sb-item-quiet" data-tool="password" title="Change password">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
@@ -677,7 +681,6 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
 <button class="sb-fab" id="sbFab" title="Open tools" aria-label="Open tools">
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
 </button>
-<div class="overlay" id="soonOverlay"><div class="modal soon-modal" id="soonModal"></div></div>
 <div class="overlay" id="exportOverlay"><div class="modal export-modal" id="exportModal"></div></div>
 <div class="overlay" id="heroOverlay"><div class="modal hero-modal" id="heroModal"></div></div>
 <div class="overlay" id="pnOverlay"><div class="modal hero-modal" id="pnModal"></div></div>
@@ -2131,29 +2134,13 @@ function setSidebarCollapsed(v){
   });
 })();
 
-const TOOL_INFO={
-  marketing:{title:"Marketing Export",desc:"A ready-to-send export tailored for the marketing team — asset dates and channels per campaign, formatted for their workflow."},
-  analysis:{title:"Full Analysis Export",desc:"A complete workbook — KPIs, placements, editions, and status — for deeper reporting and review."}
-};
 function handleTool(tool){
   if(tool==='tasks'){ openTasks(); return; }
   if(tool==='password'){ openChangePassword(); return; }
   if(tool==='export'){ openExportModal(); return; }
   if(tool==='hero'){ openHeroSchedule(); return; }
   if(tool==='pn'){ openPNSchedule(); return; }
-  const info=TOOL_INFO[tool]; if(!info) return;
-  showComingSoon(info.title,info.desc);
 }
-function showComingSoon(title,desc){
-  document.getElementById('soonModal').innerHTML=`
-    <button class="x" onclick="closeSoon()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
-    <div class="soon-badge">Coming soon</div>
-    <h2>${title}</h2>
-    <p class="soon-desc">${desc}</p>
-    <div class="modal-actions"><button class="btn primary" onclick="closeSoon()">Got it</button></div>`;
-  document.getElementById('soonOverlay').classList.add('open');
-}
-function closeSoon(){document.getElementById('soonOverlay').classList.remove('open');}
 
 /* ---------- Export with filters ---------- */
 const EXPORT_STATUSES=[['progress','In Progress'],['notstarted','Not Started'],['completed','Completed']];
@@ -2847,9 +2834,9 @@ function initFilters(){ FILTER_DEFS.forEach(renderFilterDropdown); }
 initFilters();
 document.getElementById('search').oninput=renderGrid;
 document.getElementById('sortBy').onchange=renderGrid;
-['detailOverlay','formOverlay','soonOverlay','exportOverlay','heroOverlay','pnOverlay','batchOverlay','monthsOverlay','pwOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
+['detailOverlay','formOverlay','exportOverlay','heroOverlay','pnOverlay','batchOverlay','monthsOverlay','pwOverlay'].forEach(oid=>{document.getElementById(oid).addEventListener('click',e=>{if(e.target.id===oid)e.target.classList.remove('open')})});
 document.getElementById('tasksReopen').addEventListener('click',openTasks);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeSoon();closeExport();closeHero();closePN();closeBatch();closeMonths();closeTasks();closePw();document.body.classList.remove('sb-open')}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeDetail();closeForm();closeExport();closeHero();closePN();closeBatch();closeMonths();closeTasks();closePw();document.body.classList.remove('sb-open')}});
 
 // Paint from cache immediately, then connect to Supabase and load the live data.
 renderGrid();
@@ -2858,6 +2845,15 @@ if(initSupabase()){
   loadTasksFromDB().then(renderGrid);
 }else{
   setSyncBadge('config','Set Supabase keys in the file');
+}
+
+// PWA: register the service worker (enables "Add to Home Screen" / install prompts
+// and keeps the app shell available if the connection drops). Registration failing
+// (e.g. sw.js not yet deployed) is non-fatal — the app works identically either way.
+if('serviceWorker' in navigator){
+  window.addEventListener('load',()=>{
+    navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  });
 }
 </script>
 </body>
