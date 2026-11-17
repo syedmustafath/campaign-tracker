@@ -599,6 +599,11 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   @media (max-width:560px){.frow,.frow3{grid-template-columns:1fr}.dl,.kpi-grid,.kpi-box{grid-template-columns:1fr}}
   .form-sec-t{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;
     margin:20px 0 11px;padding-top:16px;border-top:.5px solid var(--border)}
+  .drive-lbl{display:flex!important;align-items:center;gap:6px}
+  .drive-sub{color:var(--hint);font-weight:400}
+  .drive-open{margin-left:auto;font-size:12px;font-weight:600;color:var(--c-mfc);text-decoration:none;white-space:nowrap}
+  .drive-open:hover{text-decoration:underline}
+  .drive-open[hidden]{display:none}
   /* collapsible form sections (everything below KPI targets) */
   .fsec{border-top:.5px solid var(--border);margin-top:4px}
   .fsec>summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer;padding:15px 2px;user-select:none;
@@ -1506,6 +1511,10 @@ function openForm(cid, prefill, questions){
       <div class="field"><label>Key Account Manager</label><select id="f_manager" class="${ac('manager')}">${mgrOpts}</select></div>
     </div>
     <div class="pri-hint" id="priHint"></div>
+    <div class="field">
+      <label class="drive-lbl">Google Drive link <span class="drive-sub">— assets from the marketing team</span><a id="driveOpen" class="drive-open" target="_blank" rel="noopener noreferrer" hidden>Open ↗</a></label>
+      <input type="url" id="f_drivelink" class="${ac('drivelink')}" value="${esc(f.driveLink||'')}" placeholder="https://drive.google.com/…" inputmode="url" autocomplete="off" spellcheck="false">
+    </div>
 
     <div class="form-sec-t">KPI targets</div>
     <div class="frow3">${['PC','PA','CC'].map(m=>{const x=k[m]||{};return `<div class="field"><label>${m} target</label><input type="number" id="kpi_${m}_t" class="${ac('kpi_'+m)}" value="${x.t!=null?x.t:''}" placeholder="0"></div>`}).join('')}</div>
@@ -1697,7 +1706,11 @@ function updateFormMeta(){
   if(g('f_offerdate')) set('fsecOfferMeta',g('f_offerdate').value?fmtDate(g('f_offerdate').value):'Not set');
   if(g('f_editions')){const n=Number(g('f_editions').value)||1; set('fsecEdMeta',n+' edition'+(n>1?'s':''));}
   if(g('f_notes')) set('fsecNotesMeta',g('f_notes').value.trim()?'Has notes':'');
+  // "Open ↗" appears only for a real http(s) link (never a javascript: or other scheme).
+  const dl=g('f_drivelink'), da=g('driveOpen');
+  if(dl&&da){ const v=dl.value.trim(); const ok=isWebUrl(v); da.hidden=!ok; if(ok)da.href=v; else da.removeAttribute('href'); }
 }
+function isWebUrl(v){ return /^https?:\/\/\S+$/i.test(String(v||'').trim()); }
 function updatePriHint(){
   const pri=document.getElementById('f_priority').value;
   document.getElementById('f_priority').dataset.pri=pri;   // drives the colour-coding
@@ -1730,7 +1743,7 @@ function readFormObject(){
   });
   return {
     name, wallet:walletList(g('f_wallet')).join(', '), category:g('f_category'), priority:g('f_priority'),
-    manager:g('f_manager'), start:g('f_start'), end:g('f_end'),
+    manager:g('f_manager'), start:g('f_start'), end:g('f_end'), driveLink:g('f_drivelink').trim(),
     kpi, lifecycle:g('f_lifecycle'), lifecycleDates:(()=>{const o={};document.querySelectorAll('#formModal input[data-life]').forEach(inp=>{if(inp.value)o[inp.dataset.life]=inp.value;});return o;})(), editions, placements, offerDate:g('f_offerdate')||"", notes:g('f_notes').trim()
   };
 }
@@ -2669,18 +2682,21 @@ function exportPNSchedule(){
   const days=dayList(pnState.from,pnState.to);
   const list=pnSelectedList();          // only ticked campaigns
   if(!days.length||!list.length)return;
-  const header=['Campaign','Priority','Status','Target','Start Date','End Date',...days.map(d=>fmtDay(d)+' '+new Date(d).toLocaleDateString('en-GB',{month:'short'})),'Total PNs'];
+  const header=['Campaign','Priority','Status','Target','Start Date','End Date','Google Drive Link',...days.map(d=>fmtDay(d)+' '+new Date(d).toLocaleDateString('en-GB',{month:'short'})),'Total PNs'];
   const rows=[header];
   list.forEach(c=>{
     let tot=0;
     const band=PN_FREQ[c.priority]||[0,0];
     const marks=days.map(d=>{const on=pnState.ticks.has(pnKey(c.id,d));if(on)tot++;return on?'PN':'';});
-    rows.push([c.name,PRI_LABEL[c.priority]||'',STATUS_LABEL[computeStatus(c)],band[0]+'-'+band[1],c.start||'',c.end||'',...marks,tot]);
+    rows.push([c.name,PRI_LABEL[c.priority]||'',STATUS_LABEL[computeStatus(c)],band[0]+'-'+band[1],c.start||'',c.end||'',c.driveLink||'',...marks,tot]);
   });
   const colTotals=days.map(d=>pnDayTotal(d,list));
   const grand=colTotals.reduce((a,b)=>a+b,0);
-  rows.push(['PNs per day','','','','','',...colTotals,grand]);
+  rows.push(['PNs per day','','','','','','',...colTotals,grand]);
   const ws=XLSX.utils.aoa_to_sheet(rows);
+  // make Drive links clickable in Excel (column G)
+  for(let r=1;r<rows.length-1;r++){ const v=rows[r][6]; if(isWebUrl(v)){ const cell=ws[XLSX.utils.encode_cell({r,c:6})]; if(cell) cell.l={Target:v.trim()}; } }
+  ws['!cols']=[{wch:30},{wch:10},{wch:12},{wch:8},{wch:12},{wch:12},{wch:38}];
   const wb=XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb,ws,'PN Schedule');
   XLSX.writeFile(wb,'pn-schedule.xlsx');
