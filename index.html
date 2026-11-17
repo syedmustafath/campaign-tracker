@@ -599,6 +599,26 @@ window.CAMPAIGNS_DATA = {"updated":"2026-07-13T10:43:44.137Z","campaigns":[{"id"
   @media (max-width:560px){.frow,.frow3{grid-template-columns:1fr}.dl,.kpi-grid,.kpi-box{grid-template-columns:1fr}}
   .form-sec-t{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;
     margin:20px 0 11px;padding-top:16px;border-top:.5px solid var(--border)}
+  /* collapsible form sections (everything below KPI targets) */
+  .fsec{border-top:.5px solid var(--border);margin-top:4px}
+  .fsec>summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer;padding:15px 2px;user-select:none;
+    font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;font-weight:600;border-radius:8px}
+  .fsec>summary::-webkit-details-marker{display:none}
+  .fsec>summary:hover{color:var(--text)}
+  .fsec>summary:focus-visible{outline:2px solid var(--c-mfc);outline-offset:2px}
+  .fsec-meta{margin-left:auto;font-size:12px;text-transform:none;letter-spacing:0;font-weight:500;color:var(--hint);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:55%}
+  .fsec-meta:empty{display:none}
+  .fsec-chev{flex-shrink:0;opacity:.55;transition:transform .16s}
+  .fsec>summary .fsec-meta:empty+.fsec-chev,.fsec>summary>span:first-child+.fsec-chev{margin-left:auto}
+  .fsec[open]>summary .fsec-chev{transform:rotate(180deg)}
+  .fsec-body{padding:0 0 16px}
+  /* priority field: colour-coded so urgency is easy to spot */
+  .field select.pri-sel{font-weight:650;border-width:1.5px}
+  .field select.pri-sel[data-pri="urgent"]{background:var(--pri-urgent-bg);color:var(--pri-urgent);border-color:var(--pri-urgent)}
+  .field select.pri-sel[data-pri="high"]{background:var(--pri-high-bg);color:var(--pri-high);border-color:var(--pri-high)}
+  .field select.pri-sel[data-pri="normal"]{background:var(--pri-normal-bg);color:var(--pri-normal);border-color:var(--pri-normal)}
+  .field select.pri-sel[data-pri="low"]{background:var(--pri-low-bg);color:var(--pri-low);border-color:var(--pri-low)}
   /* editions — form editor */
   .ed-edit-block{border:1px solid var(--border);border-radius:14px;padding:12px 14px 6px;margin-bottom:12px;
     background:radial-gradient(140% 200% at 0% 0%, var(--c-mfc-bg) 0%, transparent 60%),var(--surface)}
@@ -1449,6 +1469,10 @@ function openForm(cid, prefill, questions){
 
   const curEditions=Math.max(1,Number(f.editions)||1);
   const edOpts=EDITION_OPTIONS.map(n=>`<option value="${n}" ${curEditions===n?'selected':''}>${n} edition${n>1?'s':''}</option>`).join('');
+  // Sections below KPI targets are collapsed by default. If an AI import pre-filled a
+  // field inside one, that section opens so the highlighted value is visible for review.
+  const openIf=(...names)=>names.some(n=>aiFields.includes(n))?'open':'';
+  const secHead=(title,metaId)=>`<span>${title}</span>${metaId?`<span class="fsec-meta" id="${metaId}"></span>`:''}<svg class="fsec-chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 9l6 6 6-6"/></svg>`;
 
   document.getElementById('formModal').innerHTML=`
     <button class="x" onclick="closeForm()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
@@ -1478,7 +1502,7 @@ function openForm(cid, prefill, questions){
       <div class="field"><label>End date</label><input type="date" id="f_end" class="${ac('end')}" value="${f.end||''}"></div>
     </div>
     <div class="frow">
-      <div class="field"><label>Priority</label><select id="f_priority" class="${ac('priority')}" onchange="updatePriHint()">${priOpts}</select></div>
+      <div class="field"><label>Priority</label><select id="f_priority" class="pri-sel ${ac('priority')}" data-pri="${esc(f.priority||'urgent')}" onchange="updatePriHint()">${priOpts}</select></div>
       <div class="field"><label>Key Account Manager</label><select id="f_manager" class="${ac('manager')}">${mgrOpts}</select></div>
     </div>
     <div class="pri-hint" id="priHint"></div>
@@ -1486,7 +1510,7 @@ function openForm(cid, prefill, questions){
     <div class="form-sec-t">KPI targets</div>
     <div class="frow3">${['PC','PA','CC'].map(m=>{const x=k[m]||{};return `<div class="field"><label>${m} target</label><input type="number" id="kpi_${m}_t" class="${ac('kpi_'+m)}" value="${x.t!=null?x.t:''}" placeholder="0"></div>`}).join('')}</div>
 
-    <div class="form-sec-t">Campaign tracking</div>
+    <details class="fsec" ${openIf('lifecycle')}><summary>${secHead('Campaign tracking','fsecLifeMeta')}</summary><div class="fsec-body">
     <div class="field"><label>Current lifecycle stage</label><select id="f_lifecycle" class="${ac('lifecycle')}">${lifeOpts}</select></div>
     <label style="display:block;font-size:12.5px;color:var(--muted);margin:8px 0 8px;font-weight:500">Stage dates <span style="color:var(--hint);font-weight:400">— when each stage was reached (optional, for tracking delays)</span></label>
     <div class="life-dates">${LIFECYCLE.map(s=>{
@@ -1500,23 +1524,29 @@ function openForm(cid, prefill, questions){
         </div>
       </div>`;
     }).join('')}</div>
-    <div class="form-sec-t">Offer Section</div>
+    </div></details>
+    <details class="fsec" ${openIf('offerdate')}><summary>${secHead('Offer Section','fsecOfferMeta')}</summary><div class="fsec-body">
     <div class="field">
       <label>Offer live date <span style="color:var(--hint);font-weight:400">— placed once, stays live for the whole campaign</span></label>
       <input type="date" id="f_offerdate" class="${ac('offerdate')}" value="${esc(getOfferDate(f))}">
     </div>
-    <div class="form-sec-t">Editions & asset schedule</div>
+    </div></details>
+    <details class="fsec"><summary>${secHead('Editions & asset schedule','fsecEdMeta')}</summary><div class="fsec-body">
     <div class="field">
       <label>Number of editions</label>
       <select id="f_editions" onchange="syncEditionStateFromDOM();renderEditionEditor()">${edOpts}</select>
     </div>
     <p class="pri-hint" style="margin-top:-4px">Editions split the campaign run into equal date windows. Set a start and end date to see each edition's range. Asset dates are optional — fill them whenever you're ready.</p>
     <div id="editionEditor"></div>
+    </div></details>
 
-    <div class="form-sec-t">To-Dos</div>
+    <details class="fsec"><summary>${secHead('To-Dos','fsecTodoMeta')}</summary><div class="fsec-body">
     <div id="formTodos"></div>
+    </div></details>
 
-    <div class="field" style="margin-top:18px"><label>Notes</label><textarea id="f_notes" class="${ac('notes')}" placeholder="Optional context…">${esc(f.notes||'')}</textarea></div>
+    <details class="fsec" ${openIf('notes')}><summary>${secHead('Notes','fsecNotesMeta')}</summary><div class="fsec-body">
+    <div class="field"><textarea id="f_notes" class="${ac('notes')}" placeholder="Optional context…" aria-label="Notes">${esc(f.notes||'')}</textarea></div>
+    </div></details>
 
     <div class="modal-actions" style="align-items:center">
       ${cid?`<span class="form-save-status saved" id="formSaveStatus">All changes saved</span>
@@ -1530,6 +1560,9 @@ function openForm(cid, prefill, questions){
   updatePriHint();
   renderEditionEditor();
   renderFormTodos(cid);
+  updateFormMeta();
+  const fm=document.getElementById('formModal');
+  fm.oninput=updateFormMeta; fm.onchange=updateFormMeta;   // property assignment, so reopening never stacks listeners
   ['f_start','f_end'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('change',()=>{syncEditionStateFromDOM();renderEditionEditor();});});
   // Enable instant auto-save for existing campaigns.
   _autosaveCid = cid || null;
@@ -1549,6 +1582,8 @@ function renderFormTodos(cid){
   if(!cid){ box.innerHTML=`<p class="exp-sub" style="margin:-4px 0 4px">Create the campaign first, then come back here to add to-dos.</p>`; return; }
   const list=tasks.filter(t=>t.campaignId===cid);
   const open=list.filter(t=>!t.done), done=list.filter(t=>t.done);
+  const todoMeta=document.getElementById('fsecTodoMeta');
+  if(todoMeta) todoMeta.textContent=open.length?open.length+' open':'';
   const itemHTML=t=>`<div class="ftodo-item ${t.done?'done':''}">
       <button class="ctodo-check ${t.done?'on':''}" data-ftt="${t.id}" title="${t.done?'Mark as not done':'Mark done'}">${t.done?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg>':''}</button>
       <span class="ftodo-text">${esc(t.text)}</span>
@@ -1654,8 +1689,18 @@ function renderEditionEditor(){
   });
 }
 
+// Short at-a-glance labels on the collapsed section headers (stage, offer date, edition count, notes).
+function updateFormMeta(){
+  const g=id=>document.getElementById(id);
+  const set=(id,t)=>{const el=g(id); if(el)el.textContent=t;};
+  if(g('f_lifecycle')) set('fsecLifeMeta',g('f_lifecycle').value);
+  if(g('f_offerdate')) set('fsecOfferMeta',g('f_offerdate').value?fmtDate(g('f_offerdate').value):'Not set');
+  if(g('f_editions')){const n=Number(g('f_editions').value)||1; set('fsecEdMeta',n+' edition'+(n>1?'s':''));}
+  if(g('f_notes')) set('fsecNotesMeta',g('f_notes').value.trim()?'Has notes':'');
+}
 function updatePriHint(){
   const pri=document.getElementById('f_priority').value;
+  document.getElementById('f_priority').dataset.pri=pri;   // drives the colour-coding
   const exp=expectedPlacements(pri);
   const names=exp.map(k=>PLACEMENTS.find(p=>p.key===k).label);
   const hint=document.getElementById('priHint');
